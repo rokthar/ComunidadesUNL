@@ -11,8 +11,11 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
+    private $estado = 400;
+    private $datos = [];
 
     //REGISTRO DE USUARIO
+    //1 docente | 2 estudiante
     public function RegistrarUsuario(Request $request)
     {
         if ($request->json()) {
@@ -59,7 +62,7 @@ class UsuarioController extends Controller
     }
 
     //REGISTRO DE DOCENTE
-    //0 inactivo, 1 docente, 2 gestor, 3 secretaria, 4 Decano
+    //0 inactivo, 1 docente, 2 gestor, 3 secretaria, 4 Decano, 5 tutor
     public function RegistrarDocente(Request $request, $external_id)
     {
         if ($request->json()) {
@@ -72,7 +75,7 @@ class UsuarioController extends Controller
                 $docente->tipoDocente = $data['tipo_docente'];
                 $docente->estado = 1;
                 $docente->fk_usuario = $usuario->id;
-                $docente->external_do = "Es" . Utilidades\UUID::v4();
+                $docente->external_do = "Doc" . Utilidades\UUID::v4();
                 $docente->save();
                 return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
             }
@@ -84,6 +87,11 @@ class UsuarioController extends Controller
     //REGISTRO DE LOGIN
     public function login(Request $request)
     {
+        global $estado, $datos;
+
+        $datos['data'] = null;
+        $datos['sucess'] = 'false';
+        $datos['mensaje'] = '';
         if ($request->json()) {
             try {
                 $data = $request->json()->all();
@@ -93,85 +101,115 @@ class UsuarioController extends Controller
                     ->where("clave", "=", $clave)
                     ->where("estado", 1)->first();
                 if ($usuario) {
-                        return response()->json([
+                        $datos['data'] = [
                             "correo" => $usuario->correo,
                             "tipoUsuario" => $usuario->tipoUsuario,
-                            "external_us" => $usuario->external_us,
-                            "mensaje" => "Operacion exitosa", "siglas" => "OE"
-                        ], 200);
-                    
+                            "external_us" => $usuario->external_us
+                        ];
+                        self::estadoJson(200, true, '');
                     
                 }else{
-                return response()->json(["mensaje"=>"Datos incorrectos", "siglas"=>"DI"],400);
+                    self::estadoJson(400, false, 'Datos Incorrectos');
 
                 }
             } catch (\Exception $e) {
-                return response()->json(["mensaje"=>"faltan datos", "siglas"=>"FD"],400);
+                self::estadoJson(400, false, 'Datos Incorrectos');
             }
+            return response()->json($datos, $estado);
         }
     }
 
     //DATOS PERFIL ESTUDIANTE
     public function datosEstudiante($external_id)
     {
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
         $estudianteObj = usuario::where("external_us", $external_id)->first();
 
         if ($estudianteObj) {
-            $estudiante = estudiante::where("fk_usuario","=", $estudianteObj->id)->get();
-            
-            $data = array();
-            foreach ($estudiante as $item) {
-                $data[]= [
-                    "nombres" => $item->nombres,
-                    "apellidos" => $item->apellidos,
-                    "ciclo" => $item->ciclo,
-                    "external_estudiante" => $item->external_es,
+            $estudiante = estudiante::where("fk_usuario", $estudianteObj->id)->first();
+            if($estudiante){
+                $datos['data']= [
+                    "nombres" => $estudiante->nombres,
+                    "apellidos" => $estudiante->apellidos,
+                    "ciclo" => $estudiante->ciclo,
+                    "paralelo" => $estudiante->paralelo,
+                    "estado"=>$estudiante->estado,
+                    "external_estudiante" => $estudiante->external_es,
                     "external_usuario" => $estudianteObj->external_us
                 ];
-                return response()->json($data,200);
+                self::estadoJson(200, true, '');
+            }else{
+                self::estadoJson(400, false, 'Datos Incorrectos');
             }
-        }
+            }else{
+                self::estadoJson(400, false, 'Datos Incorrectos');
+            } 
+        return response()->json($datos, $estado);
     }
 
     public function datosDocente($external_id)
     {
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
         $docenteObj = usuario::where("external_us", $external_id)->first();
 
         if ($docenteObj) {
-            $docente = docente::where("fk_usuario","=", $docenteObj->id)->get();
+            $docente = docente::where("fk_usuario", $docenteObj->id)->first();
             
             $data = array();
-            foreach ($docente as $item) {
-                $data[]= [
-                    "nombres" => $item->nombres,
-                    "apellidos" => $item->apellidos,
-                    "tipo_docente" => $item->tipo_docente,  //1 docente, 2 gestor
-                    "external_docente" => $item->external_do,
+            if ($docente) {
+                $datos['data']= [
+                    "nombres" => $docente->nombres,
+                    "apellidos" => $docente->apellidos,
+                    "tipo_docente" => $docente->tipoDocente, 
+                    "external_docente" => $docente->external_do,
                     "external_usuario" => $docenteObj->external_us
                 ];
-                return response()->json($data,200);
+                self::estadoJson(200, true, '');
+            }else{
+                self::estadoJson(400, false, 'Datos Incorrectos');
             }
         }
         else{
-            return response()->json(["mensaje"=>"Datos no encontrados", "siglas"=>"DNE"],400);
-
+            self::estadoJson(400, false, 'Datos Incorrectos');
         }
+        return response()->json($datos, $estado);
     }
 
     public function listarDocentes(){
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
         $listas = docente::where("estado",1)->get();
 
         $data = array();
         foreach ($listas as $lista) {
-            $data[] = [
+            $usuario = usuario::where("id", $lista->fk_usuario)->first();
+            $datos['data'][] = [
                 "nombres" => $lista->nombres,
-                    "apellidos" => $lista->apellidos,
-                    "tipo_docente" => $lista->tipo_docente,  //1 docente, 2 gestor
-                    "external_docente" => $lista->external_do,
-                    "external_usuario" => $lista->usuario->external_us
+                "apellidos" => $lista->apellidos,
+                "tipo_docente" => $lista->tipoDocente,  //1 docente, 2 gestor
+                "external_docente" => $lista->external_do,
+                "external_usuario" => $usuario->external_us
             ];
         }
-        return response()->json($data,200);
+        self::estadoJson(200, true, '');
+        return response()->json($datos, $estado);
+    }
+
+    private static function estadoJson($estadoPeticion, $satisfactorio, $mensaje)
+    {
+        global $estado, $datos;
+        $estado = $estadoPeticion;
+        $datos['sucess'] = $satisfactorio;
+        $datos['mensaje'] = $mensaje;
+    }
+
+    private static function iniciarObjetoJSon(){
+        global $estado, $datos;
+        $datos['data'] = null;
+        $datos['sucess'] = 'false';
+        $datos['mensaje'] = '';
     }
 
 }
