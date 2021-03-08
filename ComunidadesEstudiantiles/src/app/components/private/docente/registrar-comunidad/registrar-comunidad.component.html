@@ -1,0 +1,30 @@
+<div>
+    <h1>{{titulo}}</h1>
+    <form [formGroup]="registrarComunidadForm">
+        <span class="p-float-label caja-texto">
+            <input id="nombre-comunidad" type="text" pInputText formControlName="nombre_comunidad"> 
+            <label for="nombre-comunidad">Nombre</label>
+        </span>
+        <br>
+        <span class="p-float-label caja-texto">
+            <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
+            <label for="descripcion-comunidad">Descripcion</label>
+        </span>
+        <br>
+        <span class="p-float-label caja-texto">
+            <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="mision"></textarea>
+            <label for="mision-comunidad">Mision</label>
+        </span>
+        <br>
+        <span class="p-float-label caja-texto">
+            <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="vision"></textarea>
+            <label for="vision-comunidad">Vision</label>
+        </span>
+        <br>
+        <input type="file" id="myfile" name="myfile" formControlName="ruta_logo">
+        <br>
+        <button class="button" [disabled]="registrarComunidadForm.invalid" (click)="enviar()">Iniciar Sesión</button>
+        <button class="button" (click)="cancelar()">Cancelar</button>
+    </form>
+    
+</div>

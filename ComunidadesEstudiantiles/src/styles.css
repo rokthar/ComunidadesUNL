@@ -1,0 +1,27 @@
+/* You can add global styles to this file, and also import other style files */
+.button{
+    background-color: rgb(122, 157, 233);
+    color: #fafafa;
+    border-radius: 10px;
+    border-style: none;
+    padding: 1%;
+    margin: 0.5%;
+}
+.button-table{
+    background-color: rgb(122, 157, 233);
+    color: #fafafa;
+    border-radius: 10px;
+    border-style: none;
+    padding: 4%;
+}
+.caja-texto{
+    margin-bottom: 2%;
+}
+
+.textbox{
+    border-color: cadetblue;
+    border-style: solid;
+    padding: 0.5%;
+    border-radius: 15px;
+    margin-right: 1%;
+}

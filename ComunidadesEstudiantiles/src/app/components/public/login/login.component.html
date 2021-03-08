@@ -1,0 +1,18 @@
+<div>
+    <h1>{{titulo}}</h1>
+    <form [formGroup]="loginForm">
+        <span class="p-float-label caja-texto">
+            <input id="correo" type="text" pInputText formControlName="correo"> 
+            <label for="correo">Correo</label>
+        </span>
+        <br>
+        <span class="p-float-label">
+            <input id="clave" type="password" pInputText formControlName="clave"> 
+            <label for="clave">Password</label>
+        </span>
+        <br>
+        <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
+        <button class="button" (click)="cancelar()">Cancelar</button>
+    </form>
+    
+</div>

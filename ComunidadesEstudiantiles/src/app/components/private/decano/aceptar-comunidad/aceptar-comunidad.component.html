@@ -1,0 +1,31 @@
+<h1>{{titulo}}</h1>
+<div class="p-grid">
+    <div class="p-md-12 p-lg-12">
+        <p-table [value]="lista" [scrollable]="true" scrollHeight="200px">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Nombre Comunidad</th>
+                    <th >Tutor</th>
+                    <th>Descripción</th>
+                    <th>Misión</th>
+                    <th>Visión</th>
+                    <th>Acción</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr>
+                    <td>{{item.nombres}}</td>
+                    <td>{{item.tutor}}</td>
+                    <td>{{item.descripcion}}</td>
+                    <td>{{item.mision}}</td>
+                    <td>{{item.vision}}</td>
+                    <td><button (click)="aceptarComunidad(item.external_comunidad)">Aceptar</button></td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div class="p-md-12 p-lg-12">
+        asdsadasdas
+    </div>
+</div>
+
