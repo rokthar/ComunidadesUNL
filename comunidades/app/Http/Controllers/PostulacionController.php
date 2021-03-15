@@ -66,8 +66,6 @@ class PostulacionController extends Controller{
             $estudiante = estudiante::where("id", $postulacion->fk_estudiante)->first();
             $estudiante->estado = 2; //estado del estudiante en 2 indica que es miembro de comunidad
             $estudiante->save();
-            
-
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
@@ -86,6 +84,39 @@ class PostulacionController extends Controller{
             $detallepostulacion = detallePostulacion::where("fk_postulacion",$lista->id)->get();
             $estudiante = estudiante::where("id",$lista->fk_estudiante)->first();
             $comunidad = comunidad::where("id",$lista->fk_comunidad)->first();
+            foreach ($detallepostulacion as $detpos) {
+                //$datadetpos[]="";
+                $datadetpos[] =[
+                    "habilidad"=>$detpos->habilidad,
+                    "nivel"=>$detpos->nivel
+                ];
+            }
+            $datos['data'][] = [
+                "comunidad" => $comunidad->nombre_comunidad,
+                "estudiante"=>$estudiante->nombres." ". $estudiante->apellidos,
+                "habilidades"=>$datadetpos,
+                "external_postulacion"=>$lista->external_postulacion,
+                "ciclo"=>$estudiante->ciclo." ".$estudiante->paralelo
+            ];
+            
+        }
+        
+        self::estadoJson(200, true, '');
+        return response()->json($datos, $estado);
+    }
+
+    public function listarPostulacionesEsperaByComunidad($external_comunidad){
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
+        $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
+        $listas = postulacion::where("estado",2)->where("fk_comunidad",$comunidad->id)->get();
+
+        $data = array();
+        foreach ($listas as $lista) {
+            $datadetpos=null;
+            $detallepostulacion = detallePostulacion::where("fk_postulacion",$lista->id)->get();
+            $estudiante = estudiante::where("id",$lista->fk_estudiante)->first();
+            // $comunidad = comunidad::where("id",$lista->fk_comunidad)->first();
             foreach ($detallepostulacion as $detpos) {
                 //$datadetpos[]="";
                 $datadetpos[] =[
@@ -135,6 +166,20 @@ class PostulacionController extends Controller{
         self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     }
+
+    public function buscarPostulacion($external_estudiante){
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
+        $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+        $postulacion = postulacion::where("estado",2)->where("fk_estudiante",$estudiante->id)->first();
+        $comunidad = comunidad::where("id",$postulacion->fk_comunidad)->first();
+        $datos['data'] = [
+            "comunidad" => $comunidad->nombre_comunidad,
+            "siglas"=>"OE"
+        ];
+        self::estadoJson(200, true, '');
+        return response()->json($datos, $estado);
+    } 
 
     private static function estadoJson($estadoPeticion, $satisfactorio, $mensaje)
     {

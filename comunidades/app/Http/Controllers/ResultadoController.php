@@ -49,11 +49,14 @@ class ResultadoController extends Controller{
         $ruta= '../imagenes/resultados';
         $image_name = time().$file->getClientOriginalName();
         //var_dump(json_encode($file)); -> ver que me devuelve
+        
+        $codificar = file_get_contents($file);
+        $base64 = base64_encode($codificar);
         $file->move($ruta, $image_name);
         $resultado = resultado::where("external_resultado",$external_resultado)->first();
         $imagenes = new imagenes();
         $imagenes->fk_resultado = $resultado->id;
-        $imagenes->ruta_imagen = $image_name;
+        $imagenes->ruta_imagen = $base64;
         $imagenes->estado = 1;
         $external = "Img".Utilidades\UUID::v4();
         $imagenes->external_imagen = $external;

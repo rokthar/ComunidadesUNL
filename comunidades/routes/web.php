@@ -32,6 +32,7 @@ $router->get('/docente/lista', 'UsuarioController@listarDocentes');
 
 // COMUNIDAD
 $router->post('/comunidad/registro/{external_docente}', 'ComunidadController@RegistrarComuidad');
+$router->get('/comunidad/historial/{external_comunidad}', 'ComunidadController@historialComunidad');
 
 $router->post('/decano/activar/{external_comunidad}', 'ComunidadController@ActivarComunidad');
 $router->post('/secretaria/activar/{external_comunidad}', 'ComunidadController@RevisionInformacion');
@@ -42,6 +43,8 @@ $router->get('/secretaria/listar/comunidades', 'ComunidadController@ListarComuni
 $router->get('/gestor/listar/comunidades', 'ComunidadController@ListarComunidadesGestor');
 $router->get('/decano/listar/comundades', 'ComunidadController@ListarComunidadesDecano');
 $router->get('/tutor/buscar/comunidad/{external_docente}', 'ComunidadController@BuscarComunidad');
+$router->get('/vinculacion/listar/comunidades/{external_comunidad}', 'ComunidadController@ListarComunidadesVinculacion');
+$router->get('/miembro/buscar-comunidad/{external_estudiante}', 'ComunidadController@BuscarComunidadByMiembro');
 
 
 //ACTIVIDADES
@@ -49,6 +52,7 @@ $router->post('/comunidad/planficaractividades/{external_docente}', 'ActividadCo
 $router->get('/comunidad/actividadesespera', 'ActividadController@ListarPlanificacionEspera');
 $router->get('/comunidad/actividadesactivadas', 'ActividadController@ListarPlanificacionActivada');
 $router->post('/comunidad/activaractividad/{external_actividades}', 'ActividadController@ActivarPlanificacion');
+$router->post('/comunidad/terminaractividad/{external_comunidad}', 'ActividadController@TermianrPlanificacion');
 
 //DETALLE ACTIVIDADES
 $router->post('/comunidad/detalleactividad/{external_actividades}', 'ActividadController@RegistrarDetalleActividad');
@@ -60,7 +64,10 @@ $router->post('/estudiante/postulacion/{external_estudiante}/{external_comunidad
 $router->post('/estudiante/detallepostulacion/{external_postulacion}', 'PostulacionController@RegistrarDetallePostulacion');
 $router->post('/gestor/activarpostulacion/{external_postulacion}', 'PostulacionController@ActivarPostulacion');
 $router->get('/estudiante/listarpostulacionespera', 'PostulacionController@listarPostulacionesEspera');
+$router->get('/comunidad/listarpostulacionespera/{external_comunidad}', 'PostulacionController@listarPostulacionesEsperaByComunidad');
 $router->get('/estudiante/listarpostulacionaceptadas', 'PostulacionController@listarPostulacionesAceptadas');
+$router->get('/estudiante/buscarpostulacion/{external_estudiante}', 'PostulacionController@buscarPostulacion');
+
 
 
 //MIEMBROS

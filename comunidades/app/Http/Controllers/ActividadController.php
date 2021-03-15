@@ -53,7 +53,7 @@ class ActividadController extends Controller{
         $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
         if($actividadObj){
             foreach ($detalleactividadObj as $lista) {
-                $lista->estado = 1;
+                $lista->estado = 2;
                 $lista->save();    
             }
             $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
@@ -66,7 +66,12 @@ class ActividadController extends Controller{
         }
     }
 
-    
+    public function TermianrPlanificacion($external_comunidad){
+        $actividad = actividad::where("estado",2)->where("fk_comunidad",$external_comunidad)->first();
+        $actividad->estado=1;
+        $actividad->save();
+    }
+
 
     public function ListarPlanificacionEspera (){
         global $estado, $datos;
@@ -90,7 +95,8 @@ class ActividadController extends Controller{
                 "comunidad" => $comunidad->nombre_comunidad,
                 "tutor"=>$tutor->nombres." ". $tutor->apellidos,
                 "actividades"=>$dataAct,
-                "external_actividades"=>$lista->external_actividades
+                "external_actividades"=>$lista->external_actividades,
+                "logo_comunidad"=>$comunidad->ruta_logo
             ];
         }
         
@@ -130,11 +136,11 @@ class ActividadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $listas = actividades::where("estado",2)->where("fk_comunidad",$comunidad->id)->get();
+        $listas = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->get();
 
         $data = array();
         foreach ($listas as $lista) {
-            $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
+            $actividades = detalleActividad::where("fk_actividades",$lista->id)->where("estado",2)->get();
 
             foreach ($actividades as $act) {
                 $datos['data'][] = [
