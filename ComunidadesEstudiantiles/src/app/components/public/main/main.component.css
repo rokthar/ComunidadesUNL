@@ -1,0 +1,31 @@
+.contenedor{
+    width: 100%;
+}
+.menu-inicio{
+    background-color: #1d3557;
+    position: fixed;
+    width: 100%;
+    padding-top: 1%;
+    right: 0px;
+}
+.menu-inicio img{
+    width: 60%;
+    padding-top: 1%;
+    padding-left: 3%;
+}
+.links{
+    text-align: right;
+    padding-right: 3%;
+    padding-top: 3%;
+}
+
+.resultados{
+    padding-top: 12%;
+    width: 100%;
+}
+@media only screen and (max-width: 600px) {
+    .resultados{
+        padding-top: 30%;
+        padding-left: 0%;
+    }
+}

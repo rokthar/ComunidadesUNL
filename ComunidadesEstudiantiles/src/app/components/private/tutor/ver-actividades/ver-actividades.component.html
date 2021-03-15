@@ -1,0 +1,23 @@
+<div class="p-grid container">
+    <div class="p-lg-3 menu-tutor">
+        <menu-tutor></menu-tutor>
+    </div>
+    <div class="p-lg-9 actividades" *ngIf="hayDatos">
+        <div class="p-grid">
+                <div class="p-col-12 p-sm-6 p-md-6 p-lg-4" *ngFor="let item of actividades">
+                    <p-card header="{{item.nombre_actividad}}" subheader="{{item.fecha_inico}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
+                        <p>{{item.descripcion_actividad}}</p>
+                        <ng-template pTemplate="footer">
+                            <button class="button" (click)="seleccionar(item.external_det_actividad)"><i class="pi pi-check"> Seleccionar</i></button>
+                            <!-- <p-button label="Cancel" icon="pi pi-times" styleClass="p-button-secondary" [style]="{'margin-left': '.5em'}"></p-button> -->
+                        </ng-template>
+                    </p-card>
+                </div>
+        </div>
+    </div>
+    
+    <div class="p-lg-9 noData" *ngIf="!hayDatos">
+        <img src="../../../../../assets/advertencia.png" />
+        <h3>POR EL MOMENTO NO HAY ACTIVIDADES</h3>
+    </div>
+</div>

@@ -1,0 +1,87 @@
+img{
+    width: 30%;
+}
+.menu{
+    background-color: #0C2342;
+    width: 100%;
+    height: fit-content;
+    position: fixed;
+    margin: 0px;
+    padding: 1%;
+    z-index: 100;
+    top: 0px;
+}
+.logo_cis{
+    width: 60%;
+}
+
+.links{
+    color: #fafafa;
+    text-align: right;
+    text-decoration: none;
+}
+.header{
+    margin-top: 7%;
+}
+.titulos{
+    background-color: #0C2342;
+    color: #fafafa;
+    text-align: center;
+}
+
+/* Cuerpo en general */
+.cuerpo{
+    margin-top: 2%;
+}
+
+
+.titulosCabecera{
+    text-align: center;
+}
+.logo_comunidad{
+    width:150px;
+    height:150px;
+    border-radius: 150px;
+}
+.fechas{
+    text-align: center;
+}
+.fechas small{
+    margin-left: 3%;
+}
+.actividad{
+    margin-top: 10%;
+}
+.actividad h2{
+    text-align: center;
+}
+.actividad p{
+    margin-left: 10%;
+}
+.resultado{
+    margin-top: 8%;
+}
+.resultado h2{
+    text-align: center;
+}
+.resultado p{
+    margin-left: 10%;
+}
+.img_resultados{
+    text-align: center;
+    padding: 5%;
+    margin-top: 2%;
+}
+.img_resultados img{
+    width: 100%;
+}
+.aside{
+    background-color: blueviolet;
+}
+
+@media only screen and (max-width: 600px) {
+    .contenido{
+        margin-top: 30%;
+        padding-left: 0%;
+    }
+}

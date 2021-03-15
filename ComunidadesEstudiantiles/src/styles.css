@@ -1,27 +1,186 @@
 /* You can add global styles to this file, and also import other style files */
+h1, h2, h3, h4, p, small, a{
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+/* CARDS */
 .button{
-    background-color: rgb(122, 157, 233);
+    background-color: #457b9d;
     color: #fafafa;
-    border-radius: 10px;
+    border-radius: 5px;
+    border-style: none;
+    padding: 4%;
+    margin: 0.5%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+
+}
+.button-delete{
+    background-color: #e63946;
+    color: #fafafa;
+    border-radius: 5px;
+    border-style: none;
+    padding: 4%;
+    margin: 0.5%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+}
+/* HTML NORMAL */
+.btn{
+    background-color: #457b9d;
+    color: #fafafa;
+    border-radius: 5px;
     border-style: none;
     padding: 1%;
     margin: 0.5%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+}
+.btn-danger{
+    background-color: #e63946;
+    color: #fafafa;
+    border-radius: 5px;
+    border-style: none;
+    padding: 1%;
+    margin: 0.5%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
 }
 .button-table{
-    background-color: rgb(122, 157, 233);
+    background-color: #457b9d;
     color: #fafafa;
     border-radius: 10px;
     border-style: none;
     padding: 4%;
 }
 .caja-texto{
-    margin-bottom: 2%;
+    margin-bottom: 3%;
 }
 
 .textbox{
-    border-color: cadetblue;
+    border-color: #a8dadc;
     border-style: solid;
-    padding: 0.5%;
+    padding: 3%;
     border-radius: 15px;
     margin-right: 1%;
+}
+.date{
+    border-color: #a8dadc;
+    border-style: solid;
+    padding: 1%;
+    border-radius: 5px;
+    margin-right: 1%;
+}
+
+
+/* PRIVATE MENUS */
+a{
+    text-decoration: none;
+    color: #f1faee;
+}
+a:visited{
+    color: #f1faee;
+}
+.ocultar{
+    /* margin-left: -100%; */
+    visibility: inherit;
+    transition: all .3s;
+}
+.menu{
+    background-color: #1d3557;
+    color: #f1faee;
+    text-align: left;
+    height: 100%;
+    width: 300px;
+    position: fixed;
+    z-index: 100;
+    /* opacity: 0.95; */
+}
+.menu h4{
+    width: 100%;
+    word-wrap: break-word;
+}
+.menu .reporte{
+    cursor: pointer;
+}
+.items{
+    margin-top: 10%;
+}
+.items p{
+    padding: 3%;
+    margin:0px;
+    width: 100%;
+    background-color: #071831;
+    opacity: 0.9;
+}
+.items p:hover{
+    background-color: #102441;
+    transition: all .3s;
+}
+
+.menu img{
+    width: 50%;
+}
+.menu h4, small{
+    padding-left: 10%;
+}
+
+.logo{
+    width: 100%;
+    padding-top: 10%;
+    padding-left: 10%;
+}
+
+.items p{
+    padding-left: 10%;
+}
+
+
+/* IMG DE LOS CARD */
+.img-container{
+    width: 360px;
+	height: 200px;
+	border: 2px solid #fff;
+    overflow: hidden;
+}
+.img-container img.img{
+    object-fit: cover;
+    overflow: hidden;
+}
+
+
+@media only screen and (max-width: 900px) {
+    .nav{
+        transition: all .3s;
+    }
+    .ocultar{
+        /* margin-left: -100%; */
+        visibility: hidden;
+        transition: all .3s;
+    }
+    .mostrar{
+        visibility: inherit;
+        transition: all .3s;
+    }
+    .cuerpo{
+        padding-left: 10%;
+    }
+    .nav-icon{
+        visibility: inherit;
+        padding-top: 6%;
+        padding-left: 10%;
+        padding-bottom: 3%;
+        background-color: #1d3557;
+        color: #f1faee;
+        width: 100%;
+        position: fixed;
+        z-index: 100;
+    }
+    .menu{
+        padding-top: 20%;
+        padding-left: 7%;
+        transition: all .3s;
+    }
+    
 }

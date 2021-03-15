@@ -1,0 +1,38 @@
+<div class="p-grid contenedor">
+    <div class="p-col-12 p-sm-6 p-md-6 p-lg-3" *ngFor="let item of resultados">
+        <p-card class="card" header="{{item.actividad}}" subheader="{{item.comunidad}}" [style]="{width: '300px', height: '400px'}"
+            styleClass="p-card-shadow">
+            <ng-template pTemplate="header">
+                <div class="img-container">
+                    <img class="img" alt="Card" [src]="item.imagenes[0].ruta_imagen">
+                </div>
+            </ng-template>
+            <small>Fecha de Inicio: {{item.fecha_inicio}}</small>
+            <br>
+            <small>Fecha de Fin: {{item.fecha_fin}}</small>
+            <ng-template pTemplate="footer">
+                <button class="boton-mas" (click)="enviar(item.external_resultado)" class="boton-mas"><i
+                        class="pi pi-plus"></i> Ver Más</button>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
+<!-- <div class="p-grid resultados">
+    <div class="card p-col-12 p-md-6 p-lg-4" *ngFor="let item of resultados">
+        <p-card header="{{item.actividad}}" subheader="{{item.comunidad}}" [style]="{width: '360px', height: '500px'}"
+            styleClass="p-card-shadow">
+            <ng-template pTemplate="header">
+                <div class="img-container">
+                    <img class="img" alt="Card" [src]="item.imagenes[0].ruta_imagen">
+                </div>
+            </ng-template>
+            <small>Fecha de Inicio: {{item.fecha_inicio}}</small>
+            <br>
+            <small>Fecha de Fin: {{item.fecha_fin}}</small>
+            <ng-template pTemplate="footer">
+                <button class="boton-mas" (click)="enviar(item.external_resultado)" class="boton-mas"><i
+                        class="pi pi-plus"></i> Ver Más</button>
+            </ng-template>
+        </p-card>
+    </div>
+</div> -->

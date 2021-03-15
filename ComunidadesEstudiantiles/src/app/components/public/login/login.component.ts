@@ -1,8 +1,11 @@
+import { Location } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { componentFactoryName } from '@angular/compiler';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
+import { AccesoService } from 'src/app/core/global-services/acceso.service';
 import { Docente } from 'src/app/core/model/docente';
 import { Estudiante } from 'src/app/core/model/estudiante';
 import { Usuario } from 'src/app/core/model/usuario';
@@ -26,8 +29,10 @@ export class LoginComponent {
         private usuarioService:UsuarioService,
         private docenteService:DocenteService,
         private estudianteService:EstudianteService,
+        private acceso_service:AccesoService,
         private _builder:FormBuilder,
-        public router:Router
+        public router:Router,
+        private _location:Location
     ){
         this.titulo="INGRESA AL SITIO WEB";
         this.comentario="COMUNIDADES ESTUDIANTILES";
@@ -45,6 +50,7 @@ export class LoginComponent {
             if(resp.tipoUsuario == 1){
                 this.docenteService.buscarDocente(resp.external_us).subscribe((docente:Docente)=>{
                     sessionStorage.setItem('datosUsuario',JSON.stringify(docente));
+                    this.acceso_service.estaLogeado.next(docente);
                     if(docente.tipo_docente == "1"){
                         this.router.navigateByUrl(Rutas.registrarComunidad);
                     }else if(docente.tipo_docente == "2"){
@@ -60,10 +66,12 @@ export class LoginComponent {
             }else if(resp.tipoUsuario == 2){
                 this.estudianteService.buscarEstudiante(resp.external_us).subscribe((estudiante:Estudiante)=>{
                     sessionStorage.setItem('datosUsuario',JSON.stringify(estudiante));
+                    this.acceso_service.estaLogeado.next(estudiante);
+
                     if(estudiante.estado == "1"){
-                        this.router.navigateByUrl(Rutas.postulacion);
+                        this.router.navigateByUrl(Rutas.verComunidades);
                     }else if(estudiante.estado == "2"){ 
-                        console.log("miembros");
+                        this.router.navigateByUrl(Rutas.perfilMiembto);
                     }
                 });
                 
@@ -73,6 +81,6 @@ export class LoginComponent {
     }
 
     cancelar(){
-        console.log("sali del form");
+        this._location.back();
     }
 }

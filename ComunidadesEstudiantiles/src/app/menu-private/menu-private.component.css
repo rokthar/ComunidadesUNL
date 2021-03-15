@@ -1,0 +1,32 @@
+.body-private{
+    
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+.cabecera{
+    height: 60px;
+    padding: 0px;
+    background-color: #fafafa;
+    z-index: 1;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+}
+
+.columnas{
+    z-index: 0;
+    margin-top: 68px;
+    height: auto;
+}
+
+.menu{
+    position: static;
+    padding: 0px;
+}
+
+.contenido{
+    padding-top: 4em;
+    padding-left: 2em;
+    padding-right: 2em;
+}

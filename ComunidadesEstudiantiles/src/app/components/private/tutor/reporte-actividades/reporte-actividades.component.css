@@ -1,0 +1,20 @@
+.container{
+    margin-top: 2%;
+}
+.cabecera{
+    width: 50%;
+}
+.logo-unl{
+    text-align: left;
+}
+.logo-cis{
+    text-align: right;
+}
+
+.comunidad{
+    text-align: center;
+    font-size: 10t;
+}
+.comunidad img{
+    width: 10%;
+}

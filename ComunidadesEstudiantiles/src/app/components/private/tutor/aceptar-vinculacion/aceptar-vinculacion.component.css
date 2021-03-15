@@ -1,0 +1,12 @@
+.menu-tutor{
+    padding-top: 0%;
+}
+.noData{
+    text-align: center;
+    padding-top: 2%;
+}
+
+.noData img{
+    width: 20%;
+    opacity: 60%;
+}

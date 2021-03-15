@@ -1,0 +1,42 @@
+<div class="p-grid container">
+    <div id="nav" class="p-lg-4">
+        <menu-tutor></menu-tutor>
+    </div>
+    <div class="p-lg-8 cuerpo" *ngIf="!hayDatos">
+        <h1>{{titulo}}</h1>
+        <form [formGroup]="planificarActividadesForm">
+            <div class="p-grid" formArrayName="actividades">
+                <div class="p-lg-3 p-md-3 p-sm-12 card"
+                    *ngFor="let item of getActividades.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                    <p-card header="Detalles"
+                        [style]="{'width': '18rem', 'margin-bottom': '2em', 'margin-right':'2em'}">
+                        <input class="textbox" placeholder="Actividad" formControlName="nombre_actividad" /> <br><br>
+                        <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" placeholder="Descripcion"
+                            formControlName="descripcion_actividad"></textarea><br><br>
+                        <input type="date" class="textbox" placeholder="fecha" formControlName="fecha_inicio" />
+                        <ng-template pTemplate="footer">
+                            <button class="button-delete" (click)="less(pointIndex)"><i class="pi pi-trash"></i>
+                                Eliminar</button>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </div>
+            <button class="btn" (click)="add()"><i class="pi pi-plus"></i></button>
+            <br><br>
+            <button class="btn" [disabled]="planificarActividadesForm.invalid" (click)="enviar()"><i
+                    class="pi pi-send"></i> Enviar Planificacion</button>
+            <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+
+        </form>
+    </div>
+    <div class="p-lg-8 cuerpo" *ngIf="hayDatos">
+       <div class="p-grid">
+        <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
+        <div class="p-col-12 activ" *ngFor="let item of listaActividades">
+            <p><b>Fecha:</b> {{item.fecha_inicio}}</p>
+            <p><b>Actividad:</b> {{item.nombre_actividad}}</p>
+            <p><b>Descripción:</b> {{item.descripcion_actividad}}</p>
+        </div>
+       </div>
+    </div>
+</div>

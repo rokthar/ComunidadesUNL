@@ -1,0 +1,43 @@
+<div class="p-grid container">
+    <div class="p-lg-4">
+        <menu-gestor></menu-gestor>
+    </div>
+    <div class="p-lg-8 actividades" *ngIf="hayDatos">
+        <h1>{{titulo}}</h1>
+        <div class="p-grid">
+            <div *ngFor="let item of lista">
+                <div class="p-lg-3 p-md-6 p-sm-12 card">
+                    <p-card header="{{item.comunidad}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
+                        styleClass="p-card-shadow">
+                        <ng-template pTemplate="header">
+                            <div class="img-container">
+                                <img class="img" alt="Card" [src]="item.logo_comunidad">
+                            </div>
+                        </ng-template>
+                        <div *ngFor="let act of item.actividades">
+                            <p>{{act.nombre_actividad}}</p>
+                        </div>
+                        <ng-template pTemplate="footer">
+                            <button class="button" (click)="aceptarActividades(item.external_actividades)"><i class="pi pi-check"></i> Validar</button>
+                            <button class="button" (click)="verDetalles(item.external_actividades)"><i class="pi pi-check"></i> Detalles</button>
+                        </ng-template>
+                    </p-card>
+                </div>
+            </div>
+            <div>
+                <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
+                    <div *ngFor="let item of actividades">
+                        <h3>Actividad</h3>
+                        <p>{{item.nombre_actividad}}</p>
+                        <p>{{item.descripcion_actividad}}</p>
+                        <p>Fecha: {{item.fecha_inicio}}</p>
+                    </div>
+                </p-dialog> 
+            </div>
+        </div>
+    </div>
+    <div class="noData p-lg-8" *ngIf="!hayDatos">
+        <img src="../../../../../assets/advertencia.png" />
+        <h2>POR EL MOMENTO NO HAY PLANIFICACIONES</h2>
+    </div>
+</div>

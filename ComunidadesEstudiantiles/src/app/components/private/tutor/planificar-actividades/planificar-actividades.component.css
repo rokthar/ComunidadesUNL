@@ -1,0 +1,12 @@
+.card{
+    margin-right: 6%;
+}
+.nav-icon{
+    visibility: hidden;
+}
+.activ{
+    box-shadow: 2px 2px 5px #999;
+}
+.cuerpo{
+    padding-right: 8%;
+}

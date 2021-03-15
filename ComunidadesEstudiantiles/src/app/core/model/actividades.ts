@@ -1,7 +1,8 @@
 export interface Actividades{
     comunidad: string;
     estado: Number;
-    habilidades:detalleActividades[];
+    tutor:String;
+    actividades:detalleActividades[];
     external_actividades:String;
   }
 

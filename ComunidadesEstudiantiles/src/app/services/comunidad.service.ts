@@ -14,9 +14,9 @@ export class ComunidadService {
   ) {
    }
 
-   registrarComunidad(values,external_docente):Observable<Comunidad>{
+   registrarComunidad(values,external_docente){
     //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
-    return this.http.post(this.url+"comunidad/registro/"+external_docente,values).pipe(pluck('data'));
+    return this.http.post(this.url+"comunidad/registro/"+external_docente,values);
    }
 
    listarComunidadesEspera():Observable<Comunidad>{
@@ -46,4 +46,19 @@ export class ComunidadService {
    listarComunidades():Observable<Comunidad>{
     return this.http.get(this.url+"comunidad/listar/comunidadesactivadas").pipe(pluck('data'));
    }
+   listarComunidadesVinculacion(external_comunidad):Observable<Comunidad>{
+    return this.http.get(this.url+"vinculacion/listar/comunidades/"+external_comunidad).pipe(pluck('data'));
+   }
+
+  buscarComunidadByTutor(external_docente){
+    return this.http.get(this.url+"tutor/buscar/comunidad/"+external_docente).pipe(pluck('data'));
+  }
+
+  subirImagen(file,external_comunidad){
+    return this.http.post(this.url+"comunidad/subirimagen/"+external_comunidad,file);
+  }
+
+  historial(external_comunidad){
+    return this.http.get(this.url+"comunidad/historial/"+external_comunidad).pipe(pluck('data'));
+  }
 }

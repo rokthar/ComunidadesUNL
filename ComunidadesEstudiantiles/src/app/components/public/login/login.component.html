@@ -1,18 +1,18 @@
-<div>
-    <h1>{{titulo}}</h1>
-    <form [formGroup]="loginForm">
-        <span class="p-float-label caja-texto">
-            <input id="correo" type="text" pInputText formControlName="correo"> 
-            <label for="correo">Correo</label>
-        </span>
-        <br>
-        <span class="p-float-label">
-            <input id="clave" type="password" pInputText formControlName="clave"> 
-            <label for="clave">Password</label>
-        </span>
-        <br>
-        <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
-        <button class="button" (click)="cancelar()">Cancelar</button>
-    </form>
-    
+<div class="body p-grid">
+    <div class="fondo"></div>
+    <div class="p-lg-4 p-md-6 p-sm-10 login">
+        <p-card header="UNIVERSIDAD NACIONAL DE LOJA " subheader=" CARRERA DE INGENIRIA EN SISTEMAS Y COMPUTACIÓN">
+            <form [formGroup]="loginForm">
+                <input id="correo" placeholder="Correo Electrónico" class="caja-texto login-txt" type="text" pInputText
+                    formControlName="correo">
+                <br>
+                <input id="clave" placeholder="Contraseña" class="caja-texto login-txt" type="password" pInputText
+                    formControlName="clave">
+                <br>
+                <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
+                <button class="button-delete" (click)="cancelar()">Cancelar</button>
+            </form>
+        </p-card>
+
+    </div>
 </div>

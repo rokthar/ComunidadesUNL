@@ -1,46 +1,23 @@
-<h1>{{titulo}}</h1>
-
-    <div class="p-grid">
-        <div class="p-md-12 p-lg-12">
-            <p-table [value]="lista" [scrollable]="true" scrollHeight="200px">
-                <ng-template pTemplate="header">
-                    <tr>
-                        <th>Nombre Comunidad</th>
-                        <th >Tutor</th>
-                        <th>Descripción</th>
-                        <th>Misión</th>
-                        <th>Visión</th>
-                        <th>Acción</th>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="body" let-item>
-                    <tr>
-                        <td>{{item.nombres}}</td>
-                        <td>{{item.tutor}}</td>
-                        <td>{{item.descripcion}}</td>
-                        <td>{{item.mision}}</td>
-                        <td>{{item.vision}}</td>
-                        <td><button class="button-table" (click)="escogerComunidad(item.external_comunidad)">Aceptar</button></td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
-        <div class="p-md-12 p-lg-12">
-            asdsadasdas
-        </div>
+<div class="p-grid container">
+    <div class="p-lg-4">
+        <menu-estudiante></menu-estudiante>
     </div>
-    <br>
-    
-    <form [formGroup]="postulacionComunidadForm">
-        
-        <div formArrayName="habilidades">
-            <div *ngFor="let item of getHabilidades.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                <input class="textbox" placeholder="Habilidad" formControlName="habilidad" /> 
-                <input type="number" class="textbox" placeholder="Nivel" formControlName="nivel" />
-            </div>
-        </div><br>
-        <button (click)="add()">Add+</button>
-        <br><br>
-        <button class="button" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()">Enviar Postulación</button>
-        <button class="button" (click)="cancelar()">Cancelar</button>
-    </form>
+    <div class="p-lg-8">
+        <h1>{{titulo}}</h1>
+            <hr>
+            <h2>2. LLENAR EL FORMULARIO</h2>
+            <form [formGroup]="postulacionComunidadForm">
+                <div formArrayName="habilidades">
+                    <div *ngFor="let item of getHabilidades.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                        <input class="textbox" placeholder="Habilidad" formControlName="habilidad" /> 
+                        <input type="number" class="textbox" placeholder="Nivel" formControlName="nivel" min="1" max="5" />
+                        <button class="btn-danger" (click)="less(pointIndex)"><i class="pi pi-trash"></i></button>
+                    </div>
+                </div><br>
+                <button class="btn" (click)="add()"><i class="pi pi-plus"></i></button>
+                <br><br>
+                <button class="btn" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Enviar Postulación</button>
+                <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+            </form>
+    </div>
+</div>

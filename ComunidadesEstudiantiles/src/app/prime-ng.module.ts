@@ -11,7 +11,11 @@ import { CalendarModule } from 'primeng/calendar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import {TableModule} from 'primeng/table';
 import {DropdownModule} from 'primeng/dropdown';
-
+import {EditorModule} from 'primeng/editor';
+import {ScrollPanelModule} from 'primeng/scrollpanel';
+import {FileUploadModule} from 'primeng/fileupload';
+import {DialogModule} from 'primeng/dialog';
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({
@@ -26,7 +30,12 @@ import {DropdownModule} from 'primeng/dropdown';
     CalendarModule,
     InputTextareaModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    EditorModule,
+    ScrollPanelModule,
+    FileUploadModule,
+    DialogModule,
+    ToastModule
   ],
   exports: [
     ButtonModule,
@@ -39,7 +48,12 @@ import {DropdownModule} from 'primeng/dropdown';
     CalendarModule,
     InputTextareaModule,
     TableModule,
-    DropdownModule
+    DropdownModule,
+    EditorModule,
+    ScrollPanelModule,
+    FileUploadModule,
+    DialogModule,
+    ToastModule
   ],
   bootstrap: [AppComponent]
 })

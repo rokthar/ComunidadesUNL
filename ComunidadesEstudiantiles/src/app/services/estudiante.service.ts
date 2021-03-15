@@ -18,4 +18,8 @@ export class EstudianteService {
     //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
     return this.http.get(this.url+"estudiante/perfil/"+external).pipe(pluck('data'));
    }
+
+   buscarComunidadByMiembro(external_estudiante){
+    return this.http.get(this.url+"miembro/buscar-comunidad/"+external_estudiante).pipe(pluck('data'));
+   }
 }

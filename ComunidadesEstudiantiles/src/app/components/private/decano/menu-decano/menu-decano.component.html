@@ -1,0 +1,16 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<div class="menu nav" [class]="ocultar">
+    <img class="logo" id="logo" src="../.././.././../../assets/UNL3.png" />
+    <h4>{{params.nombres}} {{params.apellidos}}</h4>
+    <p>Decano de la Facultad</p>
+
+    <div class="items">
+        <p><a routerLink='../aceptar-comunidad' routerLinkActivate="active"><i class="pi pi-user"> Comunidades</i></a>
+        </p>
+
+        <p><a class="reporte" (click)="mensaje()"><i class="pi pi-sign-out"> Cerrar Sesión</i></a></p>
+    </div>
+</div>
+<div id="mostar-nav" class="nav-icon">
+    <i class="pi pi-bars" (click)="mostrarMenu()"></i>
+</div>

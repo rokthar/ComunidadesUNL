@@ -1,0 +1,22 @@
+.container{
+    height: 100%;
+    /* position: absolute; */
+    right: 0px;
+    left: 0px;
+}
+
+
+.noData{
+    text-align: center;
+    padding-top: 2%;
+}
+
+.noData img{
+    width: 20%;
+    opacity: 60%;
+}
+@media only screen and (max-width: 900px) {
+    .actividades{
+        margin-top: 10%;
+    }
+}

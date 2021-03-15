@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { RouterModule, Routes } from '@angular/router';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule  } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 
@@ -12,30 +12,15 @@ import { AppComponent } from './app.component';
 import {ButtonModule} from 'primeng/button';
 import {InputTextModule} from 'primeng/inputtext';
 import { AppRoutingModule } from './app-routing.module';
+import {MenuPrivateComponent} from './menu-private/menu-private.component';
+import { VerResultadosComponent } from './components/share/ver-resultados/ver-resultados.component';
 
-/*const rutas:Routes = [
-  {
-    path:'',
-    pathMatch:'full',
-    redirectTo:'main'
-  },
-  {
-    path:'main',
-    component:MainComponent
-  },
-  {
-    path:'login',
-    component:LoginComponent
-  },
-  {
-    path:'docente/registrarcomunidad',
-    component:RegistrarComunidadComponent
-  }
-]*/
 
 @NgModule({
   declarations: [
     AppComponent,
+    MenuPrivateComponent,
+    VerResultadosComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +30,8 @@ import { AppRoutingModule } from './app-routing.module';
     ReactiveFormsModule,
     ButtonModule,
     InputTextModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,22 @@
+.star{
+    color: rgb(255, 239, 13);
+}
+.menu-tutor{
+    padding-top: 0%;
+}
+
+.noData{
+    text-align: center;
+    padding-top: 2%;
+}
+
+.noData img{
+    width: 20%;
+    opacity: 60%;
+}
+@media only screen and (max-width: 900px) {
+    .noData{
+        text-align: center;
+        padding-top: 15%;
+    }
+}

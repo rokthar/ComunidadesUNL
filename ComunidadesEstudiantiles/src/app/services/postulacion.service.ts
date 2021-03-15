@@ -22,12 +22,20 @@ export class PostulacionService {
     return this.http.post(this.url+"estudiante/detallepostulacion/"+external_postulacion,values);
    }
 
-   listarPostulaciones(){
+   listarPostulaciones(external_comunidad){
       //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
-      return this.http.get(this.url+"estudiante/listarpostulacionespera").pipe(pluck('data'));
+      return this.http.get(this.url+"comunidad/listarpostulacionespera/"+external_comunidad).pipe(pluck('data'));
    }
 
    aceptarPostulacion(external_postulacion){
     return this.http.post(this.url+"gestor/activarpostulacion/"+external_postulacion,null);
+   }
+
+   buscarPostulacion(external_estudiante){
+    //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
+    return this.http.get(this.url+"estudiante/buscarpostulacion/"+external_estudiante).pipe(pluck('data'));
+ }
+   añadirMiembro(external_postulacion){
+    return this.http.post(this.url+"miembros/registrar/"+external_postulacion,null);
    }
 }

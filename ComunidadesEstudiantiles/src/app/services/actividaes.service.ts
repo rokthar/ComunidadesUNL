@@ -14,4 +14,25 @@ export class ActividadesService {
     private http: HttpClient
   ) {
    }
+
+
+   registrarActividades(external_docente){
+    return this.http.post(this.url+"comunidad/planficaractividades/"+external_docente,null);
+   }
+
+   registrarDetallesActividades(values,external_actividades){
+    return this.http.post(this.url+"comunidad/detalleactividad/"+external_actividades,values);
+   }
+
+   listarPlanificacion(){
+    return this.http.get(this.url+"comunidad/actividadesespera").pipe(pluck('data'));
+   }
+
+   listarPlanificacionByComunidad(external_comunidad){
+    return this.http.get(this.url+"comunidad/listar/actividades/"+external_comunidad).pipe(pluck('data'));
+   }
+
+   aceptarActividades(external_actividades){
+    return this.http.post(this.url+"comunidad/activaractividad/"+external_actividades,null);
+   }
 }

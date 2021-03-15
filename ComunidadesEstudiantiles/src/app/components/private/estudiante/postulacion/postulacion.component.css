@@ -1,0 +1,28 @@
+.noData{
+    text-align: center;
+    padding-top: 2%;
+}
+
+.noData img{
+    width: 20%;
+    opacity: 60%;
+}
+.tarjetas{
+    text-align: center;
+}
+
+.card img{
+    width: 50%;
+}
+
+.boton-card{
+    width: 100%;
+}
+
+.boton-card:active{
+    background-color: brown;
+}
+
+.textbox{
+    padding: 1% !important; 
+}
