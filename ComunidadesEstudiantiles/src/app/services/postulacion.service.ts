@@ -31,6 +31,10 @@ export class PostulacionService {
     return this.http.post(this.url+"gestor/activarpostulacion/"+external_postulacion,null);
    }
 
+   rechazarPostulacion(external_postulacion){
+    return this.http.post(this.url+"postulacion/rechazar/"+external_postulacion,null);
+   }
+
    buscarPostulacion(external_estudiante){
     //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
     return this.http.get(this.url+"estudiante/buscarpostulacion/"+external_estudiante).pipe(pluck('data'));

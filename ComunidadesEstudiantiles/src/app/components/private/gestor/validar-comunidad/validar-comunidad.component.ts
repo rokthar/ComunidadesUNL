@@ -73,4 +73,18 @@ export class ValidarComunidadComponent implements OnInit{
             }
         });
     }
+
+    rechazarComunidad(external_comunidad){
+        console.log(external_comunidad);
+        this.comunidad_service.rechazarComunidad(external_comunidad).subscribe((resp:any)=>{
+            console.log(resp); //revisar respuesta
+            if(resp.siglas=="OE"){
+                alert("La solicitud de la comunidad ha sido Rechazada");
+                this.displayModal=false
+                window.location.reload();
+            }else{
+                alert("Error al Aceptar");
+            }
+        });
+    }
 }

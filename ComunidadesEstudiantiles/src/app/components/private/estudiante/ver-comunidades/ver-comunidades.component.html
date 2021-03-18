@@ -1,11 +1,28 @@
 <div class="p-grid container">
-    <div class="p-lg-4">
+    <div class="p-col-3">
         <menu-estudiante></menu-estudiante>
     </div>
-    <div class="p-lg-8" *ngIf="postulado">
-        <div class="tarjetas p-grid">
-            <div *ngFor="let item of lista">
-                <div class="p-lg-2 p-md-6 p-sm-12 card">
+    <div class="p-col-9 comunidades" *ngIf="postulado">
+        <div class="p-grid cuerpo">
+            <div class="card p-col-12 p-sm-6 p-md-6 p-lg-4" *ngFor="let item of lista">
+                <p-card  header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '300px'}"
+                    styleClass="p-card-shadow">
+                    <ng-template pTemplate="header">
+                        <div class="img-container">
+                            <img class="img" alt="Card" [src]="item.ruta_logo">
+                        </div>
+                    </ng-template>
+                    <!-- <p>{{item.descripcion}}</p> -->
+                    <ng-template pTemplate="footer">
+                        <button class="button" (click)="seleccionar(item.external_comunidad)"><i class="pi pi-check">
+                                Seleccionar</i></button>
+                    </ng-template>
+                </p-card>
+            </div>
+        </div>
+
+        <!-- <div class="tarjetas p-grid">
+                <div class="p-col-12 p-sm-6 p-md-6 p-lg-3 card" *ngFor="let item of lista">
                     <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
                         styleClass="p-card-shadow">
                         <ng-template pTemplate="header">
@@ -19,10 +36,9 @@
                         </ng-template>
                     </p-card>
                 </div>
-            </div>
-        </div>
+        </div> -->
     </div>
-    <div class="noData p-lg-8" *ngIf="!postulado">
+    <div class="noData p-lg-9" *ngIf="!postulado">
         <img src="../../../../../assets/advertencia.png" />
         <p>Por el momento ya cuenta con una solicitud de Postulación a la Comunidad {{datosPostulacion.comunidad}}</p>
     </div>

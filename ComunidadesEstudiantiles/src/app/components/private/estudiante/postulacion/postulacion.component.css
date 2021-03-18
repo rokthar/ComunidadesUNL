@@ -26,3 +26,13 @@
 .textbox{
     padding: 1% !important; 
 }
+
+@media only screen and (max-width: 900px) {
+    .cuerpo{
+        padding-top: 10%;
+        padding-left: 4%;
+    }
+    .textbox{
+        padding: 2% !important;
+    }
+}

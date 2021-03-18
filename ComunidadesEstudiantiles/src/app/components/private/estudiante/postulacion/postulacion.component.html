@@ -2,10 +2,8 @@
     <div class="p-lg-4">
         <menu-estudiante></menu-estudiante>
     </div>
-    <div class="p-lg-8">
+    <div class="p-lg-8 cuerpo">
         <h1>{{titulo}}</h1>
-            <hr>
-            <h2>2. LLENAR EL FORMULARIO</h2>
             <form [formGroup]="postulacionComunidadForm">
                 <div formArrayName="habilidades">
                     <div *ngFor="let item of getHabilidades.controls; let pointIndex=index" [formGroupName]="pointIndex">

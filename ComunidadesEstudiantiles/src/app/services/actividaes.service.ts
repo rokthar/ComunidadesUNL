@@ -35,4 +35,8 @@ export class ActividadesService {
    aceptarActividades(external_actividades){
     return this.http.post(this.url+"comunidad/activaractividad/"+external_actividades,null);
    }
+
+   rechazarActividades(external_actividades){
+    return this.http.post(this.url+"actividades/rechazar/"+external_actividades,null);
+   }
 }

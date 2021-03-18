@@ -61,11 +61,27 @@ class PostulacionController extends Controller{
                 $lista->estado = 1;
                 $lista->save();    
             }
-            
 
             $estudiante = estudiante::where("id", $postulacion->fk_estudiante)->first();
             $estudiante->estado = 2; //estado del estudiante en 2 indica que es miembro de comunidad
             $estudiante->save();
+            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }else{
+            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+        }
+    }
+
+    public function RechazarPostulacion($external_postulacion){
+        $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
+        $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
+        
+        if($postulacionObj){
+            $postulacion->estado = 0;
+            $postulacion->save();
+            foreach ($detallePostulacionObj as $lista) {
+                $lista->estado = 0;
+                $lista->save();    
+            }
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);

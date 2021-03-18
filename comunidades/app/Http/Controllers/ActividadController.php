@@ -66,6 +66,24 @@ class ActividadController extends Controller{
         }
     }
 
+    public function RechazarPlanificacion($external_actividades){
+        $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
+        $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+        if($actividadObj){
+            foreach ($detalleactividadObj as $lista) {
+                $lista->estado = 0;
+                $lista->save();    
+            }
+            $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+            $actividad->estado = 0;
+            $actividad->save();
+                      
+            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }else{
+            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+        }
+    }
+
     public function TermianrPlanificacion($external_comunidad){
         $actividad = actividad::where("estado",2)->where("fk_comunidad",$external_comunidad)->first();
         $actividad->estado=1;

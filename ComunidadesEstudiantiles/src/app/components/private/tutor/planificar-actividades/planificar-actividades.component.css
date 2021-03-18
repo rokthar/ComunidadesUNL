@@ -10,3 +10,8 @@
 .cuerpo{
     padding-right: 8%;
 }
+@media only screen and (max-width: 900px) {
+    .cuerpo{
+        padding-top: 20%;
+    }
+}

@@ -2,15 +2,15 @@
     <div class="p-lg-3 menu-tutor">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-9">
+    <div class="p-lg-9 cuerpo">
         <h1>{{titulo}}</h1>
         <form [formGroup]="generarResultadosForm">
             <span class="p-float-label caja-texto">
-                <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="resumen_resultado"></textarea>
+                <textarea class="cajas-texto" rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="resumen_resultado"></textarea>
                 <label for="descripcion-comunidad">Resumen del Resultado</label>
             </span>
             <span class="p-float-label caja-texto">
-                <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion_resultado"></textarea>
+                <textarea class="cajas-texto" rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion_resultado"></textarea>
                 <label for="descripcion-comunidad">Descripcion del Resultado</label>
             </span>
             <input type='file' multiple (change)="fileEvent($event)" />

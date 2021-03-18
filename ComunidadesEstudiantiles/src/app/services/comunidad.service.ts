@@ -43,6 +43,10 @@ export class ComunidadService {
     return this.http.post(this.url+"decano/activar/"+external_comunidad,null);
    }
 
+   rechazarComunidad(external_comunidad){
+    return this.http.post(this.url+"comunidad/rechazar/"+external_comunidad,null);
+   }
+
    listarComunidades():Observable<Comunidad>{
     return this.http.get(this.url+"comunidad/listar/comunidadesactivadas").pipe(pluck('data'));
    }

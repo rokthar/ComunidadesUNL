@@ -45,6 +45,18 @@ class VinculacionController extends Controller{
         }
     }
 
+    public function RechazarVinculacion($external_vinculacion){
+        $vinculacionObj = vinculacion::where("external_vinculacion",$external_vinculacion)->first();
+
+        if($vinculacionObj){
+            $vinculacionObj->estado = 0;
+            $vinculacionObj->save();
+            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }else{
+            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+        }
+    }
+
     public function ListarVinculacionComunidad($external_comunidad){
         global $estado, $datos;
         self::iniciarObjetoJSon();

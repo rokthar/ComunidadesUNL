@@ -1,12 +1,11 @@
 img{
     width: 30%;
 }
-.menu{
+.menu-resultados{
     background-color: #0C2342;
     width: 100%;
     height: fit-content;
     position: fixed;
-    margin: 0px;
     padding: 1%;
     z-index: 100;
     top: 0px;
@@ -19,6 +18,7 @@ img{
     color: #fafafa;
     text-align: right;
     text-decoration: none;
+    cursor: pointer;
 }
 .header{
     margin-top: 7%;
@@ -46,8 +46,8 @@ img{
 .fechas{
     text-align: center;
 }
-.fechas small{
-    margin-left: 3%;
+small{
+    padding-left: 0%;
 }
 .actividad{
     margin-top: 10%;
@@ -76,12 +76,29 @@ img{
     width: 100%;
 }
 .aside{
-    background-color: blueviolet;
+    text-align: center;
+}
+.aside img{
+    width: 50%;
 }
 
 @media only screen and (max-width: 600px) {
-    .contenido{
-        margin-top: 30%;
+    .cuerpo{
         padding-left: 0%;
+    }
+    .contenido{
+        margin-top: 28%;
+    }
+    .actividad p{
+        margin-left: 3%;
+    }
+    .resultado{
+        margin-top: 4%;
+    }
+    .resultado h2{
+        text-align: center;
+    }
+    .resultado p{
+        margin-left: 3%;
     }
 }

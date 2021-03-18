@@ -86,7 +86,7 @@ export class planificarActividadesComponent implements OnInit{
     }
 
     cancelar(){
-        console.log("Estoy Funado");
+        this.planificarActividadesForm.reset();
     }
 
     

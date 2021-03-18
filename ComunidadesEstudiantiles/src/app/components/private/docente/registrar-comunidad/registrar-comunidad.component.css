@@ -7,3 +7,15 @@
     width: 20%;
     opacity: 60%;
 }
+.caja-texto{
+    width: 50%;
+}
+@media only screen and (max-width: 900px) {
+    .cuerpo{
+        padding-top: 20%;
+        padding-left: 2%;
+    }
+    .caja-texto{
+        width: 100%;
+    }
+}

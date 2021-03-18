@@ -52,10 +52,11 @@ export class MenuTutorComponent implements OnInit {
                 console.log(this.comunidad);
                 this.comunidad_service.historial(this.comunidad.external_comunidad).subscribe((hsitorial: any) => {
                     this.listaHistorial = hsitorial;
+                    console.log(this.listaHistorial);
                 });
                 this.actividad_service.listarPlanificacionByComunidad(com.external_comunidad).subscribe((act: any) => {
                     this.actividades = act;
-                    // console.log(this.actividades);
+                    console.log(this.actividades);
                 });
             });
 
@@ -201,35 +202,48 @@ export class MenuTutorComponent implements OnInit {
         let rowsMiembros = [];
         let rowsActividades = [];
         let rowsResultados = [];
-
+        
         rowsMiembros.push(["Num","Nombres y Apellidos"]);
         rowsActividades.push(["Fecha Inicio","Actividad","Descripción"]);
         rowsResultados.push(["Fecha Fin","Resumen"]);
         
-        for (let i in this.listaHistorial.miembros) {
-            // row = row + 30;
-            let datos = [];
-            datos.push(i+1,
-                this.listaHistorial.miembros[i].estudiante);
-            rowsMiembros.push(datos);
+        if(this.listaHistorial.miembros != null){
+            for (let i in this.listaHistorial.miembros) {
+                // row = row + 30;
+                let datos = [];
+                datos.push(i+1,
+                    this.listaHistorial.miembros[i].estudiante);
+                rowsMiembros.push(datos);
+            }
+        }else{
+            rowsMiembros.push(["0","No cuenta con ninguna miembro"]);
+        } 
+        if(this.listaHistorial.actividades != null){
+            for (let i in this.listaHistorial.actividades) {
+                let datos = [];
+                datos.push(
+                    this.listaHistorial.actividades[i].fecha_inicio,
+                    this.listaHistorial.actividades[i].nombre_actividad,
+                    this.listaHistorial.actividades[i].descripcion_actividad
+                );
+                rowsActividades.push(datos);
+            }
+
+        }else{
+            rowsActividades.push(["0","No cuenta con ninguna actividad",""]);
+        }    
+        if(this.listaHistorial.resultados != null){
+            for (let i in this.listaHistorial.resultados) {
+                let datos = [];
+                datos.push(this.listaHistorial.resultados[i].fecha_fin,
+                    this.listaHistorial.resultados[i].resumen_resultado);
+                rowsResultados.push(datos);
+            }
+        }else{
+            rowsResultados.push(["0","No cuenta con nigun resultado"]);
         }
         
-        for (let i in this.listaHistorial.actividades) {
-            let datos = [];
-            datos.push(
-                this.listaHistorial.actividades[i].fecha_inicio,
-                this.listaHistorial.actividades[i].nombre_actividad,
-                this.listaHistorial.actividades[i].descripcion_actividad
-            );
-            rowsActividades.push(datos);
-        }
-
-        for (let i in this.listaHistorial.resultados) {
-            let datos = [];
-            datos.push(this.listaHistorial.resultados[i].fecha_fin,
-                this.listaHistorial.resultados[i].resumen_resultado);
-            rowsResultados.push(datos);
-        }
+        
 
         let docDefinition = {
             content: [

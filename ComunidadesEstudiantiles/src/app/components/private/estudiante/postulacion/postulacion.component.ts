@@ -74,7 +74,7 @@ export class PostulacionComponent implements OnInit{
     
       cancelar(){
         console.log("he sido funado");
-        this.postulacionComunidadForm.reset();
+        this._location.back();
       }
 
       get getHabilidades(){

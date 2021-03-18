@@ -19,6 +19,7 @@
                         </div>
                         <ng-template pTemplate="footer">
                             <button class="button" (click)="aceptarActividades(item.external_actividades)"><i class="pi pi-check"></i> Validar</button>
+                            <button class="button-delete" (click)="rechazarActividades(item.external_actividades)"><i class="pi pi-times"></i> Rechazar</button>
                             <button class="button" (click)="verDetalles(item.external_actividades)"><i class="pi pi-check"></i> Detalles</button>
                         </ng-template>
                     </p-card>

@@ -31,6 +31,7 @@
             <h3>Visión</h3>
                 <p>{{comunidad.vision}}</p>
             <p-button class="boton-card" (click)="verificarInformacion(comunidad.external_comunidad)" icon="pi pi-check" label="Verificar Información"></p-button>
+            <p-button class="button-delete" (click)="rechazarInformacion(comunidad.external_comunidad)" icon="pi pi-times" label="Rechazar Solicitud"></p-button>
         </p-dialog> 
     </div>
     <div class="p-lg-8 noData" *ngIf="!hayDatos">

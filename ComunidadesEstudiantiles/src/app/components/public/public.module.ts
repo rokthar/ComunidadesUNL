@@ -15,7 +15,7 @@ import { ResultadosPreviewComponent } from './resultados-preview/resultados-prev
   declarations: [
     LoginComponent,
     MainComponent,
-    ResultadosPreviewComponent
+    ResultadosPreviewComponent,
   ],
   exports:[
   ],

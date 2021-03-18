@@ -69,6 +69,17 @@ class ComunidadController extends Controller{
         }
     }
 
+    public function RechazarComunidad ($external_comunidad){
+        $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
+        if($comunidadObj){
+            $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+            $comunidad->estado = 0;
+            $comunidad->save();
+            
+            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }
+    }
+
     public function RevisionInformacion ($external_comunidad){
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
         if($comunidadObj){
@@ -256,7 +267,9 @@ class ComunidadController extends Controller{
     public function historialComunidad($external_comunidad){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $data="";
+        $data=null;
+        $dataRes=null;
+        $dataAct=null;
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
         $miembro = miembros::where("fk_comunidad",$comunidad->id)->get();
         $listas = actividades::where("fk_comunidad",$comunidad->id)->get();

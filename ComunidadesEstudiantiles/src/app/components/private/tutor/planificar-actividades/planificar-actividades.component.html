@@ -1,8 +1,8 @@
 <div class="p-grid container">
-    <div id="nav" class="p-lg-4">
+    <div id="nav" class="p-lg-3">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-8 cuerpo" *ngIf="!hayDatos">
+    <div class="p-lg-9 cuerpo" *ngIf="!hayDatos">
         <h1>{{titulo}}</h1>
         <form [formGroup]="planificarActividadesForm">
             <div class="p-grid" formArrayName="actividades">
@@ -29,7 +29,7 @@
 
         </form>
     </div>
-    <div class="p-lg-8 cuerpo" *ngIf="hayDatos">
+    <div class="p-lg-9 cuerpo" *ngIf="hayDatos">
        <div class="p-grid">
         <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
         <div class="p-col-12 activ" *ngFor="let item of listaActividades">

@@ -2,7 +2,7 @@
     <div class="p-lg-3">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-lg-9" *ngIf="hayDatos">
+    <div class="p-lg-9 contenedor" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div class="p-md-12 p-lg-12">
@@ -34,6 +34,8 @@
                     <h3>Visión</h3>
                     <p>{{comunidad.vision}}</p>
                     <p-button class="boton-card" (click)="validarComunidad(comunidad.external_comunidad)"
+                        icon="pi pi-check" label="Validar Comunidad"></p-button>
+                    <p-button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"
                         icon="pi pi-check" label="Validar Comunidad"></p-button>
                 </p-dialog>
             </div>

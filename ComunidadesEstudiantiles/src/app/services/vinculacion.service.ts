@@ -20,8 +20,11 @@ export class VinculacionService {
    }
 
    activarVinculacion(external_vinculacion){
-    return this.http.post(this.url+"comunidad/activarvinculacion/"+external_vinculacion,null).pipe(pluck('data'));
+    return this.http.post(this.url+"comunidad/activarvinculacion/"+external_vinculacion,null);
+   }
 
+   rechazarVinculación(external_vinculacion){
+    return this.http.post(this.url+"vinculacion/rechazar/"+external_vinculacion,null);
    }
 
    listarVinculacionComunidad(external_comunidad):Observable<Vinculacion>{

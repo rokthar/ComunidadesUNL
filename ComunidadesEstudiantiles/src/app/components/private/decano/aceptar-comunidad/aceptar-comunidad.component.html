@@ -32,6 +32,8 @@
                         <h3>Visión</h3>
                             <p>{{comunidad.vision}}</p>
                         <p-button class="boton-card" (click)="aceptarComunidad(comunidad.external_comunidad)" icon="pi pi-check" label="Aceptar Comunidad"></p-button>
+                        <p-button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)" icon="pi pi-times" label="Rechazar Comunidad"></p-button>
+
                     </p-dialog> 
                 </div>
             </div>

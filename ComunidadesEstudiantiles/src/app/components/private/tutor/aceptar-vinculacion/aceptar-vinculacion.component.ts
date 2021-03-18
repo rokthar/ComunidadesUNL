@@ -49,9 +49,7 @@ export class AceptarVinculacionComponent implements OnInit{
     }
 
     aceptarVinculacion(external_vinculacion){
-        console.log(external_vinculacion);
         this.vinculacion_service.activarVinculacion(external_vinculacion).subscribe((resp:any)=>{
-            console.log(resp);
             if(resp.siglas=="OE"){
                 alert("Operación Exitosa");
                 window.location.reload();
@@ -62,8 +60,14 @@ export class AceptarVinculacionComponent implements OnInit{
     }
 
     rechazarVinculacion(external_vinculacion){
-        console.log(external_vinculacion);
-
+        this.vinculacion_service.rechazarVinculación(external_vinculacion).subscribe((resp:any)=>{
+            if(resp.siglas=="OE"){
+                alert("La solicitud de Vinculación ha sido Rechazada");
+                window.location.reload();
+            }else{
+                alert("Error al Aceptar");
+            }
+        });
     }
 
 }

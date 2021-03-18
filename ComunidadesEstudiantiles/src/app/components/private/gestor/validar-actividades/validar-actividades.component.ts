@@ -66,6 +66,19 @@ export class validarActividadesComponent implements OnInit{
         });
     }
 
+    rechazarActividades(external_actividades){
+        console.log(external_actividades);
+        this.actividades_service.rechazarActividades(external_actividades).subscribe((resp:any)=>{
+            console.log(resp);
+            if(resp.siglas == "OE"){
+                alert("La planificación ha sido Rechazada");
+                window.location.reload();
+            }else{
+                alert("Error al Enviar");
+            }   
+        });
+    }
+
     verDetalles(external_actividades){
         this.displayModal=true
         for(let i in this.lista){
