@@ -2,14 +2,30 @@
     text-align: center;
     padding-top: 2%;
 }
+.cuerpo small{
+    padding-left: 0%;
+}
+.noData img{
+    width: 20%;
+    opacity: 60%;
+}
+.caja-texto {
+    width: 60%;
+}
+.caja-txt{
+    width: 60%;
+}
+.noData{
+    text-align: center;
+    padding-top: 2%;
+}
 
 .noData img{
     width: 20%;
     opacity: 60%;
 }
-.caja-texto{
-    width: 50%;
-}
+
+    
 @media only screen and (max-width: 900px) {
     .cuerpo{
         padding-top: 20%;
@@ -17,5 +33,8 @@
     }
     .caja-texto{
         width: 100%;
+    }
+    .noData{
+        padding-top: 20%;
     }
 }

@@ -1,7 +1,8 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="menu nav" [class]="ocultar">
     <img class="logo" id="logo" src="../.././.././../../assets/UNL3.jpg" />
-    <h4>{{titulo}}: {{params.nombres}} {{params.apellidos}}</h4>
+    <h4>{{params.nombres}} {{params.apellidos}}</h4>
+    <small>{{titulo}}</small>
     <div class="items">
         <p><a routerLink='../registrar-comunidad' routerLinkActivate="active"><i class="pi pi-user"> Crear
                     Comunidad</i></a></p>

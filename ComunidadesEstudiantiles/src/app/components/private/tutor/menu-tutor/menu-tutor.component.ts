@@ -48,7 +48,7 @@ export class MenuTutorComponent implements OnInit {
             this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com: any) => {
                 this.comunidad = com;
                 this.logo_comunidad = com.ruta_logo;
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + this.logo_comunidad);
+                // this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,' + this.logo_comunidad);
                 console.log(this.comunidad);
                 this.comunidad_service.historial(this.comunidad.external_comunidad).subscribe((hsitorial: any) => {
                     this.listaHistorial = hsitorial;
@@ -105,11 +105,6 @@ export class MenuTutorComponent implements OnInit {
                     style: 'subheader'
                 },
                 {
-                    image: 'data:image/png;base64,' +this.logo_comunidad,
-                    width: 50,
-			        height: 50
-                },
-                {
                     text:[
                         {text:'\nComunidad: ', bold:true}, this.comunidad.nombre_comunidad+'\n',
                         {text:'Tutor: ',bold:true},this.params.nombres + " " + this.params.apellidos+'\n\n\n'
@@ -125,7 +120,6 @@ export class MenuTutorComponent implements OnInit {
                     style:'subtitulos'
                 },
                 {
-                    style:'tablasTexto',
                     table: {
                         headerRows: 1,
                         widths: [ 'auto', 'auto','auto'],
@@ -133,7 +127,7 @@ export class MenuTutorComponent implements OnInit {
                      },
                      layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#1d3557' : '#457b9d';
+                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
                         }
                     }
                 },
@@ -248,12 +242,7 @@ export class MenuTutorComponent implements OnInit {
         let docDefinition = {
             content: [
                 // Previous configuration  
-                {
-                    image: 'data:image/png;base64,' +this.logo_comunidad,
-                    width: 50,
-			        height: 50,
-                    style:'imagenes'
-                },
+                
                 {
                     text: 'UNIVERSIDAD NACIONAL DE LOJA',
                     style: 'header'
@@ -281,7 +270,6 @@ export class MenuTutorComponent implements OnInit {
                     style:'subtitulos'
                 },
                 {
-                    style:'tablasTexto',
                     table: {
                         headerRows: 1,
                         widths: [ 'auto', 'auto'],
@@ -289,7 +277,7 @@ export class MenuTutorComponent implements OnInit {
                      },
                      layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#1d3557' : '#457b9d';
+                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
                         }
                     }
                 },
@@ -298,7 +286,6 @@ export class MenuTutorComponent implements OnInit {
                     style:'subtitulos'
                 },
                 {
-                    style:'tablasTexto',
                     table: {
                         headerRows: 1,
                         widths: [ 'auto', 'auto','auto'],
@@ -306,7 +293,7 @@ export class MenuTutorComponent implements OnInit {
                      },
                      layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#1d3557' : '#457b9d';
+                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
                         }
                     }
                 },
@@ -315,7 +302,6 @@ export class MenuTutorComponent implements OnInit {
                     style:'subtitulos'
                 },
                 {
-                    style:'tablasTexto',
                     table: {
                         headerRows: 1,
                         widths: [ 'auto', 'auto'],
@@ -323,7 +309,7 @@ export class MenuTutorComponent implements OnInit {
                      },
                      layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#1d3557' : '#457b9d';
+                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
                         }
                     }
                 },

@@ -1,13 +1,13 @@
 <div class="p-grid container">
-    <div class="p-lg-4">
+    <div class="p-lg-3">
         <menu-secretaria></menu-secretaria>
     </div>
-    <div class="p-lg-8" *ngIf="hayDatos">
+    <div class="p-lg-9" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="tarjetas p-grid">
             <div *ngFor="let item of lista">
                 <div class="p-lg-2 p-md-6 p-sm-12 card">
-                    <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
+                    <p-card header="Comunidad {{item.nombres}}" subheader="Tutor: {{item.tutor}}" [style]="{width: '300px'}"
                         styleClass="p-card-shadow">
                         <ng-template pTemplate="header">
                             <div class="img-container">
@@ -17,7 +17,7 @@
                         
                         <ng-template pTemplate="footer">
                             <p-button class="boton-card" (click)="show(item.external_comunidad)" icon="pi pi-info" label="Ver Información"
-                                icon="pi pi-check"></p-button>
+                                icon="pi pi-info"></p-button>
                         </ng-template>
                     </p-card>
                 </div>
@@ -30,11 +30,11 @@
                 <p>{{comunidad.mision}}</p>
             <h3>Visión</h3>
                 <p>{{comunidad.vision}}</p>
-            <p-button class="boton-card" (click)="verificarInformacion(comunidad.external_comunidad)" icon="pi pi-check" label="Verificar Información"></p-button>
-            <p-button class="button-delete" (click)="rechazarInformacion(comunidad.external_comunidad)" icon="pi pi-times" label="Rechazar Solicitud"></p-button>
+            <button class="button" (click)="verificarInformacion(comunidad.external_comunidad)"><i class="pi pi-check"> Aceptar</i></button>
+            <button class="button-delete" (click)="rechazarInformacion(comunidad.external_comunidad)"><i class="pi pi-times"> Rechazar</i></button>
         </p-dialog> 
     </div>
-    <div class="p-lg-8 noData" *ngIf="!hayDatos">
+    <div class="p-lg-9 noData" *ngIf="!hayDatos">
         <img src="../../../../../assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY NINGUNA SOLICITUD DE COMUNIDAD</h3>
     </div>

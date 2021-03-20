@@ -1,23 +1,28 @@
+<p-toast position="top-center" key="tc"></p-toast>
 <div class="p-grid container">
     <div class="p-lg-3">
         <menu-docente></menu-docente>
     </div>
-    <div class="p-lg-4 cuerpo">
+    <div class="p-lg-9 cuerpo" *ngIf="!esTutor">
         <h2>{{titulo}}</h2>
         <form [formGroup]="registrarComunidadForm">
-                <input class="caja-texto" id="nombre-comunidad" placeholder="Nombre de la Comunidad" type="text" pInputText formControlName="nombre_comunidad"> 
+                <input maxlength="25" class="caja-txt" id="nombre-comunidad" placeholder="Nombre de la Comunidad" type="text" pInputText formControlName="nombre_comunidad"> 
+                <br><br><br>
+                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Descripción de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
                 <br>
-                <textarea class="caja-texto" rows="3" cols="60" placeholder="Descripción de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
+                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Misión de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="mision"></textarea>
                 <br>
-                <textarea class="caja-texto" rows="3" cols="60" placeholder="Misión de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="mision"></textarea>
-                <br>
-                <textarea class="caja-texto" rows="3" cols="60" pInputTextarea placeholder="Visión de la Comunidad" autoResize="autoResize" formControlName="vision"></textarea>
+                <textarea maxlength="65000" class="caja-texto" rows="3"  pInputTextarea placeholder="Visión de la Comunidad" autoResize="autoResize" formControlName="vision"></textarea>
             <br><br>
+            <small>Sr Usuario su imagen debe ser de tipo PNG y no debe pesar mas de 2Mb</small><br>
             <input type='file' s (change)="fileEvent($event)" />
             <br><br>
             <button class="btn" [disabled]="registrarComunidadForm.invalid" (click)="enviar()"><i class="pi pi-send"> Enviar Solicitud</i></button>
             <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"> Cancelar</i></button>
         </form>
     </div>
-   
+    <div class="p-lg-9 noData" *ngIf="esTutor">
+        <img src="../../../../../assets/advertencia.png" />
+        <h3>POR EL MOMENTO YA CUENTA CON UNA SOLICITUD PARA LA CREACIÓN DE UNA COMUNIDAD</h3>
+    </div>
 </div>

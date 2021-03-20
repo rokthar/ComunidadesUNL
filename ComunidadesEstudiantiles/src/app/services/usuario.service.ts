@@ -8,7 +8,7 @@ import { Usuario } from '../core/model/usuario';
   providedIn: 'root'
 })
 export class UsuarioService {
-  url="http://localhost/TT/comunidades/public/";
+  url="http://localhost/TT/ComunidadesUNL/comunidades/public/";
   constructor(
     private http: HttpClient
   ) {

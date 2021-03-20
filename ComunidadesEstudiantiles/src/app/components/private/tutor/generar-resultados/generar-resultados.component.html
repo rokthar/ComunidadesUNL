@@ -1,3 +1,4 @@
+<p-toast position="top-center" key="tc"></p-toast>
 <div class="p-grid container">
     <div class="p-lg-3 menu-tutor">
         <menu-tutor></menu-tutor>
@@ -11,9 +12,13 @@
             </span>
             <span class="p-float-label caja-texto">
                 <textarea class="cajas-texto" rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion_resultado"></textarea>
-                <label for="descripcion-comunidad">Descripcion del Resultado</label>
+                <label for="descripcion-comunidad">Descripción del Resultado</label>
             </span>
+            <small>Sr Usuario se recomienda subir imagenes de tipo jpg, jpeg o png</small><br>
+            <small>su imagen no puede pesar más de 2Mb</small>
+            <br><br>
             <input type='file' multiple (change)="fileEvent($event)" />
+            <br>
             <br><br>
             <input type="date" class="date" placeholder="fecha" formControlName="fecha_fin" />
             <br><br>

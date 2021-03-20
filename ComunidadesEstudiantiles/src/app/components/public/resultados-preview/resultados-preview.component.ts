@@ -28,13 +28,13 @@ export class ResultadosPreviewComponent implements OnInit{
 
        this.resultados_service.listarResultados().subscribe((resp:any)=>{
         this.resultados = resp;
-        for(let i in this.resultados){
-            for(let j in this.resultados[i].imagenes){
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultados[i].imagenes[j].ruta_imagen);
-                this.resultados[i].imagenes[j].ruta_imagen = this.imageSource
-            }
-            // console.log("a");
-        }
+        // for(let i in this.resultados){
+        //     for(let j in this.resultados[i].imagenes){
+        //         this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultados[i].imagenes[j].ruta_imagen);
+        //         this.resultados[i].imagenes[j].ruta_imagen = this.imageSource
+        //     }
+        //     // console.log("a");
+        // }
         
         console.log(this.resultados); 
        });

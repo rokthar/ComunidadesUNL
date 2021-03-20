@@ -9,7 +9,7 @@ import { Vinculacion } from '../core/model/vinculacion';
   providedIn: 'root'
 })
 export class VinculacionService {
-  url="http://localhost/TT/comunidades/public/";
+  url="http://localhost/TT/ComunidadesUNL/comunidades/public/";
   constructor(
     private http: HttpClient
   ) {

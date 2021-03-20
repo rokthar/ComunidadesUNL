@@ -44,10 +44,10 @@ export class VerComunidadesTutorComponent implements OnInit{
             this.comunidad_service.listarComunidadesVinculacion(resp.external_comunidad).subscribe((resp)=>{
                 console.log(resp);
                 this.lista=resp;
-                for(let i in this.lista){
-                    this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[i].ruta_logo);
-                    this.lista[i].ruta_logo = this.imageSource;
-                }
+                // for(let i in this.lista){
+                //     this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[i].ruta_logo);
+                //     this.lista[i].ruta_logo = this.imageSource;
+                // }
                 if(this.lista != null){
                     this.hayDatos=true;
                 }else{

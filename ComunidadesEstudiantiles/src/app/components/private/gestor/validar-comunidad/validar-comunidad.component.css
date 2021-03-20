@@ -1,6 +1,9 @@
 .container{
     top: 0%;
 }
+p{
+    padding-left: 0%;
+}
 .noData{
     text-align: center;
     padding-top: 2%;
@@ -10,7 +13,15 @@
     width: 20%;
     opacity: 60%;
 }
-
+.img-container img{
+    width: 50%;
+}
+.button{
+    padding: 1%;
+}
+.button-delete{
+    padding: 1%;    
+}
 @media only screen and (max-width: 900px) {
     .noData{
         padding-top: 20%;

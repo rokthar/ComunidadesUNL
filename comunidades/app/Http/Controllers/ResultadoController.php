@@ -48,24 +48,28 @@ class ResultadoController extends Controller{
         $file = $request->file('file');
         $ruta= '../imagenes/resultados';
         $image_name = time().$file->getClientOriginalName();
-        //var_dump(json_encode($file)); -> ver que me devuelve
-        
-        $codificar = file_get_contents($file);
-        $base64 = base64_encode($codificar);
-        $file->move($ruta, $image_name);
-        $resultado = resultado::where("external_resultado",$external_resultado)->first();
-        $imagenes = new imagenes();
-        $imagenes->fk_resultado = $resultado->id;
-        $imagenes->ruta_imagen = $base64;
-        $imagenes->estado = 1;
-        $external = "Img".Utilidades\UUID::v4();
-        $imagenes->external_imagen = $external;
-        $imagenes->save();
-        return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
+        // $tipo = $_FILES['file']['type'];
+        // $tamano = $_FILES['file']['size'];
+        // if(((strpos(tipo,"jpeg")) || (strpos($tipo,"jpg")) || (strpos(tipo,"png")) && (strpos($tamano<2000000)))){
+            $file->move($ruta, $image_name);
+            $resultado = resultado::where("external_resultado",$external_resultado)->first();
+            $imagenes = new imagenes();
+            $imagenes->fk_resultado = $resultado->id;
+            $imagenes->ruta_imagen = $image_name;
+            $imagenes->estado = 1;
+            $external = "Img".Utilidades\UUID::v4();
+            $imagenes->external_imagen = $external;
+            $imagenes->save();
+            return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
+        // }else{
+        //     return response()->json(["mensaje"=>"Imagen Erronea","siglas"=>"IE"], 200);
+        // }
+    
     }
 
 
     public function listarResultados(){
+        $ruta="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/resultados/";
         global $estado, $datos; 
         self::iniciarObjetoJSon();
         $listas = resultado::where("estado",1)->get();
@@ -78,9 +82,11 @@ class ResultadoController extends Controller{
             $comunidad = comunidad::where("id",$actividad->fk_comunidad)->first();
             $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
             foreach ($imagenes as $img) {
-                //$lista_imagenes[]="";
+                // $img = $ruta.$img->ruta_imagen
+                // $codificar = file_get_contents($img);
+                // $base64 = base64_encode($codificar);
                 $lista_imagenes[] =[
-                    "ruta_imagen"=>$img->ruta_imagen
+                    "ruta_imagen"=>$img->ruta_imagen//transformas base64
                 ];
             }
 

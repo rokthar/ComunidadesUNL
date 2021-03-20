@@ -7,7 +7,10 @@ use App\Models\estudiante;
 use App\Models\actividades;
 use App\Models\detalleActividad;
 use App\Models\resultado;
+use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
+//use PHPMailer\PHPMailer\PHPMailer;
+// require 'Utilidades/PHPMailer/vendor/autoload.php';
 
 //estado 0 Inactivo | 1 Activado | 2 revision Gestor | 3 revision secretaria | 4 en espera
 class ComunidadController extends Controller{
@@ -33,6 +36,19 @@ class ComunidadController extends Controller{
                     $comunidad->external_comunidad = $external;
         
                     $comunidad->save();
+                    // $mailController = new MailController();
+                    // $mailController->enviarMail();
+                    // require base_path("vendor/autoload.php");
+                    // $mail = new PHPMailer(true);
+                    // $mail->CharSet='UTF-8';
+                    // $mail->isMail();
+                    // $mail->setFrom('jmmorochoaunl.edu.ec@gmail.com','Proeditsclub.com');
+                    // $mail->addReplyTo('jmmorochoaunl.edu.ec@gmail.com','Proeditsclub.com');
+                    // $mail->Subject=('Solicitud para la creación de una nueva Comunidad Estudiantil'); //asunto del correo
+                    // $mail->addAddress('riky.paramore@gmail.com');
+                    // $mail->msgHTML('<h1>Solicitud de creacion de comunidada<h1/>');
+                    // $mail->Send();
+
                     return response()->json(["mensaje"=>"Operación Exitosa","external_comunidad"=>$external ,"siglas"=>"OE"],200);
                 }else{
                     return response()->json(["mensaje"=>"Docente no enconrado", "siglas"=>"DNE"],400);

@@ -1,23 +1,23 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="menu nav" [class]="ocultar">
-    <img class="logo" id="logo" [src]="imageSource" />
+    <img class="logo" id="logo" src="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/comunidad/{{logo_comunidad}}" />
     <h4>{{params.nombres}} {{params.apellidos}}</h4>
     <small>Tutor de {{comunidad.nombre_comunidad}}</small>
     <div class="items">
         <p>
             <a routerLink='../aceptar-postulacion' routerLinkActivate="active"><i class="pi pi-user">
-                    Postulacion</i></a>
+                    Postulación</i></a>
         </p>
         <p>
             <a routerLink='../planificar-actividades' routerLinkActivate="active"><i class="pi pi-calendar-plus">
-                    Planificaion</i></a>
+                    Planificación</i></a>
         </p>
         <p>
             <a routerLink='../ver-actividades' routerLinkActivate="active"><i class="pi pi-book"> Resultados</i></a>
         </p>
         <p>
             <a routerLink='../aceptar-vinculacion' routerLinkActivate="active"><i class="pi pi-file">
-                    Vinculacion</i></a>
+                    Vinculación</i></a>
         </p>
         <p>
             <a routerLink='../ver-comunidades-tutor' routerLinkActivate="active"><i class="pi pi-users">

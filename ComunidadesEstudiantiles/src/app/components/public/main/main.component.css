@@ -6,7 +6,8 @@
     position: fixed;
     width: 100%;
     padding-top: 1%;
-    right: 0px;
+    /* right: 0%; */
+    /* left: 0%; */
 }
 .menu-inicio img{
     width: 60%;

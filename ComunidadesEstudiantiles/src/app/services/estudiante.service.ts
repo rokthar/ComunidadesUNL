@@ -8,7 +8,7 @@ import { Estudiante } from '../core/model/estudiante';
   providedIn: 'root'
 })
 export class EstudianteService {
-  url="http://localhost/TT/comunidades/public/";
+  url="http://localhost/TT/ComunidadesUNL/comunidades/public/";
   constructor(
     private http: HttpClient
   ) {

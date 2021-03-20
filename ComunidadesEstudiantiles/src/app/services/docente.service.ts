@@ -8,7 +8,7 @@ import { Docente } from '../core/model/docente';
   providedIn: 'root'
 })
 export class DocenteService {
-  url="http://localhost/TT/comunidades/public/";
+  url="http://localhost/TT/ComunidadesUNL/comunidades/public/";
   constructor(
     private http: HttpClient
   ) {

@@ -12,7 +12,7 @@ import { ResultadosService } from 'src/app/services/resultados.service';
 
 export class VerResultadosComponent implements OnInit{
     external_resultado:string;
-    resultado;
+    resultado=null;
     imageSource: any;
     constructor(
         private _location:Location,
@@ -28,12 +28,12 @@ export class VerResultadosComponent implements OnInit{
         if(this.external_resultado != null){
             this.resultados_service.listarResultado(this.external_resultado).subscribe((resp:any)=>{
                 this.resultado = resp;
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultado.comunidad_logo);
-                this.resultado.comunidad_logo = this.imageSource;
-                for(let j in this.resultado.imagenes){
-                    this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultado.imagenes[j].ruta_imagen);
-                    this.resultado.imagenes[j].ruta_imagen = this.imageSource
-                }
+                // this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultado.comunidad_logo);
+                // this.resultado.comunidad_logo = this.imageSource;
+                // for(let j in this.resultado.imagenes){
+                //     this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultado.imagenes[j].ruta_imagen);
+                //     this.resultado.imagenes[j].ruta_imagen = this.imageSource
+                // }
                 console.log(this.resultado);
             });
         }else{

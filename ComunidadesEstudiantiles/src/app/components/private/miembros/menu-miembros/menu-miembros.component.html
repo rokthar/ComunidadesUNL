@@ -1,8 +1,8 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="menu nav" [class]="ocultar">
-    <img class="logo" id="logo" [src]="imageSource" />
+    <img class="logo" id="logo" src="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/comunidad/{{comunidad.ruta_logo}}" />
     <h4>{{params.nombres}} {{params.apellidos}}</h4>
-    <p>Miembro de {{comunidad.nombre_comunidad}}</p>
+    <small>Miembro de {{comunidad.nombre_comunidad}}</small>
     <div class="items">
         <p>
             <a routerLink='../perfil' routerLinkActivate="active"><i class="pi pi-user"> Lista Actividades</i></a>

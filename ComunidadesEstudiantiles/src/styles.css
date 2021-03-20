@@ -2,6 +2,9 @@
 h1, h2, h3, h4, p, small, a{
     font-family: 'Montserrat', sans-serif;
 }
+p{
+    text-align: justify;
+}
 
 
 /* CARDS */
@@ -57,6 +60,7 @@ h1, h2, h3, h4, p, small, a{
 .caja-texto{
     margin-bottom: 3%;
 }
+
 
 .textbox{
     border-color: #a8dadc;
@@ -122,7 +126,7 @@ a:visited{
 .menu img{
     width: 50%;
 }
-.menu h4, small{
+.menu h4, small, p{
     padding-left: 10%;
 }
 
@@ -153,6 +157,8 @@ a:visited{
 @media only screen and (max-width: 900px) {
     .nav{
         transition: all .3s;
+        top: 0%;
+        left: 0%;
     }
     .ocultar{
         /* margin-left: -100%; */
@@ -176,11 +182,31 @@ a:visited{
         width: 100%;
         position: fixed;
         z-index: 100;
+        top: 0%;
+        left: 0%;
     }
     .menu{
         padding-top: 20%;
-        padding-left: 7%;
         transition: all .3s;
     }
-    
+    .btn{
+        background-color: #457b9d;
+        color: #fafafa;
+        border-radius: 5px;
+        border-style: none;
+        padding: 2%;
+        margin: 0.5%;
+        font-size: 12pt;
+        font-family: 'Montserrat', sans-serif;
+    }
+    .btn-danger{
+        background-color: #e63946;
+        color: #fafafa;
+        border-radius: 5px;
+        border-style: none;
+        padding: 2%;
+        margin: 0.5%;
+        font-size: 12pt;
+        font-family: 'Montserrat', sans-serif;
+    }
 }

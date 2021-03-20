@@ -8,7 +8,7 @@
             <div class="p-md-12 p-lg-12">
                 <div *ngFor="let item of lista">
                     <div class="p-lg-2 p-md-3 p-sm-12 card">
-                        <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
+                        <p-card header="Comunidad {{item.nombres}}" subheader="Tutor: {{item.tutor}}" [style]="{width: '300px'}"
                             styleClass="p-card-shadow">
                             <ng-template pTemplate="header">
                                 <div class="img-container">
@@ -18,14 +18,14 @@
 
                             <ng-template pTemplate="footer">
                                 <p-button class="boton-card" (click)="show(item.external_comunidad)"
-                                    icon="pi pi-info-circle" label="Ver Información" icon="pi pi-check"></p-button>
+                                    icon="pi pi-info-circle" label="Ver Información"></p-button>
                             </ng-template>
                         </p-card>
                     </div>
                 </div>
             </div>
             <div>
-                <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}"
+                <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [(visible)]="displayModal" [style]="{width: '70vw'}"
                     [baseZIndex]="10000">
                     <h3>Descripción</h3>
                     <p>{{comunidad.descripcion}}</p>
@@ -33,10 +33,12 @@
                     <p>{{comunidad.mision}}</p>
                     <h3>Visión</h3>
                     <p>{{comunidad.vision}}</p>
-                    <p-button class="boton-card" (click)="validarComunidad(comunidad.external_comunidad)"
-                        icon="pi pi-check" label="Validar Comunidad"></p-button>
-                    <p-button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"
-                        icon="pi pi-check" label="Validar Comunidad"></p-button>
+                    <button class="button" (click)="validarComunidad(comunidad.external_comunidad)">
+                        <i class="pi pi-check"> Aceptar</i>
+                    </button>
+                    <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)">
+                        <i class="pi pi-times"> Rechazar</i>
+                    </button>
                 </p-dialog>
             </div>
         </div>

@@ -33,8 +33,8 @@ export class MenuMiembrosComponent implements OnInit{
         if(this.params != null){
             this.estudiante_service.buscarComunidadByMiembro(this.params.external_estudiante).subscribe((resp:any)=>{
                 this.comunidad = resp;
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.comunidad.ruta_logo);
-                this.comunidad.ruta_logo = this.imageSource;
+                // this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.comunidad.ruta_logo);
+                // this.comunidad.ruta_logo = this.imageSource;
             });
         }
         // console.log(this.params);

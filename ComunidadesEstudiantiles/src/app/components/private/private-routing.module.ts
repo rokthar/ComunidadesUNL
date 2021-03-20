@@ -13,7 +13,6 @@ import { GenerarVinculacionComponent } from './tutor/generar-vinculacion/generar
 import { AceptarVinculacionComponent } from './tutor/aceptar-vinculacion/aceptar-vinculacion.component';
 import { GenerarResultadosComponent } from './tutor/generar-resultados/generar-resultados.component';
 import { PerfilMiembrosComponent } from './miembros/main-miembros/main-miembros.component';
-import { MenuPrivateComponent } from '../../menu-private/menu-private.component';
 import { VerComunidadesComponent } from './estudiante/ver-comunidades/ver-comunidades.component';
 import { VerComunidadesTutorComponent } from './tutor/ver-comunidades-tutor/ver-comunidades-tutor.component';
 import { VerActividadesComponent } from './tutor/ver-actividades/ver-actividades.component';

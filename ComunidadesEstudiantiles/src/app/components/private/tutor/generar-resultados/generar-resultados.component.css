@@ -6,17 +6,22 @@
     text-align: center;
     padding-top: 2%;
 }
-
+.cuerpo small{
+    padding-left: 0%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;
 }
 .cajas-texto{
-    width: 100%;
+    width: 60%;
 }
 @media only screen and (max-width: 900px) {
     .cuerpo{
         padding-top: 20%;
         padding-left: 3%;
+    }
+    .cajas-texto{
+        width: 100%;
     }
 }

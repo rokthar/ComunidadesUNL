@@ -38,6 +38,13 @@ $router->post('/decano/activar/{external_comunidad}', 'ComunidadController@Activ
 $router->post('/secretaria/activar/{external_comunidad}', 'ComunidadController@RevisionInformacion');
 $router->post('/gestor/activar/{external_comunidad}', 'ComunidadController@RevisionGestor');
 
+// RECHAZOS
+$router->post('/comunidad/rechazar/{external_comunidad}', 'ComunidadController@RechazarComunidad');
+$router->post('/actividades/rechazar/{external_actividades}', 'ActividadController@RechazarPlanificacion');
+$router->post('/postulacion/rechazar/{external_postulacion}', 'PostulacionController@RechazarPostulacion');
+$router->post('/vinculacion/rechazar/{external_vinculacion}', 'VinculacionController@RechazarVinculacion');
+
+// FIN DE LOS RECHAZOS
 $router->get('/comunidad/listar/comunidadesactivadas', 'ComunidadController@ListarComunidadesActivadas');
 $router->get('/secretaria/listar/comunidades', 'ComunidadController@ListarComunidadesSecretaria');
 $router->get('/gestor/listar/comunidades', 'ComunidadController@ListarComunidadesGestor');

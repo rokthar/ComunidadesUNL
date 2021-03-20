@@ -1,7 +1,11 @@
 .menu-tutor{
     padding-top: 0%;
 }
-
+.actividades p{
+    padding-left: 2%;
+    padding-right: 2%;
+    text-align: justify;
+}
 .noData{
     text-align: center;
     padding-top: 2%;

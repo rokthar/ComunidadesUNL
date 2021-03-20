@@ -12,7 +12,7 @@ import { MessageService } from 'primeng/api';
 
 export class MenuDocenteComponent implements OnInit{
     titulo;
-    params: any;
+    params: any=null;
     
     logo_comunidad: any;
     ocultar: string="ocultar";

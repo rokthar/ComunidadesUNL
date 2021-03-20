@@ -14,74 +14,13 @@
    width: 20%;
    opacity: 60%;
 }
-.header{
-   margin-top: 1%;
-   width: 100%;
-}
-.titulos{
-   background-color: #0C2342;
-   color: #fafafa;
-   text-align: center;
+.img-container .img{
+   width: 50%;
 }
 
-/* Cuerpo en general */
-.cuerpo{
-   margin-top: 2%;
+.button{
+   padding: 2%;
 }
-
-
-.titulosCabecera{
-   text-align: center;
+.button-delete{
+   padding: 2%;
 }
-.logo_comunidad{
-   width:150px;
-   height:150px;
-   border-radius: 150px;
-}
-.fechas{
-   text-align: center;
-}
-.fechas small{
-   margin-left: 3%;
-}
-.actividad{
-   margin-top: 10%;
-}
-.actividad h2{
-   text-align: center;
-}
-.actividad p{
-   margin-left: 10%;
-}
-.resultado{
-   margin-top: 8%;
-}
-.resultado h2{
-   text-align: center;
-}
-.resultado p{
-   margin-left: 10%;
-}
-.img_resultados{
-   text-align: center;
-   padding: 5%;
-   margin-top: 2%;
-}
-.img_resultados img{
-   width: 100%;
-}
-.aside{
-   background-color: blueviolet;
-}
-table {
-    width: 100%;
-    border: 1px solid #000;
- }
- th, td {
-    width: 25%;
-    text-align: left;
-    vertical-align: top;
-    border: 1px solid #000;
-    border-collapse: collapse;
- }
-
