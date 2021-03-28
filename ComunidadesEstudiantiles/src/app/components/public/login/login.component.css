@@ -9,7 +9,7 @@
 }
 
 .fondo{
-    background-image: url(../../../../assets/f187d747-6dcb-4347-89bc-440aab1bcf4c.jpe);
+    background-image: url(/assets/f187d747-6dcb-4347-89bc-440aab1bcf4c.jpe);
     background-repeat: no-repeat;
     background-size: cover;
     filter: blur(5px);

@@ -1,25 +1,43 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3 menu-tutor">
+    <div class="p-lg-12 menu-tutor">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-9 container" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-lg-10 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div *ngFor="let item of lista">
                 <div class="p-lg-3 p-md-6 p-sm-12">
                     <p-card header="{{item.comunidad_solicitante}}" subheader="{{item.fecha_inicio}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
-                        <p>{{item.descripcion}}</p>
-                        <ng-template pTemplate="footer">
-                            <p-button label="Aceptar" icon="pi pi-check" (click)="aceptarVinculacion(item.external_vinculacion)"></p-button>
-                            <p-button label="Rechazar" icon="pi pi-times" (click)="rechazarVinculacion(item.external_vinculacion)" styleClass="p-button-danger" [style]="{'margin-left': '.5em'}"></p-button>
-                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <div class="img-container">
+                                <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
+                            </div>
+                            </ng-template>
+                            <button class="button-det" (click)="detalles(item.descripcion,item.external_vinculacion)"><i class="pi pi-info-circle"> Ver Detalle</i></button>
                     </p-card>
                 </div>
             </div>
         </div>
+
+        <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
+                <h3>Descripción</h3>
+                <p>{{descrip}}</p>
+                <form [formGroup]="rechazarVinculacionForm">
+                    <h3>Puede dejar sus Observaciones</h3>
+                    <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                    <br><br>
+                    <button class="button" (click)="aceptarVinculacion(external_vinculacion)"><i class="pi pi-check"> Aceptar Vinculación</i></button>
+                    <button class="button-delete" (click)="rechazarVinculacion(external_vinculacion)"><i class="pi pi-times"> Rechazar Rechazar</i></button>
+                </form>
+        </p-dialog> 
+
     </div>
-    <div class="p-lg-9 noData" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="p-col-10 noData" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO EXISTEN SOLICITUDES DE VINCULACIÓN</h3>
     </div>
+    <div class="p-col-1"></div>
 </div>

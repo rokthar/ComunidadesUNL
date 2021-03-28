@@ -6,9 +6,11 @@ p{
 }
 .noData{
     text-align: center;
-    padding-top: 2%;
+    padding-top: 5%;
 }
-
+.contenedor{
+    padding-top: 5%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;
@@ -19,9 +21,17 @@ p{
 .button{
     padding: 1%;
 }
+.btnCard{
+    padding: 3%;
+}
+
+.caja-texto{
+    width: 80%;
+}
 .button-delete{
     padding: 1%;    
 }
+
 @media only screen and (max-width: 900px) {
     .noData{
         padding-top: 20%;

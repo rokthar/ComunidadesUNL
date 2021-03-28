@@ -1,16 +1,22 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { MessageService } from 'primeng/api';
 import { Comunidad } from 'src/app/core/model/comunidad';
 import { ComunidadService } from 'src/app/services/comunidad.service';
+import { URL } from '../../../../core/constants/url';
 
 @Component({
     selector: 'verificarinformacion',
     templateUrl: './verificar-informacion.component.html',
-    styleUrls: ['./verificar-informacion.component.css']
+    styleUrls: ['./verificar-informacion.component.css'],
+    providers: [MessageService]
+
 })
 
 export class VerificarInformacionComponent implements OnInit{
+    rechazarComunidadForm: FormGroup;
     titulo:String;
     lista:Comunidad;
     params;
@@ -19,13 +25,19 @@ export class VerificarInformacionComponent implements OnInit{
     imageSource: any;
     displayModal: boolean;
     comunidad="";
+    imagen = URL._imgCom;
     constructor(
+        private _builder: FormBuilder,
         private comunidad_service:ComunidadService,
         private _location:Location,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private messageService: MessageService
 
     ){
-        this.titulo="Lista de Comunidades"
+        this.titulo="Lista de Comunidades";
+        this.rechazarComunidadForm = this._builder.group({
+            comentario: ['']
+          })
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
@@ -33,16 +45,10 @@ export class VerificarInformacionComponent implements OnInit{
             this.estaLogeado = true;
             console.log(this.params);
         }else{
-            alert("no estoy autorizado");
             this._location.back();
         }
         this.comunidad_service.listarComunidadesEspera().subscribe((resp:Comunidad)=>{
             this.lista = resp;
-            for(let i in this.lista){
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[i].ruta_logo);
-                this.lista[i].ruta_logo = this.imageSource;
-            }
-            console.log(this.lista);
             if(resp != null){
                 this.hayDatos=true;
             }else{
@@ -61,29 +67,41 @@ export class VerificarInformacionComponent implements OnInit{
     }
 
     verificarInformacion(external_comunidad){
-        console.log(external_comunidad);
-        this.comunidad_service.revisionInformacion(external_comunidad).subscribe((resp:any)=>{
+        const values = this.rechazarComunidadForm.getRawValue();
+        this.comunidad_service.revisionInformacion(values,external_comunidad).subscribe((resp:any)=>{
             console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
-                alert("Operación Exitosa");
-                this.displayModal=false
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo completada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Aceptar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Verificación no pudo completarse' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
         });
     }
 
     rechazarInformacion(external_comunidad){
-        console.log(external_comunidad);
-        this.comunidad_service.rechazarComunidad(external_comunidad).subscribe((resp:any)=>{
+        const values = this.rechazarComunidadForm.getRawValue();
+        this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
-                alert("La solicitud de la comunidad ha sido rechazada");
-                this.displayModal=false
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Rechazar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Verificación no pudo ser rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
         });
     }

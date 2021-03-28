@@ -1,20 +1,21 @@
 <div class="p-grid container">
-    <div class="p-lg-3 menu-tutor">
+    <div class="p-lg-12 menu-tutor">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-9 cuerpo" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-lg-10 cuerpo" *ngIf="hayDatos">
         <h2>Seleccionar Comunidad</h2>
         <div class="p-grid">
-            <div class="p-col-12 p-sm-6 p-md-6 p-lg-4" *ngFor="let item of lista">
-                <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '290px', height:'300px'}" styleClass="p-card-shadow">
+            <div class="tarjetas p-col-12 p-sm-6 p-md-6 p-lg-3" *ngFor="let item of lista">
+                <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '100%', height:'auto'}" styleClass="p-card-shadow">
                     <ng-template pTemplate="header">
                         <div class="img-container">
-                            <img class="img" alt="Card" src="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/comunidad/{{item.ruta_logo}}">
+                            <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                         </div>
                         </ng-template>
                     <ng-template pTemplate="footer">
                         <button class="button" (click)="seleccionar(item.external_comunidad)"><i class="pi pi-check"> Seleccionar</i></button>
-                        <button class="button" (click)="verDetalles(item.external_comunidad)"><i class="pi pi-info-circle"> Detalles</i></button>
+                        <button class="button-detalles" (click)="verDetalles(item.external_comunidad)"><i class="pi pi-info-circle"> Detalles</i></button>
                     </ng-template>
                 </p-card>
             </div>
@@ -33,8 +34,9 @@
         </div>
     </div>
 
-    <div class="p-lg-8 noData" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="p-lg-10 noData" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY COMUNIDADES</h3>
     </div>
+    <div class="p-col-1"></div>
 </div>

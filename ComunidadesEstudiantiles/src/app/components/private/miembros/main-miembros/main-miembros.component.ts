@@ -4,6 +4,7 @@ import { ResultadosService } from 'src/app/services/resultados.service';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { DomSanitizer } from '@angular/platform-browser';
+import { URL } from '../../../../core/constants/url';
 
 @Component({
     selector: 'main-miembros',
@@ -17,6 +18,7 @@ export class PerfilMiembrosComponent implements OnInit{
     titulo;
     hayDatos:boolean;
     imageSource: any;
+    imagen = URL._imgResul;
     constructor(
         private resultados_service:ResultadosService,
         private _location:Location,
@@ -33,13 +35,6 @@ export class PerfilMiembrosComponent implements OnInit{
             this.resultados_service.listarResultadoByMiembro(this.params.external_estudiante).subscribe((resp:any)=>{
                 console.log(resp);
                 this.resultados = resp;
-                for(let i in this.resultados){
-                    for(let j in this.resultados[i].imagenes){
-                        this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.resultados[i].imagenes[j].ruta_imagen);
-                        this.resultados[i].imagenes[j].ruta_imagen = this.imageSource
-                    }
-                    // console.log("a");
-                }
                 if(resp != null){
                     this.hayDatos=true;
                 }else{
@@ -47,7 +42,6 @@ export class PerfilMiembrosComponent implements OnInit{
                 }
                }); 
         }else{
-            alert("no estoy autorizado");
             this._location.back();
         }
         

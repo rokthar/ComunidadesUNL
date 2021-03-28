@@ -1,10 +1,7 @@
-.container{
-    height: 100%;
-    position: absolute;
-    right: 0px;
-    left: 0px;
+p{
+    padding-left: 0%;
+    margin-left: 0%;
 }
-
 .noData{
     text-align: center;
     padding-top: 2%;
@@ -26,7 +23,7 @@
 
 /* Cuerpo en general */
 .cuerpo{
-    margin-top: 2%;
+    margin-top: 5%;
 }
 
 
@@ -41,27 +38,20 @@
 .fechas{
     text-align: center;
 }
-.fechas small{
-    margin-left: 3%;
-}
 .actividad{
     margin-top: 10%;
 }
 .actividad h2{
     text-align: center;
 }
-.actividad p{
-    margin-left: 10%;
-}
+
 .resultado{
     margin-top: 8%;
 }
 .resultado h2{
     text-align: center;
 }
-.resultado p{
-    margin-left: 10%;
-}
+
 .img_resultados{
     text-align: center;
     padding: 5%;
@@ -69,7 +59,4 @@
 }
 .img_resultados img{
     width: 100%;
-}
-.aside{
-    background-color: blueviolet;
 }

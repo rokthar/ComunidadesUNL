@@ -4,13 +4,24 @@
     right: 0px;
     left: 0px;
 }
-
+.img-container img{
+    width: 50%;
+}
 .noData{
     text-align: center;
-    padding-top: 2%;
+    padding-top: 5%;
 }
-
+.cuerpo{
+    padding-top: 5%;
+}
+.button{
+    padding: 1%;
+}
+.button-delete{
+    padding: 1%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;
 }
+

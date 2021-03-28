@@ -2,12 +2,15 @@
 namespace App\Http\Controllers;
 use App\Models\vinculacion;
 use App\Models\comunidad;
+use App\Http\Controllers\MailController;
 
 use Illuminate\Http\Request;
 
 //estado 0 Inactivo | 1 Activado | 2 En espera
 class VinculacionController extends Controller{
     public function RegistrarVinculacion(Request $request, $ext_comunidad,$ext_comunidad_solic){
+        $enviar = new MailController();
+
         if ($request->json()){
             $data = $request->json()->all();
             
@@ -25,6 +28,10 @@ class VinculacionController extends Controller{
                 $vinculacion->external_vinculacion = $external;
 
                 $vinculacion->save();
+
+                $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Su solicitud de vinculacion con la comunidad ".$comunidadSolicitada->nombre_comunidad." ha sido enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
+                $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Ha sido enviada una nueva solicitud para vincularse con la comunidad ".$comunidadSolicitante->nombre_comunidad.", dispone de 3-8 dias para dar su respuesta");
+
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_vinculacion"=>$external],200);
             }else{
                 return response()->json(["mensaje"=>"No existen los datos", "siglas"=>"NED"],200);
@@ -33,25 +40,43 @@ class VinculacionController extends Controller{
         }
     }
 
-    public function AceptarVinculacion($external_vinculacion){
-        $vinculacionObj = vinculacion::where("external_vinculacion",$external_vinculacion)->first();
+    public function AceptarVinculacion(Request $request,$external_vinculacion){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
 
-        if($vinculacionObj){
-            $vinculacionObj->estado = 1;
-            $vinculacionObj->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-        }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            $vinculacionObj = vinculacion::where("external_vinculacion",$external_vinculacion)->first();
+            $comunidad=comunidad::where("id",$vinculacionObj->fk_comunidad_solicitada)->first();
+
+            if($vinculacionObj){
+                $vinculacionObj->estado = 1;
+                $vinculacionObj->save();
+                $enviar->enviarMail("Tutor","Solicitud de Vinculacion Aceptada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido aceptada.<br>".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            }
         }
     }
 
-    public function RechazarVinculacion($external_vinculacion){
-        $vinculacionObj = vinculacion::where("external_vinculacion",$external_vinculacion)->first();
+    public function RechazarVinculacion(Request $request, $external_vinculacion){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+            
+            $vinculacionObj = vinculacion::where("external_vinculacion",$external_vinculacion)->first();
+            $comunidad=comunidad::where("id",$vinculacionObj->fk_comunidad_solicitada)->first();
 
-        if($vinculacionObj){
-            $vinculacionObj->estado = 0;
-            $vinculacionObj->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            if($vinculacionObj){
+                $vinculacionObj->estado = 0;
+                $vinculacionObj->save();
+                $enviar->enviarMail("Tutor","Solicitud de Vinculacion Rechazada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido rechazada <br>".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            }
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
         }
@@ -76,7 +101,8 @@ class VinculacionController extends Controller{
                     "comunidad_solicitada"=>$comunidad->nombre_comunidad,
                     "descripcion"=>$lista->descripcion,
                     "fecha_inicio"=>$lista->fecha_inicio,
-                    "external_vinculacion"=>$lista->external_vinculacion
+                    "external_vinculacion"=>$lista->external_vinculacion,
+                    "ruta_logo"=>$comunidadSolicitante->ruta_logo
                 ];
             }
 

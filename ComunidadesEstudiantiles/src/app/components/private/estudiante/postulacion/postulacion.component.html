@@ -1,8 +1,11 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3">
+    <div class="p-col-12">
         <menu-estudiante></menu-estudiante>
     </div>
-    <div class="p-lg-9 cuerpo">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 cuerpo">
         <h1>{{titulo}}</h1>
             <form [formGroup]="postulacionComunidadForm">
                 <div formArrayName="habilidades">
@@ -18,4 +21,5 @@
                 <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
             </form>
     </div>
+    <div class="p-col-1"></div>
 </div>

@@ -1,4 +1,10 @@
 .nav{
-    top: 0%;
-    left: 0%;
+    position: fixed;
+    width: 100%;
+}
+.nav span{
+    color: #fafafa;
+}
+.p-menubar .p-menuitem-link .p-menuitem-text{
+    background-color: black !important;
 }

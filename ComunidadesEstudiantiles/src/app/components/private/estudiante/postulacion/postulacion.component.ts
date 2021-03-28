@@ -4,12 +4,15 @@ import { Comunidad } from 'src/app/core/model/comunidad';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { PostulacionService } from 'src/app/services/postulacion.service';
 import { Location } from '@angular/common';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
     selector: 'postulacion',
     templateUrl: './postulacion.component.html',
-    styleUrls: ['./postulacion.component.css']
+    styleUrls: ['./postulacion.component.css'],
+    providers: [MessageService]
+
 })
 
 export class PostulacionComponent implements OnInit{
@@ -25,8 +28,8 @@ export class PostulacionComponent implements OnInit{
         private _builder:FormBuilder,
         private postulacion_service:PostulacionService,
         private comunidad_service:ComunidadService,
-        private _location: Location
-
+        private _location: Location,
+        private messageService: MessageService
     ){
         this.titulo="Solicitud para la Postulación a una Comunidad";
         this.postulacionComunidadForm = this._builder.group({
@@ -46,7 +49,6 @@ export class PostulacionComponent implements OnInit{
             });
             
         }else{
-            alert("no estoy autorizado");
             this._location.back();
         }
         
@@ -62,10 +64,15 @@ export class PostulacionComponent implements OnInit{
           this.postulacion_service.detallePostulacion(values.habilidades,resp['external_postulacion']).subscribe((respu:any)=>{
               console.log(respu);
               if(resp.siglas == "OE"){
-                alert("Operación Exitosa");
-                this._location.back();
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido enviada' });
+                setTimeout(() => {
+                    this._location.back();
+                }, 1500);
             }else{
-                alert("Error al Enviar");
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Postulación no pudo ser enviada' });
+                setTimeout(() => {
+                    this._location.back();
+                }, 1500);
             }   
               
           });
@@ -93,7 +100,6 @@ export class PostulacionComponent implements OnInit{
 
       escogerComunidad(external_comunidad){
           this.external_c = external_comunidad;
-        console.log(this.external_c);
     }
     
     

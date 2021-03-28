@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { Location } from '@angular/common';
 import { MessageService } from 'primeng/api';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 
 
@@ -24,7 +25,8 @@ export class RegistrarComunidadComponent implements OnInit {
     private _builder: FormBuilder,
     private comunidad_service: ComunidadService,
     private _location: Location,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private usuario_service:UsuarioService
   ) {
     this.titulo = "Creación de una Comunidad";
     this.registrarComunidadForm = this._builder.group({
@@ -43,7 +45,6 @@ export class RegistrarComunidadComponent implements OnInit {
       alert("no estoy autorizado");
       this._location.back();
     }
-    console.log(this.params);
     this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp) => {
       this.comunidad = resp;
       if(this.comunidad === null){
@@ -63,20 +64,39 @@ export class RegistrarComunidadComponent implements OnInit {
 
   enviar() {
     const values = this.registrarComunidadForm.getRawValue();
-    console.log(values);
-    console.log(this.file);
-    console.log(this.params.external_docente);
     if ((this.file.size <= 2000000) && (this.file.type == "image/png")) {
       this.comunidad_service.registrarComunidad(values, this.params.external_docente).subscribe((resp: any) => {
-        console.log(resp); //revisar el console.log y falta el subir imagen y el desabilitar esta pag cuando un docente ya alla enviado la solicitud
         let form = new FormData();
         form.append('file', this.file);
         this.comunidad_service.subirImagen(form, resp.external_comunidad).subscribe((resp: any) => {
           if (resp.siglas == "OE") {
-            alert("Operación Exitosa");
-            window.location.reload();
+            
+            const docente = {
+              "correo":this.params.correo,
+              "asunto":"Solicitud de Creación de Comunidad",
+              "mensaje":"Usted ha enviado una solicitud para la creación de una comunidad, debe esperar un aproximado de 3-24 días para su respuesta"
+            }
+          this.usuario_service.enviarMail(docente).subscribe((resp:any)=>{
+            console.log(resp.mensaje);
+          });
+          const secretaria={
+              "correo":"riky.paramore@gmail.com",
+              "asunto":"Solicitud de Creación de Comunidad",
+              "mensaje":"Se ha enviado una solicitud para la creación de una comunidad, porfavor revisar el portal web Comunidades Estudiantiles y revisar la Solicitud"
+          }
+          this.usuario_service.enviarMail(secretaria).subscribe((resp:any)=>{
+            console.log(resp.mensaje);
+          });
+            
+          this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La solicitud ha sido enviada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
           } else {
-            alert("Error al Enviar");
+            this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La solicitud no ha podido ser enviada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
           }
         });
       });

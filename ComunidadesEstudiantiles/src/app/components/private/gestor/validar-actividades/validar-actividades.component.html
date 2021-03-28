@@ -1,8 +1,11 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-4">
+    <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-lg-8 actividades" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 actividades" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div *ngFor="let item of lista">
@@ -11,34 +14,39 @@
                         styleClass="p-card-shadow">
                         <ng-template pTemplate="header">
                             <div class="img-container">
-                                <img class="img" alt="Card" [src]="item.logo_comunidad">
+                                <img class="img" alt="Card" src="{{imagen}}{{item.logo_comunidad}}">
                             </div>
                         </ng-template>
                         <div *ngFor="let act of item.actividades">
                             <p>{{act.nombre_actividad}}</p>
                         </div>
                         <ng-template pTemplate="footer">
-                            <button class="button" (click)="aceptarActividades(item.external_actividades)"><i class="pi pi-check"></i> Validar</button>
-                            <button class="button-delete" (click)="rechazarActividades(item.external_actividades)"><i class="pi pi-times"></i> Rechazar</button>
-                            <button class="button" (click)="verDetalles(item.external_actividades)"><i class="pi pi-check"></i> Detalles</button>
+                            <button class="button" (click)="verDetalles(item.external_actividades)"><i class="pi pi-info-circle"></i> Detalles</button>
                         </ng-template>
                     </p-card>
                 </div>
             </div>
             <div>
-                <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
+                <p-dialog header="Actividades" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
                     <div *ngFor="let item of actividades">
-                        <h3>Actividad</h3>
-                        <p>{{item.nombre_actividad}}</p>
+                        <h3>Actividad: {{item.nombre_actividad}}</h3>
                         <p>{{item.descripcion_actividad}}</p>
                         <p>Fecha: {{item.fecha_inicio}}</p>
+                        <form [formGroup]="actividadesForm">
+                            <h3>Puede enviar sus Observaciones</h3>
+                            <textarea maxlength="1000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                            <br><br>
+                            <button class="button-card" (click)="aceptarActividades(ext_act)"><i class="pi pi-check"></i> Validar</button>
+                            <button class="button-delete" (click)="rechazarActividades(ext_act)"><i class="pi pi-times"></i> Rechazar</button>
+                        </form>
                     </div>
                 </p-dialog> 
             </div>
         </div>
     </div>
-    <div class="noData p-lg-8" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="noData p-col-10" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h2>POR EL MOMENTO NO HAY PLANIFICACIONES</h2>
     </div>
+    <div class="p-col-1"></div>
 </div>

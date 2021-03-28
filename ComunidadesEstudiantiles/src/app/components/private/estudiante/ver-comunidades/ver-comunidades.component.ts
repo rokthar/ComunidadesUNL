@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PostulacionService } from 'src/app/services/postulacion.service';
+import { URL } from '../../../../core/constants/url';
 
 
 
@@ -20,6 +21,7 @@ export class VerComunidadesComponent implements OnInit{
     params: any;
     postulado: boolean;
     datosPostulacion="";
+    imagen = URL._imgCom;
     constructor(
         private comunidad_service:ComunidadService,
         public router:Router,
@@ -41,14 +43,8 @@ export class VerComunidadesComponent implements OnInit{
                 }else{
                     this.postulado=true;
                     this.datosPostulacion = post;
-                    console.log(this.datosPostulacion);
                 }
             });
-            for(let i in this.lista){
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[i].ruta_logo);
-                this.lista[i].ruta_logo = this.imageSource;
-            }
-            console.log(this.lista);
         });
     }
 

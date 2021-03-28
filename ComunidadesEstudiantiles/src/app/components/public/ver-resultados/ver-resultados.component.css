@@ -1,0 +1,30 @@
+.nav{
+    position: fixed;
+    width: 100%;
+}
+.nav a{
+    color: #fafafa;
+    cursor: pointer;
+}
+
+/* CUERPO */
+.cuerpo{
+    padding-top: 7%;
+}
+.cuerpo h2{
+    text-align: center;
+}
+.logo img{
+    width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+.img img{
+    width: 100%;
+    height: auto;
+    /* padding: 3%; */
+}
+.info{
+    padding-left: 5%;
+    padding-right: 5%;
+}

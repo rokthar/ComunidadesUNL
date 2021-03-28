@@ -98,3 +98,4 @@ $router->get('/comunidad/listar/resultadoscomunidad/{external_comunidad}', 'Resu
 $router->get('/ver/resultado/{external_resultado}', 'ResultadoController@listarResultado');
 $router->get('/comunidad/presentar/resultado/miembros/{external_estudiante}', 'ResultadoController@listarResultadosByEstudiante');
 
+$router->post('/utilidad/emviar-mail', 'MailController@enviarMail');

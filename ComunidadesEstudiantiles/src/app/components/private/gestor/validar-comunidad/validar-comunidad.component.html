@@ -1,8 +1,11 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3">
+    <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-lg-9 contenedor" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 contenedor" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div class="p-md-12 p-lg-12">
@@ -12,13 +15,13 @@
                             styleClass="p-card-shadow">
                             <ng-template pTemplate="header">
                                 <div class="img-container">
-                                    <img class="img" alt="Card" [src]="item.ruta_logo">
+                                    <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                                 </div>
+                                
                             </ng-template>
 
                             <ng-template pTemplate="footer">
-                                <p-button class="boton-card" (click)="show(item.external_comunidad)"
-                                    icon="pi pi-info-circle" label="Ver Información"></p-button>
+                                <button class="button btnCard" (click)="show(item.external_comunidad)"><i class="pi pi-info-circle"> Ver Información</i></button>
                             </ng-template>
                         </p-card>
                     </div>
@@ -33,18 +36,26 @@
                     <p>{{comunidad.mision}}</p>
                     <h3>Visión</h3>
                     <p>{{comunidad.vision}}</p>
-                    <button class="button" (click)="validarComunidad(comunidad.external_comunidad)">
-                        <i class="pi pi-check"> Aceptar</i>
-                    </button>
-                    <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)">
-                        <i class="pi pi-times"> Rechazar</i>
-                    </button>
+                    <form [formGroup]="rechazarComunidadForm">
+                        <h3>Puede enviar sus Observaciones</h3>
+                        <textarea maxlength="1000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                        <br><br>
+                        <button class="button" (click)="validarComunidad(comunidad.external_comunidad)">
+                            <i class="pi pi-check"> Aceptar</i>
+                        </button>
+                        <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)">
+                            <i class="pi pi-times"> Rechazar</i>
+                        </button>
+                    </form>
+                    
+                    
                 </p-dialog>
             </div>
         </div>
     </div>
-    <div class="noData p-lg-9" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="noData p-col-10" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>
+    <div class="p-col-1"></div>
 </div>

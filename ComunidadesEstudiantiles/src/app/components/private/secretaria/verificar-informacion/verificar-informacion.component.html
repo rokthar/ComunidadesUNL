@@ -1,8 +1,11 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3">
+    <div class="p-col-12">
         <menu-secretaria></menu-secretaria>
     </div>
-    <div class="p-lg-9" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="tarjetas p-grid">
             <div *ngFor="let item of lista">
@@ -11,12 +14,12 @@
                         styleClass="p-card-shadow">
                         <ng-template pTemplate="header">
                             <div class="img-container">
-                                <img class="img" alt="Card" [src]="item.ruta_logo">
+                                <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                             </div>
                             </ng-template>
                         
                         <ng-template pTemplate="footer">
-                            <p-button class="boton-card" (click)="show(item.external_comunidad)" icon="pi pi-info" label="Ver Información"
+                            <p-button class="boton-card" (click)="show(item.external_comunidad)" icon="pi pi-info-circle" label="Ver Información"
                                 icon="pi pi-info"></p-button>
                         </ng-template>
                     </p-card>
@@ -30,13 +33,19 @@
                 <p>{{comunidad.mision}}</p>
             <h3>Visión</h3>
                 <p>{{comunidad.vision}}</p>
-            <button class="button" (click)="verificarInformacion(comunidad.external_comunidad)"><i class="pi pi-check"> Aceptar</i></button>
-            <button class="button-delete" (click)="rechazarInformacion(comunidad.external_comunidad)"><i class="pi pi-times"> Rechazar</i></button>
+                <form [formGroup]="rechazarComunidadForm">
+                    <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                    <br><br>
+                    <button class="button" (click)="verificarInformacion(comunidad.external_comunidad)"><i class="pi pi-check"> Aceptar</i></button>
+                    <button class="button-delete" (click)="rechazarInformacion(comunidad.external_comunidad)"><i class="pi pi-times"> Rechazar</i></button>
+                   
+                </form>
         </p-dialog> 
     </div>
-    <div class="p-lg-9 noData" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="p-col-10 noData" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY NINGUNA SOLICITUD DE COMUNIDAD</h3>
     </div>
+    <div class="p-col-1"></div>
 </div>
 

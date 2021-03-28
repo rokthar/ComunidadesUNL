@@ -1,13 +1,13 @@
 .star{
     color: rgb(255, 239, 13);
 }
-.menu-tutor{
-    padding-top: 0%;
+.cuerpo{
+    padding-top: 5%;
 }
 
 .noData{
     text-align: center;
-    padding-top: 2%;
+    padding-top: 5%;
 }
 
 .noData img{

@@ -1,18 +1,21 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3 menu-decano">
+    <div class="p-col-12">
         <menu-decano></menu-decano>
     </div>
-    <div class="p-lg-9" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div class="p-md-12 p-lg-12">
                 <div *ngFor="let item of lista">
                     <div class="p-lg-2 p-md-6 p-sm-12 card">
-                        <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
+                        <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '300px'}"
                             styleClass="p-card-shadow">
                             <ng-template pTemplate="header">
                                 <div class="img-container">
-                                    <img class="img" alt="Card" [src]="item.ruta_logo">
+                                    <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                                 </div>
                             </ng-template>
                             
@@ -31,17 +34,22 @@
                             <p>{{comunidad.mision}}</p>
                         <h3>Visión</h3>
                             <p>{{comunidad.vision}}</p>
-                        <p-button class="boton-card" (click)="aceptarComunidad(comunidad.external_comunidad)" icon="pi pi-check" label="Aceptar Comunidad"></p-button>
-                        <p-button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)" icon="pi pi-times" label="Rechazar Comunidad"></p-button>
+                            <form [formGroup]="rechazarComunidadForm">
+                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Descripción de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                                <button class="button" (click)="aceptarComunidad(comunidad.external_comunidad)"><i class="pi pi-check">Aceptar Comunidad</i></button>
+                                <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"><i class="pi pi-times">Rechazar Comunidad</i></button>
+                                
+                            </form>
 
                     </p-dialog> 
                 </div>
             </div>
         </div>
     </div>
-    <div class="noData p-lg-9" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="noData p-col-10" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>
+    <div class="p-col-1"></div>
 </div>
 

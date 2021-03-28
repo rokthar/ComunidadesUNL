@@ -2,7 +2,9 @@
     text-align: center;
     padding-top: 2%;
 }
-
+.cuerpo{
+    padding-top: 5%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;

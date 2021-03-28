@@ -4,19 +4,49 @@
     right: 0px;
     left: 0px;
 }
-
-
+p{
+    padding-left: 0%;
+    margin-left: 0%;
+    text-align: justify;
+}
+.img-container{
+    width: 100%;
+}
+.img{
+    text-align: center;
+    width: 50%;
+}
 .noData{
     text-align: center;
-    padding-top: 2%;
+    padding-top: 5%;
 }
-
+.caja-texto{
+    width: 80%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;
 }
+.actividades{
+    padding-top: 5%;
+}
+.button-card, .button-delete{
+    padding: 1%;
+}
+.button-card{
+    background-color: #457b9d;
+    color: #fafafa;
+    border-radius: 5px;
+    border-style: none;
+    margin: 0.5%;
+    font-size: 12pt;
+    font-family: 'Montserrat', sans-serif;
+}
 @media only screen and (max-width: 900px) {
     .actividades{
         margin-top: 10%;
+    }
+    .noData{
+        padding-top: 20%;
     }
 }

@@ -12,11 +12,13 @@ import { Usuario } from 'src/app/core/model/usuario';
 import { DocenteService } from 'src/app/services/docente.service';
 import { EstudianteService } from 'src/app/services/estudiante.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import {MessageService} from 'primeng/api';
 
 @Component({
     selector: 'login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.css']
+    styleUrls: ['./login.component.css'],
+    providers: [MessageService]
 })
 
 export class LoginComponent {
@@ -32,7 +34,8 @@ export class LoginComponent {
         private acceso_service:AccesoService,
         private _builder:FormBuilder,
         public router:Router,
-        private _location:Location
+        private _location:Location,
+        private messageService: MessageService
     ){
         this.titulo="INGRESA AL SITIO WEB";
         this.comentario="COMUNIDADES ESTUDIANTILES";
@@ -46,7 +49,9 @@ export class LoginComponent {
 
     login(){
         const values = this.loginForm.getRawValue();
-        this.usuarioService.loginUsuarios(values).subscribe((resp: Usuario)=>{
+        this.usuarioService.loginUsuarios(values).subscribe((resp: any)=>{
+            console.log(resp);
+            if(resp.siglas == "OE"){
             if(resp.tipoUsuario == 1){
                 this.docenteService.buscarDocente(resp.external_us).subscribe((docente:Docente)=>{
                     sessionStorage.setItem('datosUsuario',JSON.stringify(docente));
@@ -76,8 +81,13 @@ export class LoginComponent {
                 });
                 
             }
+        }else{
+            this.messageService.add({key: 'tc', severity:'error', summary: 'Error al iniciar sesión', detail: 'Usuario o Contraseña Incorrectos'});
+            setTimeout(() => {
+                window.location.reload();
+            }, 1500);
+        }
         });
-        //console.log(values.correo);
     }
 
     cancelar(){

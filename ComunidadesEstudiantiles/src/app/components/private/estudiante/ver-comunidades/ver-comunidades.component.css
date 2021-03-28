@@ -5,6 +5,9 @@
 .cuerpo{
     width: 100%;
 }
+.comunidades{
+    padding-top: 5%;
+}
 .noData img{
     width: 20%;
     opacity: 60%;

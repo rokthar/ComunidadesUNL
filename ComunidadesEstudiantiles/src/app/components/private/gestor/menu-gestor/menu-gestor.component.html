@@ -1,6 +1,20 @@
 <p-toast position="top-center" key="tc"></p-toast>
-<div class="menu nav" [class]="ocultar">
-    <img class="logo" id="logo" src="../.././.././../../assets/UNL3.jpg" />
+
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-menubar class="nav" [model]="items">
+            <ng-template pTemplate="start">
+                <img src="/assets/UNL3.jpg" height="40" class="p-mr-2">
+            </ng-template>
+            <ng-template pTemplate="end">
+                <span>{{titulo}}: {{params.nombres}} {{params.apellidos}}</span>
+            </ng-template>
+        </p-menubar>
+    </div>
+</div>
+
+<!-- <div class="menu nav" [class]="ocultar">
+    <img class="logo" id="logo" src="/assets/UNL3.jpg" />
     <h4>{{titulo}}: {{params.nombres}} {{params.apellidos}}</h4>
     <div class="items">
         <p>
@@ -18,4 +32,4 @@
 </div>
 <div id="mostar-nav" class="nav-icon">
     <i class="pi pi-bars" (click)="mostrarMenu()"></i>
-</div>
+</div> -->

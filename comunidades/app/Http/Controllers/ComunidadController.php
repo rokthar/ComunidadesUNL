@@ -7,16 +7,17 @@ use App\Models\estudiante;
 use App\Models\actividades;
 use App\Models\detalleActividad;
 use App\Models\resultado;
+use App\Models\vinculacion;
 use App\Http\Controllers\MailController;
+
 use Illuminate\Http\Request;
-//use PHPMailer\PHPMailer\PHPMailer;
-// require 'Utilidades/PHPMailer/vendor/autoload.php';
+
 
 //estado 0 Inactivo | 1 Activado | 2 revision Gestor | 3 revision secretaria | 4 en espera
 class ComunidadController extends Controller{
 
     public function RegistrarComuidad(Request $request, $external_docente){
-        
+            $enviar = new MailController();
             if ($request->json()){
                 $data = $request->json()->all();
 
@@ -36,19 +37,11 @@ class ComunidadController extends Controller{
                     $comunidad->external_comunidad = $external;
         
                     $comunidad->save();
-                    // $mailController = new MailController();
-                    // $mailController->enviarMail();
-                    // require base_path("vendor/autoload.php");
-                    // $mail = new PHPMailer(true);
-                    // $mail->CharSet='UTF-8';
-                    // $mail->isMail();
-                    // $mail->setFrom('jmmorochoaunl.edu.ec@gmail.com','Proeditsclub.com');
-                    // $mail->addReplyTo('jmmorochoaunl.edu.ec@gmail.com','Proeditsclub.com');
-                    // $mail->Subject=('Solicitud para la creación de una nueva Comunidad Estudiantil'); //asunto del correo
-                    // $mail->addAddress('riky.paramore@gmail.com');
-                    // $mail->msgHTML('<h1>Solicitud de creacion de comunidada<h1/>');
-                    // $mail->Send();
-
+                    
+                    $enviar->enviarMail("Secretaria","Solicitud para la creacion de una Comunidad","Ha sido enviada una nueva solicitud para la creacion de la comunidad ".$data["nombre_comunidad"]);
+                    $enviar->enviarMail("Estudiante","Solicitud para la creacion de una Comunidad","Su solicitud para la creacion de la comunidad ".$data["nombre_comunidad"]. " ha sido enviada correctamente
+                    debe esperar un aproximado de 3-24 dias para su respuesta");
+                    
                     return response()->json(["mensaje"=>"Operación Exitosa","external_comunidad"=>$external ,"siglas"=>"OE"],200);
                 }else{
                     return response()->json(["mensaje"=>"Docente no enconrado", "siglas"=>"DNE"],400);
@@ -72,6 +65,7 @@ class ComunidadController extends Controller{
     }
 
     public function ActivarComunidad ($external_comunidad){
+        $enviar = new MailController();
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
         $docenteObj = docente::where("id", $comunidadObj->tutor)->first();
         if($comunidadObj){
@@ -81,38 +75,59 @@ class ComunidadController extends Controller{
             //tipoDocente: 1 docente | 2 gestor | 3 secretaria | 4 Decano | 5 Tutor
             $docenteObj->tipoDocente = 5;
             $docenteObj->save();
+            $enviar->enviarMail("Docente","Aprobacion de Solicitud","La comunidad ".$comunidadObj["nombre_comunidad"]." ha sido aprobada");
+
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
         }
     }
 
-    public function RechazarComunidad ($external_comunidad){
+    public function RechazarComunidad (Request $request, $external_comunidad){
+        if ($request->json()){
+            $data = $request->json()->all();
+        $enviar = new MailController();
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
         if($comunidadObj){
             $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
             $comunidad->estado = 0;
             $comunidad->save();
+            $enviar->enviarMail("Estudiante","Aprobacion de Solicitud","La comunidad ".$comunidadObj["nombre_comunidad"]." ha sido rechazada. <br> ".$data["comentario"]);
             
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }
+        }else{
+            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
         }
     }
 
-    public function RevisionInformacion ($external_comunidad){
-        $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-        if($comunidadObj){
-            $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $comunidad->estado = 3;
-            $comunidad->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+    public function RevisionInformacion (Request $request,$external_comunidad){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+            $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
+            if($comunidadObj){
+                $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $comunidad->estado = 3;
+                $comunidad->save();
+                $enviar->enviarMail("Gestor/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido verificada por la Secretaria <br>".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }
         }
     }
 
-    public function RevisionGestor ($external_comunidad){
-        $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-        if($comunidadObj){
-            $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $comunidad->estado = 2;
-            $comunidad->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+    public function RevisionGestor (Request $request,$external_comunidad){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+            $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
+            if($comunidadObj){
+                $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $comunidad->estado = 2;
+                $comunidad->save();
+                $enviar->enviarMail("Decano/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido validada por el Gestor de la Carrera <br> ".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }
         }
     }
 
@@ -289,11 +304,21 @@ class ComunidadController extends Controller{
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
         $miembro = miembros::where("fk_comunidad",$comunidad->id)->get();
         $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+        $vinculaciones = vinculacion::where("fk_comunidad_solicitada",$comunidad->id)->get();
         foreach ($miembro as $item) {
             $data=null;
             $estudiante = estudiante::where("id",$item->fk_estudiante)->first();
             $data[] = [
-                "estudiante"=>$estudiante->nombres." ".$estudiante->apellidos
+                "estudiante"=>$estudiante->nombres." ".$estudiante->apellidos,
+                "ciclo"=>$estudiante->ciclo,
+                "paralelo"=>$estudiante->paralelo
+            ];
+        }
+        foreach($vinculaciones as $vinc){
+            $comunidad = comunidad::where("id",$vinc->fk_comunidad_solicitante)->first();
+            $dataVinc[]=[
+                "fecha_solicitud"=>$vinc->fecha_inicio,
+                "comunidad_solicitante"=>$comunidad->nombre_comunidad
             ];
         }
         foreach ($listas as $act) {
@@ -324,7 +349,8 @@ class ComunidadController extends Controller{
         $datos['data'] = [
             "miembros" => $data,
             "actividades"=>$dataAct,
-            "resultados"=>$dataRes
+            "resultados"=>$dataRes,
+            "vinculaciones"=>$dataVinc
         ];
         self::estadoJson(200, true, '');
         return response()->json($datos, $estado);

@@ -46,10 +46,8 @@ export class GenerarResultadosComponent implements OnInit {
         if (this.params != null && this.params.tipo_docente == "5") {
             this.estaLogeado = true;
             this.ext_det_act = sessionStorage.getItem('datosActividad');
-            console.log(this.ext_det_act);
 
         } else {
-            alert("no estoy autorizado");
             this._location.back();
         }
     }
@@ -75,9 +73,16 @@ export class GenerarResultadosComponent implements OnInit {
                     this.resultados_service.subirImagenes(form, resp.external_resultado).subscribe((respi: any) => {
                         console.log(respi);
                         if (respi.siglas == "OE") {
-                            this._location.back();
+                            this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'El Resultado ha sido publicado' });
+                            setTimeout(() => {
+                                this._location.back();
+                            }, 1500);
+                            
                         } else {
-                            this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Ocurrio un error en el envio de los datos' });
+                            this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Error al publicar el resultado' });
+                            setTimeout(() => {
+                                window.location.reload();
+                            }, 1500);
                         }
                     });
                 }

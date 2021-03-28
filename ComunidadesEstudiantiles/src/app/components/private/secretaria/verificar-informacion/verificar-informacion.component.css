@@ -1,13 +1,10 @@
-.container{
-   height: 100%;
-   position: absolute;
-   right: 0px;
-   left: 0px;
+.cuerpo{
+   padding-top: 5%;
 }
 
 .noData{
    text-align: center;
-   padding-top: 2%;
+   padding-top: 5%;
 }
 
 .noData img{
@@ -17,10 +14,12 @@
 .img-container .img{
    width: 50%;
 }
-
+.caja-texto{
+   width: 80%;
+}
 .button{
-   padding: 2%;
+   padding: 1%;
 }
 .button-delete{
-   padding: 2%;
+   padding: 1%;
 }

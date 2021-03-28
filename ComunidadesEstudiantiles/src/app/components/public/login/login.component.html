@@ -1,3 +1,4 @@
+<p-toast position="top-center" key="tc"></p-toast>
 <div class="body p-grid">
     <div class="fondo"></div>
     <div class="p-lg-4 p-md-6 p-sm-10 login">
@@ -5,10 +6,10 @@
             <form [formGroup]="loginForm">
                 <input id="correo" placeholder="Correo Electrónico" class="caja-texto login-txt" type="text" pInputText
                     formControlName="correo">
-                <br>
+                <br><br>
                 <input id="clave" placeholder="Contraseña" class="caja-texto login-txt" type="password" pInputText
                     formControlName="clave">
-                <br>
+                <br><br>
                 <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
                 <button class="button-delete" (click)="cancelar()">Cancelar</button>
             </form>

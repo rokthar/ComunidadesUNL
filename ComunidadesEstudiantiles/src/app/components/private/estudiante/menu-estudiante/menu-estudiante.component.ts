@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 
 @Component({
@@ -10,23 +11,48 @@ import { MessageService } from 'primeng/api';
     providers: [MessageService]
 })
 
-export class MenuEstudianteComponent implements OnInit{
+export class MenuEstudianteComponent implements OnInit {
     titulo;
     params: any;
-    
+    items: MenuItem[];
     logo_comunidad: any;
     ocultar: string = "ocultar";
     constructor(
-        public router:Router,
+        public router: Router,
         private messageService: MessageService
-    ){
-        this.titulo="Estudiante"
+    ) {
+        this.titulo = "Estudiante"
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        console.log(this.params);
+        this.items = [
+            {
+                label: 'Comunidades',
+                items: [
+                    {
+                        label: 'Postularse',
+                        icon: 'pi pi-user-plus',
+                        command: () => this.links('postularse')
+                    }
+                ]
+            },
+            {
+                label: 'Cerrar Sesión',
+                icon: 'pi pi-power-off',
+                command: () => this.mensaje()
+            }
+        ];
     }
-
+    links(opcion){
+        switch (opcion) {
+            case 'postularse':
+                this.router.navigateByUrl(Rutas.postulacion);
+                break;
+        
+            default:
+                break;
+        }
+    }
     cerrarSesion() {
         sessionStorage.clear();
         this.router.navigateByUrl('');
@@ -38,12 +64,12 @@ export class MenuEstudianteComponent implements OnInit{
         }, 1500);
     }
 
-    mostrarMenu(){
+    mostrarMenu() {
         // alert("olsi");
-        if(this.ocultar=="ocultar"){
-            this.ocultar="mostrar";
-        }else if(this.ocultar=="mostrar"){
-            this.ocultar="ocultar"
-        }     
+        if (this.ocultar == "ocultar") {
+            this.ocultar = "mostrar";
+        } else if (this.ocultar == "mostrar") {
+            this.ocultar = "ocultar"
+        }
     }
 }

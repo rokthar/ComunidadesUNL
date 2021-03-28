@@ -145,7 +145,7 @@ class ResultadoController extends Controller{
         $estudiante = estudiante::where("external_es",$external_estudiante)->first();
         $miembro = miembros::where("fk_estudiante",$estudiante->id)->first();
         $comunidad = comunidad::where("id",$miembro->fk_comunidad)->first();
-        $actividad = actividades::where("estado",1)->where("id",$comunidad->id)->first();
+        $actividad = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->first();
         $detActividad = detalleActividad::where("fk_actividades", $actividad->id)->first();
         $listas = resultado::where("estado",1)->where("fk_det_actividad",$detActividad->id)->get();
         

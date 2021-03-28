@@ -5,8 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\usuario;
 use App\Models\estudiante;
 use App\Models\docente;
-
-
+use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -88,7 +87,6 @@ class UsuarioController extends Controller
     public function login(Request $request)
     {
         global $estado, $datos;
-
         $datos['data'] = null;
         $datos['sucess'] = 'false';
         $datos['mensaje'] = '';
@@ -101,19 +99,26 @@ class UsuarioController extends Controller
                     ->where("clave", "=", $clave)
                     ->where("estado", 1)->first();
                 if ($usuario) {
+                    
                         $datos['data'] = [
                             "correo" => $usuario->correo,
                             "tipoUsuario" => $usuario->tipoUsuario,
-                            "external_us" => $usuario->external_us
+                            "external_us" => $usuario->external_us,
+                            "siglas"=>"OE"
                         ];
                         self::estadoJson(200, true, '');
-                    
                 }else{
-                    self::estadoJson(400, false, 'Datos Incorrectos');
-
+                    $datos['data'] = [
+                        "siglas"=>"UNE"
+                    ];
+                    self::estadoJson(200, true, 'Datos Incorrectos');
                 }
             } catch (\Exception $e) {
+                $datos['data'] = [
+                    "siglas"=>"UNE"
+                ];
                 self::estadoJson(400, false, 'Datos Incorrectos');
+                
             }
             return response()->json($datos, $estado);
         }
@@ -160,6 +165,7 @@ class UsuarioController extends Controller
             $data = array();
             if ($docente) {
                 $datos['data']= [
+                    "correo"=>$docenteObj->correo,
                     "nombres" => $docente->nombres,
                     "apellidos" => $docente->apellidos,
                     "tipo_docente" => $docente->tipoDocente, 

@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { EstudianteService } from 'src/app/services/estudiante.service';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { URL } from '../../../../core/constants/url';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 
 @Component({
@@ -12,34 +14,60 @@ import { MessageService } from 'primeng/api';
     providers: [MessageService]
 })
 
-export class MenuMiembrosComponent implements OnInit{
+export class MenuMiembrosComponent implements OnInit {
+    items: MenuItem[];
     titulo;
     params: any;
-    
+    imagen = URL._imgCom;
     logo_comunidad: any;
-    comunidad: any="";
-    imageSource: any="";
-    ocultar: string="ocultar";
+    comunidad: any = "";
+    imageSource: any = "";
+    ocultar: string = "ocultar";
     constructor(
-        public router:Router,
-        private estudiante_service:EstudianteService,
+        public router: Router,
+        private estudiante_service: EstudianteService,
         private sanitizer: DomSanitizer,
         private messageService: MessageService
-    ){
-        this.titulo="Miembro"
+    ) {
+        this.titulo = "Miembro"
     }
     ngOnInit(): void {
+        this.items = [
+            {
+                label: 'Perfil',
+                items: [
+                    {
+                        label: 'Ver Resultados',
+                        icon: 'pi pi-eye',
+                        command: () => this.links('verResultados')
+                    }
+                ]
+            },
+            {
+                label: 'Cerrar Sesión',
+                icon: 'pi pi-power-off',
+                command: () => this.mensaje()
+            }
+        ];
+
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        if(this.params != null){
-            this.estudiante_service.buscarComunidadByMiembro(this.params.external_estudiante).subscribe((resp:any)=>{
+        if (this.params != null) {
+            this.estudiante_service.buscarComunidadByMiembro(this.params.external_estudiante).subscribe((resp: any) => {
                 this.comunidad = resp;
-                // this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.comunidad.ruta_logo);
-                // this.comunidad.ruta_logo = this.imageSource;
             });
         }
-        // console.log(this.params);
     }
 
+    links(opcion){
+        switch (opcion) {
+            case 'verResultados':
+                this.router.navigateByUrl(Rutas.perfilMiembto);
+                break;
+        
+            default:
+                break;
+        }
+    }
     cerrarSesion() {
         sessionStorage.clear();
         this.router.navigateByUrl('');
@@ -51,12 +79,11 @@ export class MenuMiembrosComponent implements OnInit{
         }, 1500);
     }
 
-    mostrarMenu(){
-        // alert("olsi");
-        if(this.ocultar=="ocultar"){
-            this.ocultar="mostrar";
-        }else if(this.ocultar=="mostrar"){
-            this.ocultar="ocultar"
-        }     
+    mostrarMenu() {
+        if (this.ocultar == "ocultar") {
+            this.ocultar = "mostrar";
+        } else if (this.ocultar == "mostrar") {
+            this.ocultar = "ocultar"
+        }
     }
 }

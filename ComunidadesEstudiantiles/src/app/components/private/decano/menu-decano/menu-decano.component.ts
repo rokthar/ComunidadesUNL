@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 
 @Component({
@@ -14,7 +15,7 @@ import { MessageService } from 'primeng/api';
 export class MenuDecanoComponent implements OnInit{
     titulo;
     params: any;
-    
+    items: MenuItem[];
     logo_comunidad: any;
     ocultar: string="ocultar";
     constructor(
@@ -25,12 +26,38 @@ export class MenuDecanoComponent implements OnInit{
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        console.log(this.params);
+        this.items=[
+            {
+                label:'Comunidades',
+                items:[
+                    {
+                        label:'Aceptar',
+                        icon:'pi pi-check',
+                        command: () => this.links('validarComunidades')
+                    }
+                ]
+            },
+            {
+                label:'Cerrar Sesión',
+                icon:'pi pi-power-off',
+                command: () => this.mensaje()
+            }
+        ];
     }
 
     cerrarSesion() {
         sessionStorage.clear();
         this.router.navigateByUrl('');
+    }
+    links(opcion){
+        switch (opcion) {
+            case 'validarComunidades':
+                this.router.navigateByUrl(Rutas.aceptarComunidad);
+                break;
+        
+            default:
+                break;
+        }
     }
     mensaje() {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });

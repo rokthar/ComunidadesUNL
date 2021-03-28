@@ -16,6 +16,7 @@ import {ScrollPanelModule} from 'primeng/scrollpanel';
 import {FileUploadModule} from 'primeng/fileupload';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
+import {MenubarModule} from 'primeng/menubar';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import {ToastModule} from 'primeng/toast';
     ScrollPanelModule,
     FileUploadModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    MenubarModule
   ],
   exports: [
     ButtonModule,
@@ -53,7 +55,8 @@ import {ToastModule} from 'primeng/toast';
     ScrollPanelModule,
     FileUploadModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    MenubarModule
   ],
   bootstrap: [AppComponent]
 })

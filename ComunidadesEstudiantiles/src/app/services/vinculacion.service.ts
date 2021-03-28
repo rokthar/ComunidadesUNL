@@ -4,12 +4,15 @@ import { Observable } from 'rxjs';
 import { pluck } from 'rxjs/operators';
 import { Comunidad } from '../core/model/comunidad';
 import { Vinculacion } from '../core/model/vinculacion';
+import { URL } from '../core/constants/url';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class VinculacionService {
   url="http://localhost/TT/ComunidadesUNL/comunidades/public/";
+  // url = "https://comunidadesestudiantiles.000webhostapp.com/comunidades/public/";
   constructor(
     private http: HttpClient
   ) {
@@ -19,12 +22,12 @@ export class VinculacionService {
     return this.http.post(this.url+"comunidad/vinculacion/"+ext_comunidad+"/"+ext_comunidad_solic,values);
    }
 
-   activarVinculacion(external_vinculacion){
-    return this.http.post(this.url+"comunidad/activarvinculacion/"+external_vinculacion,null);
+   activarVinculacion(values,external_vinculacion){
+    return this.http.post(this.url+"comunidad/activarvinculacion/"+external_vinculacion,values);
    }
 
-   rechazarVinculación(external_vinculacion){
-    return this.http.post(this.url+"vinculacion/rechazar/"+external_vinculacion,null);
+   rechazarVinculación(values,external_vinculacion){
+    return this.http.post(this.url+"vinculacion/rechazar/"+external_vinculacion,values);
    }
 
    listarVinculacionComunidad(external_comunidad):Observable<Vinculacion>{

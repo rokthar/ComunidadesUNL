@@ -4,12 +4,16 @@ use App\Models\actividades;
 use App\Models\comunidad;
 use App\Models\docente;
 use App\Models\detalleActividad;
+use App\Http\Controllers\MailController;
+
 use Illuminate\Http\Request;
 
 //estado 0 Inactivo | 1 Activado | 2 En espera
 class ActividadController extends Controller{
 
     public function PlanificarActividades ($external_docente){
+            $enviar = new MailController();
+
             $docente=docente::where("external_do",$external_docente)->first();
             $comunidadObj=comunidad::where("tutor",$docente->id)->first();
             //$comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
@@ -20,11 +24,15 @@ class ActividadController extends Controller{
                 $external = "Act".Utilidades\UUID::v4();
                 $actividades->external_actividades = $external;
                 $actividades->save();
+                $enviar->enviarMail("Gestor","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias");
+
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
             }
     }
 
     public function RegistrarDetalleActividad(Request $request, $external_actividades){
+        $enviar = new MailController();
+
         if ($request->json()){
             $data = $request->json()->all();
             
@@ -41,6 +49,8 @@ class ActividadController extends Controller{
                     $detalleActividad->external_detact = $external;
                     $detalleActividad->save();
                 }
+                $enviar->enviarMail("Tutor","Planificacion de Actividades","Su planificacion de actividades ha sido enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
+
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
                 return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
@@ -48,39 +58,51 @@ class ActividadController extends Controller{
         }
     }
 
-    public function ActivarPlanificacion($external_actividades){
-        $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-        $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
-        if($actividadObj){
-            foreach ($detalleactividadObj as $lista) {
-                $lista->estado = 2;
-                $lista->save();    
+    public function ActivarPlanificacion(Request $request,$external_actividades){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+
+            $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
+            $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+            if($actividadObj){
+                foreach ($detalleactividadObj as $lista) {
+                    $lista->estado = 2;
+                    $lista->save();    
+                }
+                $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $actividad->estado = 2;
+                $actividad->save();
+                $enviar->enviarMail("Tutor","Planificacion de Actividades Aprobada","Su planificacion de actividades ha sido aprobada por el Gestor de la Carrera <br>".$data["comentario"]);
+                        
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
             }
-            $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $actividad->estado = 2;
-            $actividad->save();
-                      
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-        }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
         }
     }
 
-    public function RechazarPlanificacion($external_actividades){
-        $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-        $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
-        if($actividadObj){
-            foreach ($detalleactividadObj as $lista) {
-                $lista->estado = 0;
-                $lista->save();    
+    public function RechazarPlanificacion(Request $request,$external_actividades){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+
+            $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
+            $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+            if($actividadObj){
+                foreach ($detalleactividadObj as $lista) {
+                    $lista->estado = 0;
+                    $lista->save();    
+                }
+                $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $actividad->estado = 0;
+                $actividad->save();
+                $enviar->enviarMail("Tutor","Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"]);
+                        
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
             }
-            $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $actividad->estado = 0;
-            $actividad->save();
-                      
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-        }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
         }
     }
 

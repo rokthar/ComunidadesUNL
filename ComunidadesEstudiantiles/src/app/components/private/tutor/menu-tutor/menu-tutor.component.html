@@ -1,12 +1,26 @@
 <p-toast position="top-center" key="tc"></p-toast>
-<div class="menu nav" [class]="ocultar">
-    <img class="logo" id="logo" src="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/comunidad/{{logo_comunidad}}" />
+
+<div class="p-grid">
+    <div class="p-col-12">
+        <p-menubar class="nav" [model]="items" [style]="{'background-color': '#1d3557', 'color':'#fafafa'}">
+            <ng-template pTemplate="start">
+                <img src="{{imagen}}{{logo_comunidad}}" height="40" class="p-mr-2">
+            </ng-template>
+            <ng-template pTemplate="end">
+                <span>{{params.nombres}} {{params.apellidos}}</span>
+            </ng-template>
+        </p-menubar>
+    </div>
+</div>
+
+<!-- <div class="menu nav" [class]="ocultar">
+    <img class="logo" id="logo" src="{{imagen}}{{logo_comunidad}}" />
     <h4>{{params.nombres}} {{params.apellidos}}</h4>
     <small>Tutor de {{comunidad.nombre_comunidad}}</small>
     <div class="items">
         <p>
             <a routerLink='../aceptar-postulacion' routerLinkActivate="active"><i class="pi pi-user">
-                    Postulación</i></a>
+                    Postulaciones</i></a>
         </p>
         <p>
             <a routerLink='../planificar-actividades' routerLinkActivate="active"><i class="pi pi-calendar-plus">
@@ -17,7 +31,7 @@
         </p>
         <p>
             <a routerLink='../aceptar-vinculacion' routerLinkActivate="active"><i class="pi pi-file">
-                    Vinculación</i></a>
+                    Solicitudes de Vinculación</i></a>
         </p>
         <p>
             <a routerLink='../ver-comunidades-tutor' routerLinkActivate="active"><i class="pi pi-users">
@@ -38,4 +52,4 @@
 </div>
 <div id="mostar-nav" class="nav-icon">
     <i class="pi pi-bars" (click)="mostrarMenu()"></i>
-</div>
+</div> -->

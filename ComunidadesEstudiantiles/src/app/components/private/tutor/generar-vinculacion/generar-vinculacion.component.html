@@ -1,23 +1,25 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3">
+    <div class="p-lg-12">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-9">
+    <div class="p-col-1"></div>
+    <div class="p-lg-10 cuerpo">
         <h1>{{titulo}}</h1>
-
         <div>
             <form [formGroup]="generarVinculacionForm">
-                <span class="p-float-label caja-texto">
-                    <textarea rows="3" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
-                    <label for="descripcion">Descripción</label>
-                </span>
+                <h3>Inserte la Descripción de la Vinculación</h3>
+                <textarea placeholder="Descripción de la Vinculación" rows="3" cols="100" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
                 <br>
-                <input type="date" class="date" placeholder="fecha" formControlName="fecha_inicio" />
+                <h3>Inserte la Fecha para la Vinculación</h3>
+                <input pInputText type="date" class="date" placeholder="fecha" formControlName="fecha_inicio" />
                 <br><br>
-                <button class="btn" [disabled]="generarVinculacionForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Generar Vinculación</button>
-                <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+                <button class="button" [disabled]="generarVinculacionForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Generar Vinculación</button>
+                <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
             </form>
             
         </div>
     </div>
+    <div class="p-col-1"></div>
 </div>

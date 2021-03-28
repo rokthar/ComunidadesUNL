@@ -31,11 +31,9 @@ export class VerActividadesComponent implements OnInit{
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if(this.params != null && this.params.tipo_docente=="5"){
             this.estaLogeado=true;
-            console.log(this.params);
             this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com:any)=>{
                 this.actividad_service.listarPlanificacionByComunidad(com.external_comunidad).subscribe((act:any)=>{
                     this.actividades = act;
-                    console.log(this.actividades);
                     if(this.actividades != null){
                         this.hayDatos = true;
                     }else{
@@ -45,7 +43,6 @@ export class VerActividadesComponent implements OnInit{
             });
             
         }else{
-            alert("no estoy autorizado");
             this._location.back();
         }
     }

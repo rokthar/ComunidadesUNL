@@ -1,8 +1,11 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
 <div class="p-grid container">
-    <div class="p-lg-3 menu-tutor">
+    <div class="p-lg-12 menu-tutor">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-lg-9" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-lg-10 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <div *ngFor="let item of postulaciones">
@@ -13,8 +16,12 @@
                             <p>{{pos.habilidad}}  {{pos.nivel}} <i class="star pi pi-star"></i></p>
                         </div>
                         <ng-template pTemplate="footer">
-                            <button class="button" (click)="aceptarPostulacion(item.external_postulacion)"><i class="pi pi-check"></i> Aceptar</button>
-                            <p-button label="Rechazar"  icon="pi pi-times" (click)="rechazarPostulacion(item.external_postulacion)" styleClass="p-button-danger" [style]="{'margin-left': '.5em'}"></p-button>
+                            <form [formGroup]="postulacionForm">
+                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                                <br><br>
+                                <button class="button" (click)="aceptarPostulacion(item.external_postulacion)"><i class="pi pi-check"></i> Aceptar</button>
+                                <button (click)="rechazarPostulacion(item.external_postulacion)" styleClass="p-button-danger" [style]="{'margin-left': '.5em'}"><i class="pi pi-times"> Rechazar</i></button>
+                            </form>
                         </ng-template>
                     </p-card>
                 </div>
@@ -22,8 +29,9 @@
         </div>
     </div>
 
-    <div class="p-lg-9 noData" *ngIf="!hayDatos">
+    <div class="p-lg-10 noData" *ngIf="!hayDatos">
         <img src="../../../../../assets/advertencia.png" />
         <h3>POR EL MOMENTO NO EXISTEN POSTULACIONES</h3>
     </div>
+    <div class="p-col-1"></div>
 </div>

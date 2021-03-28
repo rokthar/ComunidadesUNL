@@ -4,49 +4,52 @@ import { Actividades } from 'src/app/core/model/actividades';
 import { ActividadesService } from 'src/app/services/actividaes.service';
 import { Location } from '@angular/common';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { MessageService } from 'primeng/api';
+import { URL } from '../../../../core/constants/url';
 
 @Component({
     selector: 'validar-actividades',
     templateUrl: './validar-actividades.component.html',
-    styleUrls: ['./validar-actividades.component.css']
+    styleUrls: ['./validar-actividades.component.css'],
+    providers: [MessageService]
+
 })
 
 export class validarActividadesComponent implements OnInit{
     titulo;
     private params;
-    actividades;
+    actividades=[];
     lista=[];
+    ext_act;
     estaLogeado:Boolean=false;
     hayDatos=false;
     imageSource: any;
     displayModal: boolean;
+    imagen = URL._imgCom;
+    actividadesForm: FormGroup;
+
     constructor(
+        private _builder: FormBuilder,
         private actividades_service:ActividadesService,
         private _location:Location,
-        private sanitizer: DomSanitizer
+        private messageService: MessageService
 
     ){
-        this.titulo="Lista de Actividades"
+        this.titulo="Lista de Actividades",
+        this.actividadesForm = this._builder.group({
+            comentario: ['']
+          })
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if(this.params != null && this.params.tipo_docente=="2"){
             this.estaLogeado = true;
-            console.log(this.params);
         }else{
-            alert("no estoy autorizado");
             this._location.back();
         }
 
         this.actividades_service.listarPlanificacion().subscribe((resp:any)=>{
             this.lista = resp;
-            for(let j in this.lista){
-            this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[j].logo_comunidad);
-            resp[j].logo_comunidad = this.imageSource;
-            }
-            console.log(this.lista);
-
             if(this.lista != null){
                 this.hayDatos=true;
             }
@@ -54,27 +57,41 @@ export class validarActividadesComponent implements OnInit{
     }
 
     aceptarActividades(external_actividades){
-        console.log(external_actividades);
-        this.actividades_service.aceptarActividades(external_actividades).subscribe((resp:any)=>{
+        const values = this.actividadesForm.getRawValue();
+        this.actividades_service.aceptarActividades(values,external_actividades).subscribe((resp:any)=>{
             console.log(resp);
             if(resp.siglas == "OE"){
-                alert("Operación Exitosa");
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido Validada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Enviar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser validada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }   
         });
     }
 
     rechazarActividades(external_actividades){
-        console.log(external_actividades);
-        this.actividades_service.rechazarActividades(external_actividades).subscribe((resp:any)=>{
+        const values = this.actividadesForm.getRawValue();
+        this.actividades_service.rechazarActividades(values,external_actividades).subscribe((resp:any)=>{
             console.log(resp);
             if(resp.siglas == "OE"){
-                alert("La planificación ha sido Rechazada");
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido Rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Enviar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad ha sido rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }   
         });
     }
@@ -84,8 +101,11 @@ export class validarActividadesComponent implements OnInit{
         for(let i in this.lista){
             if(this.lista[i].external_actividades == external_actividades){
                 this.actividades = this.lista[i].actividades;
-                console.log(this.actividades);
+                this.ext_act = this.lista[i].external_actividades;
             }
         }
+        console.log(this.lista);
+        console.log(this.actividades);
+
     }
 }

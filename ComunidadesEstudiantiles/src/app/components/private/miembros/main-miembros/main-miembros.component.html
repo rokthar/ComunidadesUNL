@@ -1,15 +1,16 @@
 <div class="p-grid container">
-    <div class="p-lg-4">
+    <div class="p-col-121">
         <menu-miembros></menu-miembros>
     </div>
-    <div class="p-lg-8" *ngIf="hayDatos">
+    <div class="p-col-1"></div>
+    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
         <h2>{{titulo}}</h2>
         <div *ngFor="let item of resultados">
-            <div class="p-lg-3 p-md-6 p-sm-12 card" >
-                <p-card header="{{item.actividad}}" subheader="{{item.comunidad}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
+            <div class="p-lg-4 p-md-6 p-sm-12 card" >
+                <p-card header="{{item.actividad}}" subheader="{{item.comunidad}}" [style]="{width: '100%'}" styleClass="p-card-shadow">
                     <ng-template pTemplate="header">
                         <div class="img-container">
-                            <img class="img" alt="Card" [src]="item.imagenes[0].ruta_imagen">
+                            <img class="img" alt="Card" src="{{imagen}}{{item.imagenes[0].ruta_imagen}}">
                         </div>
                     </ng-template>
                     <p>{{item.resumen_resultado}}</p>
@@ -23,8 +24,9 @@
             </div>
         </div>
     </div>
-    <div class="p-lg-8 noData" *ngIf="!hayDatos">
-        <img src="../../../../../assets/advertencia.png" />
+    <div class="p-col-1 noData" *ngIf="!hayDatos">
+        <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY RESULTADOS DE NINGUNA ACTIVIDAD</h3>
     </div>
+    <div class="p-col-1"></div>
 </div>

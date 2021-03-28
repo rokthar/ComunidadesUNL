@@ -5,11 +5,15 @@ import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { Location } from '@angular/common';
 import { ComunidadService } from 'src/app/services/comunidad.service';
+import { MessageService } from 'primeng/api';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
     selector: 'aceptarpostulacion',
     templateUrl: './aceptar-postulacion.component.html',
-    styleUrls: ['./aceptar-postulacion.component.css']
+    styleUrls: ['./aceptar-postulacion.component.css'],
+    providers: [MessageService]
+
 })
 
 export class AceptarPostulacionComponent implements OnInit {
@@ -20,22 +24,28 @@ export class AceptarPostulacionComponent implements OnInit {
     private params;
     estaLogeado: Boolean = false;
     hayDatos: boolean;
+    postulacionForm: FormGroup;
+
     constructor(
+        private _builder: FormBuilder,
         private postulacion_service: PostulacionService,
         public router: Router,
         private _location: Location,
-        private comunidad_service: ComunidadService
+        private comunidad_service: ComunidadService,
+        private messageService: MessageService
+
     ) {
-        this.titulo = "Lista de Postulaciones"
+        this.titulo = "Lista de Postulaciones",
+        this.postulacionForm = this._builder.group({
+            comentario: ['']
+          })
     }
     ngOnInit(): void {
 
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if ((this.params != null) && (this.params.tipo_docente == "5")) {
             this.estaLogeado = true;
-            console.log(this.params);
         } else {
-            alert("no estoy autorizado");
             this._location.back();
         }
         console.log(this.params);
@@ -55,34 +65,42 @@ export class AceptarPostulacionComponent implements OnInit {
     }
 
     aceptarPostulacion(external_postulacion) {
-        this.postulacion_service.aceptarPostulacion(external_postulacion).subscribe((resp: any) => {
+        const values = this.postulacionForm.getRawValue();
+        this.postulacion_service.aceptarPostulacion(values,external_postulacion).subscribe((resp: any) => {
             console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
                 this.postulacion_service.añadirMiembro(external_postulacion).subscribe(() => {
                     if (resp.siglas == "OE") {
-                        alert("Operación Exitosa");
-                        window.location.reload();
+                        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido aceptada' });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
                     }
                 });
             } else {
-                alert("Error al Aceptar");
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Operación Exitosa', detail: 'Error al aceptar la Postulación' });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
             }
         });
     }
 
     rechazarPostulacion(external_postulacion) {
-        this.postulacion_service.rechazarPostulacion(external_postulacion).subscribe((resp: any) => {
+        const values = this.postulacionForm.getRawValue();
+        this.postulacion_service.rechazarPostulacion(values,external_postulacion).subscribe((resp: any) => {
             console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
-                alert("La Postulación ha sido Rechazada");
-                window.location.reload();
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido rechazada' });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
             } else {
-                alert("Error al Aceptar");
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Postulación no pudo ser rechazada' });
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
             }
         });
-    }
-
-    enviar() {
-        console.log("enviado");
     }
 }

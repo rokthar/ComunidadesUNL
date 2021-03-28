@@ -4,12 +4,16 @@ use App\Models\postulacion;
 use App\Models\comunidad;
 use App\Models\estudiante;
 use App\Models\detallePostulacion;
+use App\Http\Controllers\MailController;
+
 use Illuminate\Http\Request;
 
 //estado 0 Inactivo | 1 Activado | 2 En espera
 class PostulacionController extends Controller{
 
     public function RegistrarPostulacion($external_estudiante, $external_comunidad){
+        $enviar = new MailController();
+
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
         $estudianteObj = estudiante::where("external_es", $external_estudiante)->first();
         if($comunidadObj && $estudianteObj){
@@ -18,8 +22,12 @@ class PostulacionController extends Controller{
             $postulacion->fk_comunidad = $comunidadObj->id;
             $postulacion->estado = 2;
             $external = "Post".Utilidades\UUID::v4();
-                $postulacion->external_postulacion = $external;
-                $postulacion->save();
+            $postulacion->external_postulacion = $external;
+            $postulacion->save();
+            
+            $enviar->enviarMail("Tutor","Postulacion","El estudiante ".$estudianteObj->nombres." ".$estudianteObj->apellidos." del ciclo ".$estudianteObj->ciclo." paralelo ".$estudianteObj->paralelo." ha enviado una postulacion a la comunidad");
+            $enviar->enviarMail($estudianteObj->nombres." ".$estudianteObj->apellidos,"Postulacion","Su postulacion a la comunidad ".$comunidadObj->nombre_comunidad." ha sifo enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
+            
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_postulacion"=>$external],200);
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
@@ -49,42 +57,57 @@ class PostulacionController extends Controller{
         }
     }
 
-    public function ActivarPostulacion($external_postulacion){
-        $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
-        $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
-        
-        if($postulacionObj){
-            $postulacion = postulacion::where("id", $postulacionObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $postulacion->estado = 1;
-            $postulacion->save();
-            foreach ($detallePostulacionObj as $lista) {
-                $lista->estado = 1;
-                $lista->save();    
-            }
+    public function ActivarPostulacion(Request $request, $external_postulacion){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
 
-            $estudiante = estudiante::where("id", $postulacion->fk_estudiante)->first();
-            $estudiante->estado = 2; //estado del estudiante en 2 indica que es miembro de comunidad
-            $estudiante->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-        }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
+            $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
+            
+            if($postulacionObj){
+                $postulacion = postulacion::where("id", $postulacionObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $postulacion->estado = 1;
+                $postulacion->save();
+                foreach ($detallePostulacionObj as $lista) {
+                    $lista->estado = 1;
+                    $lista->save();    
+                }
+
+                $estudiante = estudiante::where("id", $postulacion->fk_estudiante)->first();
+                $estudiante->estado = 2; //estado del estudiante en 2 indica que es miembro de comunidad
+                $estudiante->save();
+
+                $enviar->enviarMail($estudiante->nombres." ".$estudiante->apellidos,"Postulacion Aceptada","Su postulacion ha sido aceptada. <br>".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            }
         }
     }
 
-    public function RechazarPostulacion($external_postulacion){
-        $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
-        $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
-        
-        if($postulacionObj){
-            $postulacion->estado = 0;
-            $postulacion->save();
-            foreach ($detallePostulacionObj as $lista) {
-                $lista->estado = 0;
-                $lista->save();    
+    public function RechazarPostulacion(Request $request, $external_postulacion){
+        if ($request->json()){
+            $data = $request->json()->all();
+            $enviar = new MailController();
+
+            $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
+            $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
+            
+            if($postulacionObj){
+                $postulacion->estado = 0;
+                $postulacion->save();
+                foreach ($detallePostulacionObj as $lista) {
+                    $lista->estado = 0;
+                    $lista->save();    
+                }
+                $enviar->enviarMail("Estudiante","Postulacion Rechazada","Su postulacion ha sido rechazada <br>".$data["comentario"]);
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
             }
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-        }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
         }
     }
     

@@ -1,18 +1,24 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { Comunidad } from 'src/app/core/model/comunidad';
 import { ComunidadService } from 'src/app/services/comunidad.service';
+import { URL } from '../../../../core/constants/url';
 
 @Component({
     selector: 'validarcomunidad',
     templateUrl: './validar-comunidad.component.html',
-    styleUrls: ['./validar-comunidad.component.css']
+    styleUrls: ['./validar-comunidad.component.css'],
+    providers: [MessageService]
+
 })
 
 export class ValidarComunidadComponent implements OnInit{
+    rechazarComunidadForm: FormGroup;
     titulo:String;
     lista:Comunidad;
     estaLogeado:Boolean=false;
@@ -21,30 +27,31 @@ export class ValidarComunidadComponent implements OnInit{
     imageSource: any;
     displayModal: boolean;
     comunidad="";
+    imagen = URL._imgCom;
     constructor(
+        private _builder: FormBuilder,
         private comunidad_service:ComunidadService,
         private _location:Location,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
+        private messageService: MessageService
+
 
     ){
-        this.titulo="Lista de Comunidades Revisadas por la Secretaria"
+        this.titulo="Lista de Comunidades Revisadas por la Secretaria";
+        this.rechazarComunidadForm = this._builder.group({
+            comentario: ['']
+          })
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if(this.params != null && this.params.tipo_docente=="2"){
             this.estaLogeado = true;
-            console.log(this.params);
         }else{
             alert("no estoy autorizado");
             this._location.back();
         }
         this.comunidad_service.listarComunidadesRevisadas().subscribe((resp:Comunidad)=>{
             this.lista = resp;
-            for(let i in this.lista){
-                this.imageSource = this.sanitizer.bypassSecurityTrustResourceUrl('data:image/png;base64,'+this.lista[i].ruta_logo);
-                this.lista[i].ruta_logo = this.imageSource;
-            }
-            console.log(this.lista);
             if(this.lista!=null){
                 this.hayDatos=true;
             }
@@ -61,29 +68,40 @@ export class ValidarComunidadComponent implements OnInit{
     }
 
     validarComunidad(external_comunidad){
-        console.log(external_comunidad);
-        this.comunidad_service.validarComunidad(external_comunidad).subscribe((resp:any)=>{
-            console.log(resp); //revisar respuesta
+        const values = this.rechazarComunidadForm.getRawValue();
+        this.comunidad_service.validarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
-                alert("Operación Exitosa");
-                this.displayModal=false
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido validada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Aceptar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser validada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
         });
     }
 
     rechazarComunidad(external_comunidad){
-        console.log(external_comunidad);
-        this.comunidad_service.rechazarComunidad(external_comunidad).subscribe((resp:any)=>{
+        const values = this.rechazarComunidadForm.getRawValue();
+        this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
-                alert("La solicitud de la comunidad ha sido Rechazada");
-                this.displayModal=false
-                window.location.reload();
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }else{
-                alert("Error al Aceptar");
+                this.displayModal = false
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser rechazada' });
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
         });
     }

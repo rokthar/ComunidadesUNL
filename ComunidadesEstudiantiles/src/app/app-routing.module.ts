@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { VerResultadosComponent } from './components/share/ver-resultados/ver-resultados.component';
+import { VerResultadosComponent } from './components/public/ver-resultados/ver-resultados.component';
 
 const routes: Routes = [
   {
