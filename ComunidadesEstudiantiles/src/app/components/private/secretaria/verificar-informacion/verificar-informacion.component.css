@@ -11,15 +11,22 @@
    width: 20%;
    opacity: 60%;
 }
+.img-container{
+   text-align: center;
+}
 .img-container .img{
    width: 50%;
 }
 .caja-texto{
-   width: 80%;
+   width: 100%;
 }
 .button{
    padding: 1%;
 }
 .button-delete{
    padding: 1%;
+}
+.button-detalles{
+   padding: 5%;
+   width: 100%;
 }

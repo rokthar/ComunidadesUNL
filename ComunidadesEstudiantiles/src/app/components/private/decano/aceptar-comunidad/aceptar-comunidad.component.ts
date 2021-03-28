@@ -24,7 +24,7 @@ export class AceptarComunidadComponent implements OnInit {
     imageSource: any;
     displayModal: boolean;
     comunidad = "";
-    imagen = URL._imgResul;
+    imagen = URL._imgCom;
     constructor(
         private _builder: FormBuilder,
         private comunidad_service: ComunidadService,

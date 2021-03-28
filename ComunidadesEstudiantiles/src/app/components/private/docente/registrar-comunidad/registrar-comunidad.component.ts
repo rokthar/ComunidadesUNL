@@ -20,7 +20,7 @@ export class RegistrarComunidadComponent implements OnInit {
   private file;
   public comunidad = null;
   estaLogeado: Boolean = false;
-  esTutor:boolean=true;
+  esTutor:boolean=false;
   constructor(
     private _builder: FormBuilder,
     private comunidad_service: ComunidadService,
@@ -47,8 +47,8 @@ export class RegistrarComunidadComponent implements OnInit {
     }
     this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp) => {
       this.comunidad = resp;
-      if(this.comunidad === null){
-        this.esTutor = false;
+      if(this.comunidad != null){
+        this.esTutor = true;
       }
     });
   }
@@ -70,24 +70,6 @@ export class RegistrarComunidadComponent implements OnInit {
         form.append('file', this.file);
         this.comunidad_service.subirImagen(form, resp.external_comunidad).subscribe((resp: any) => {
           if (resp.siglas == "OE") {
-            
-            const docente = {
-              "correo":this.params.correo,
-              "asunto":"Solicitud de Creación de Comunidad",
-              "mensaje":"Usted ha enviado una solicitud para la creación de una comunidad, debe esperar un aproximado de 3-24 días para su respuesta"
-            }
-          this.usuario_service.enviarMail(docente).subscribe((resp:any)=>{
-            console.log(resp.mensaje);
-          });
-          const secretaria={
-              "correo":"riky.paramore@gmail.com",
-              "asunto":"Solicitud de Creación de Comunidad",
-              "mensaje":"Se ha enviado una solicitud para la creación de una comunidad, porfavor revisar el portal web Comunidades Estudiantiles y revisar la Solicitud"
-          }
-          this.usuario_service.enviarMail(secretaria).subscribe((resp:any)=>{
-            console.log(resp.mensaje);
-          });
-            
           this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La solicitud ha sido enviada' });
                 setTimeout(() => {
                     window.location.reload();

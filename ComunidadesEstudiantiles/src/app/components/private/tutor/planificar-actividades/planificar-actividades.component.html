@@ -4,44 +4,47 @@
     <div id="nav" class="p-lg-12">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-col-1"></div>    
+    <div class="p-col-1"></div>
     <div class="p-lg-10 cuerpo" *ngIf="!hayDatos">
         <h1>{{titulo}}</h1>
-        <small><strong>Nota:</strong> Recuerde revisar el calendario Académico para poder Planificar sus Actividaes</small><br><br>
+        <small><strong>Nota:</strong> Recuerde revisar el calendario Académico para poder Planificar sus
+            Actividaes</small><br><br>
         <form [formGroup]="planificarActividadesForm">
-            <div class="p-grid" formArrayName="actividades">
-                <div class="p-col-12 p-lg-4 p-md-4 p-sm-12 card" *ngFor="let item of getActividades.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                    <p-card header="Actividad" [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em'}">
-                        <input pInputText class="textbox" placeholder="Nombre Actividad" formControlName="nombre_actividad" /> <br><br>
-                        <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" placeholder="Descripcion"
-                            formControlName="descripcion_actividad"></textarea><br><br>
-                        <input pInputText type="date" class="textbox" placeholder="fecha" formControlName="fecha_inicio" />
-                        <ng-template pTemplate="footer">
-                            <button class="button-delete less" (click)="less(pointIndex)"><i class="pi pi-trash"></i>
-                                Eliminar</button>
-                        </ng-template>
-                    </p-card>
+            <div class="p-grid act" formArrayName="actividades">
+                <div class="p-col-12">
+                    <button class="button add" (click)="add()"><i class="pi pi-plus"> Añadir</i></button>
+                    <button class="button" [disabled]="planificarActividadesForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Enviar Planificacion</button>
+                    <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
                 </div>
-            </div>
-            <button class="button add" (click)="add()"><i class="pi pi-plus"></i></button>
-            <br><br>
-            <button class="button" [disabled]="planificarActividadesForm.invalid" (click)="enviar()"><i
-                    class="pi pi-send"></i> Enviar Planificacion</button>
-            <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+                <div class="p-col-12">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-lg-6 p-md-6 p-sm-12 card" *ngFor="let item of getActividades.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                            <p-card header="Actividad" [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#a8dadc'}">
+                                <input pInputText class="textbox" placeholder="Nombre Actividad" formControlName="nombre_actividad" /> <br><br>
+                                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" placeholder="Descripcion" formControlName="descripcion_actividad"></textarea><br><br>
+                                <input pInputText type="date" class="textbox" placeholder="fecha" formControlName="fecha_inicio" />
+                                <ng-template pTemplate="footer">
+                                    <button class="button-delete less" (click)="less(pointIndex)"><i class="pi pi-trash"></i> Eliminar</button>
+                                </ng-template>
+                            </p-card>
+                        </div>
+                    </div>
+                </div>
 
+            </div>
         </form>
     </div>
-    
+
     <div class="p-lg-10 cuerpo" *ngIf="hayDatos">
-       <div class="p-grid">
-        <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
-        <div class="p-col-12 activ" *ngFor="let item of listaActividades">
-            <p><b>Fecha:</b> {{item.fecha_inicio}}</p>
-            <p><b>Actividad:</b> {{item.nombre_actividad}}</p>
-            <p><b>Descripción:</b> {{item.descripcion_actividad}}</p>
+        <div class="p-grid">
+            <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
+            <div class="p-col-12 activ" *ngFor="let item of listaActividades">
+                <p><b>Fecha:</b> {{item.fecha_inicio}}</p>
+                <p><b>Actividad:</b> {{item.nombre_actividad}}</p>
+                <p><b>Descripción:</b> {{item.descripcion_actividad}}</p>
+            </div>
         </div>
-       </div>
     </div>
-    <div class="p-col-1"></div>    
+    <div class="p-col-1"></div>
 
 </div>

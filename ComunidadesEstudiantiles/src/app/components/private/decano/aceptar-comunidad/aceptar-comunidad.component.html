@@ -20,8 +20,7 @@
                             </ng-template>
                             
                             <ng-template pTemplate="footer">
-                                <p-button class="boton-card" (click)="show(item.external_comunidad)" icon="pi pi-info-circle" label="Ver Información"
-                                    icon="pi pi-check"></p-button>
+                                <button class="button-detalles" (click)="show(item.external_comunidad)"><i class="pi pi-info-circle"> Ver Información</i></button>
                             </ng-template>
                         </p-card>
                     </div>
@@ -35,9 +34,11 @@
                         <h3>Visión</h3>
                             <p>{{comunidad.vision}}</p>
                             <form [formGroup]="rechazarComunidadForm">
-                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Descripción de la Comunidad" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                                <h3>Puede insetar sus Observaciones</h3>
+                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                                <br><br>
                                 <button class="button" (click)="aceptarComunidad(comunidad.external_comunidad)"><i class="pi pi-check">Aceptar Comunidad</i></button>
-                                <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"><i class="pi pi-times">Rechazar Comunidad</i></button>
+                                <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"><i class="pi pi-times"> Rechazar Comunidad</i></button>
                                 
                             </form>
 

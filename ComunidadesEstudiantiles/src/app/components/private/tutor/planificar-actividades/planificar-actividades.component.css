@@ -26,8 +26,18 @@ small{
 .less{
     padding: 2%;
 }
+
+.card textarea, input{
+    width: 100%;
+}
+.act{
+    padding: 1%;
+}
 @media only screen and (max-width: 900px) {
     .cuerpo{
-        padding-top: 20%;
+        padding-top: 10%;
+    }
+    .button, .button-delete, .add{
+        padding: 2%;
     }
 }

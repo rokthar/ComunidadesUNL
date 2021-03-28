@@ -24,4 +24,13 @@
     width: 20%;
     opacity: 60%;
 }
-
+.button-detalles{
+    padding: 4%;
+    width: 100%;
+}
+.img-container{
+    text-align: center;
+}
+.caja-texto{
+    width: 100%;
+}

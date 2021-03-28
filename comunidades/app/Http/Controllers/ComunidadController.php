@@ -54,12 +54,9 @@ class ComunidadController extends Controller{
         $file = $request->file('file');
         $ruta= '../imagenes/comunidad';
         $image_name = time().$file->getClientOriginalName();
-        //var_dump(json_encode($file)); -> ver que me devuelve
-        $codificar = file_get_contents($file);
-        $base64 = base64_encode($codificar);
         $file->move($ruta, $image_name);
         $comunidades = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $comunidades->ruta_logo = $base64;
+        $comunidades->ruta_logo = $image_name;
         $comunidades->save();
         return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
     }
