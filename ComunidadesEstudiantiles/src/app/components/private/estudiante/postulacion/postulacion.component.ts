@@ -16,6 +16,7 @@ import { MessageService } from 'primeng/api';
 })
 
 export class PostulacionComponent implements OnInit{
+    val: number = 1;
     public titulo: string;
     postulacionComunidadForm: FormGroup;
     private params;
@@ -58,7 +59,6 @@ export class PostulacionComponent implements OnInit{
     enviar(){
         const values = this.postulacionComunidadForm.getRawValue();
         console.log(values);
-        //console.log(this.params.external_docente);  
         this.postulacion_service.postularseComunidad(this.params.external_estudiante,this.external_c).subscribe((resp:any)=>{
           console.log(resp); //revisar el console.log y falta el subir imagen y el desabilitar esta pag cuando un docente ya alla enviado la solicitud
           this.postulacion_service.detallePostulacion(values.habilidades,resp['external_postulacion']).subscribe((respu:any)=>{
@@ -82,6 +82,9 @@ export class PostulacionComponent implements OnInit{
       cancelar(){
         console.log("he sido funado");
         this._location.back();
+      }
+      slider(value){
+        this.val = value;
       }
 
       get getHabilidades(){

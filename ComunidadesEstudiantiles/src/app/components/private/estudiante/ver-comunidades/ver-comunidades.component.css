@@ -2,11 +2,8 @@
     text-align: center;
     padding-top: 2%;
 }
-.cuerpo{
-    width: 100%;
-}
 .comunidades{
-    padding-top: 5%;
+    padding-top: 7%;
 }
 .noData img{
     width: 20%;
@@ -14,19 +11,22 @@
 }
 .img-container{
     width: 100%;
-	height: 100px;
-    overflow: hidden;
+    padding-top: 3%;
+    text-align: center;
 }
 .img-container img.img{
-    object-fit: cover;
-    overflow: hidden;
+    width: 50%;
+    height: auto;
+}
+.card{
+    margin-bottom: 2%;
+}
+.button, .button-detalles{
+    padding: 3%;
 }
 @media only screen and (max-width: 900px) {
     .comunidades{
         padding-top: 20%;
-        width: 100%;
-    }
-    .card{
         width: 100%;
     }
 }

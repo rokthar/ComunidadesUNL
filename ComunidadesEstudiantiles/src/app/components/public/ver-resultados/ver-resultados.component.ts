@@ -18,6 +18,7 @@ export class VerResultadosComponent implements OnInit {
     imageSource: any;
     imagen = URL._imgResul;
     img_con = URL._imgCom;
+    imagenes: any=[];
     constructor(
         private _location: Location,
         private resultados_service: ResultadosService,

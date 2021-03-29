@@ -9,25 +9,33 @@
     width: 20%;
     opacity: 60%;
 }
-.tarjetas{
-    text-align: center;
+.button, .button-delete{
+    padding: 1%;
 }
-
-.card img{
-    width: 50%;
+.trash{
+    padding: 4%;
+    margin-top: 4%;
+    width: 100%;
 }
-
-.boton-card{
+.textbox{
+    margin-right: 2%;
+    margin-bottom: 1%;
     width: 100%;
 }
 
-.boton-card:active{
-    background-color: brown;
-}
 
-.textbox{
-    padding: 1% !important; 
-}
+  input[type=range]::-webkit-slider-runnable-track {
+    cursor: pointer;
+    background: #fdff72;
+    border-radius: 10px;
+    width: 100%;
+  }
+  input[type=range]::-moz-range-thumb{
+    border-radius: 5px;
+    background: #372e88;
+    cursor: pointer;
+  }
+
 
 @media only screen and (max-width: 900px) {
     .cuerpo{

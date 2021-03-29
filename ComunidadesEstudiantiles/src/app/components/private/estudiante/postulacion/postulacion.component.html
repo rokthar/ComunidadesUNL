@@ -7,19 +7,26 @@
     <div class="p-col-1"></div>
     <div class="p-col-10 cuerpo">
         <h1>{{titulo}}</h1>
-            <form [formGroup]="postulacionComunidadForm">
-                <div formArrayName="habilidades">
-                    <div *ngFor="let item of getHabilidades.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                        <input class="textbox" placeholder="Habilidad" formControlName="habilidad" /> 
-                        <input type="number" class="textbox" placeholder="Nivel" formControlName="nivel" min="1" max="5" />
-                        <button class="btn-danger" (click)="less(pointIndex)"><i class="pi pi-trash"></i></button>
-                    </div>
-                </div><br>
-                <button class="btn" (click)="add()"><i class="pi pi-plus"></i></button>
-                <br><br>
-                <button class="btn" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Enviar Postulación</button>
-                <button class="btn-danger" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
-            </form>
+        <form [formGroup]="postulacionComunidadForm">
+            <div class="p-grid" formArrayName="habilidades">
+                <div class="p-col-12 p-lg-3 p-md-6 p-sm-12 card"
+                    *ngFor="let item of getHabilidades.controls; let pointIndex=index" [formGroupName]="pointIndex">
+                    <p-card header="Habilidad"
+                        [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#a9b5ec'}">
+                        <input pInputText class="textbox" placeholder="Habilidad" formControlName="habilidad" />
+                        <br><br>
+                        <input pInputText type="number" class="textbox" placeholder="Nivel" formControlName="nivel" min="1" max="5" />
+                        <br><button class="button-delete trash" (click)="less(pointIndex)"><i class="pi pi-trash">
+                                Eliminar</i></button>
+                    </p-card>
+                </div>
+            </div><br>
+            <button class="button" (click)="add()"><i class="pi pi-plus"></i></button>
+            <br><br>
+            <button class="button" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()"><i
+                    class="pi pi-send"></i> Enviar Postulación</button>
+            <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+        </form>
     </div>
     <div class="p-col-1"></div>
 </div>

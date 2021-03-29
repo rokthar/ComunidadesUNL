@@ -22,6 +22,8 @@ export class VerComunidadesComponent implements OnInit{
     postulado: boolean;
     datosPostulacion="";
     imagen = URL._imgCom;
+    comunidad="";
+    displayModal: boolean;
     constructor(
         private comunidad_service:ComunidadService,
         public router:Router,
@@ -52,5 +54,13 @@ export class VerComunidadesComponent implements OnInit{
         sessionStorage.setItem('datosComunidad',external_comunidad);
         this.router.navigateByUrl(Rutas.postulacion);
 
+    }
+    detalles(external_comunidad){
+        this.displayModal=true
+        for(let i in this.lista){
+            if(this.lista[i].external_comunidad == external_comunidad){
+                this.comunidad = this.lista[i];
+            }
+        }
     }
 }
