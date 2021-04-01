@@ -48,10 +48,16 @@ export class MenuGestorComponent implements OnInit {
                 ]
             },
             {
+                label: 'Configuraciones',
+                icon: 'pi pi-cog',
+                command: () => this.links('configuraciones')
+            },
+            {
                 label: 'Cerrar Sesión',
                 icon: 'pi pi-power-off',
                 command: () => this.mensaje()
             }
+            
         ]
     }
     links(opcion){
@@ -61,6 +67,9 @@ export class MenuGestorComponent implements OnInit {
                 break;
             case 'validarActividades':
                 this.router.navigateByUrl(Rutas.validarActividades);
+                break;
+            case 'configuraciones':
+                this.router.navigateByUrl(Rutas.configuracionesGestor);
                 break;
             default:
                 break;

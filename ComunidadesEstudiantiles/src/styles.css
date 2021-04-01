@@ -5,7 +5,7 @@ body{
     padding: 0%;
     margin: 0%;
 }
-h1, h2, h3, h4, p, small, a, span{
+h1, h2, h3, h4, p, small, a, span, label{
     font-family: 'Montserrat', sans-serif;
 }
 p{
@@ -44,4 +44,88 @@ a{
     border-radius: 5px;
     border-style: none;
     cursor: pointer;
+}
+
+/* SIDE MENU GENERAL */
+#header{
+    background-color: #1d3557;
+    position: fixed;
+    width: 50px;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    padding-top: 11%;
+    text-align: center;
+    visibility: hidden;
+    z-index: 20;
+}
+#header .barras{
+    color: #fafafa;
+    cursor: pointer;
+}
+
+#sidemenu{
+    background-color: #1d3557;
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    top: 0%;
+    left: 0%;
+    padding-top: 5%;
+    z-index: 21;
+}
+#sidemenu #header .barras{
+    visibility: hidden;
+}
+#sidemenu #profile{
+    padding: 5%;
+    text-align: center;
+    border-bottom: solid 1px #071831;
+}
+#sidemenu #profile img{
+    width: 50%;
+}
+#sidemenu #items .item{
+    padding-top: 5%;
+    padding-bottom: 5%;
+    cursor: pointer;
+}
+#sidemenu #items .item:hover{
+    background-color: #071831;
+}
+#sidemenu #items .item a{
+    color: #fafafa;
+    padding-left: 10%;
+    font-size: 14px;
+}
+
+.mostrar{
+    margin-left: 0px;
+    margin-top: 14% !important;
+    padding-top: 0% !important;
+    z-index: 25;
+}
+@media only screen and (max-width: 900px) {
+    .ocultar{
+        margin-left: -200px;
+    }
+    #header{
+        visibility: visible;
+    }
+}
+
+
+
+
+.nav{
+    position: fixed;
+    width: 100%;
+    z-index: 30;
+    background-color: #1d3557;
+    color: #fafafa;
+}
+.nav .user{
+    text-align: right;
+    padding-right: 3%;
+    padding-top: 2%;
 }

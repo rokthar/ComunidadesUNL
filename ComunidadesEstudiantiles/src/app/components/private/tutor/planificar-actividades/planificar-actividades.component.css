@@ -30,8 +30,9 @@ small{
 .card textarea, input{
     width: 100%;
 }
-.act{
-    padding: 1%;
+
+.calendatio{
+    padding: 5%;
 }
 @media only screen and (max-width: 900px) {
     .cuerpo{

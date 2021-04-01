@@ -1,10 +1,12 @@
 <p-toast position="top-center" key="tc"></p-toast>
 <div class="p-grid container">
-    <div class="p-lg-12 menu-tutor">
+    <div id="nav" class="p-col-12">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-col-1"></div>    
-    <div class="p-lg-10 cuerpo">
+    <div class="p-col-2">
+        <sidemenu-tutor></sidemenu-tutor>
+    </div>  
+    <div class="p-col-9 cuerpo">
         <h1>{{titulo}}</h1>
         <form [formGroup]="generarResultadosForm">
             <h3>Inserte el Resumen del Resultado</h3>

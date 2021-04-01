@@ -32,7 +32,7 @@ export class VerActividadesComponent implements OnInit{
         if(this.params != null && this.params.tipo_docente=="5"){
             this.estaLogeado=true;
             this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com:any)=>{
-                this.actividad_service.listarPlanificacionByComunidad(com.external_comunidad).subscribe((act:any)=>{
+                this.actividad_service.actividadesGenerarResultados(com.external_comunidad).subscribe((act:any)=>{
                     this.actividades = act;
                     if(this.actividades != null){
                         this.hayDatos = true;

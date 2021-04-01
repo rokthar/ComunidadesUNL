@@ -121,7 +121,7 @@ class ComunidadController extends Controller{
                 $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $comunidad->estado = 2;
                 $comunidad->save();
-                $enviar->enviarMail("Decano/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido validada por el Gestor de la Carrera <br> ".$data["comentario"]);
+                // $enviar->enviarMail("Decano/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido validada por el Gestor de la Carrera <br> ".$data["comentario"]);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }
@@ -272,6 +272,24 @@ class ComunidadController extends Controller{
             "nombre_comunidad" => $comunidad->nombre_comunidad,
             "external_comunidad"=>$comunidad->external_comunidad,
             "ruta_logo"=>$comunidad->ruta_logo
+        ];
+        self::estadoJson(200, true, '');
+        return response()->json($datos, $estado);
+    }
+
+    public function BuscarComunidadExternal($external_comunidad){
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
+        $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
+        $docente = docente::where("id",$comunidad->tutor)->first();
+
+        $datos['data'] = [
+            "nombre_comunidad" => $comunidad->nombre_comunidad,
+            "external_comunidad"=>$comunidad->external_comunidad,
+            "tutor"=>$docente->nombres." ".$docente->apellidos,
+            "descripcion"=>$comunidad->descripcion,
+            "mision"=>$comunidad->mision,
+            "vision"=>$comunidad->vision
         ];
         self::estadoJson(200, true, '');
         return response()->json($datos, $estado);

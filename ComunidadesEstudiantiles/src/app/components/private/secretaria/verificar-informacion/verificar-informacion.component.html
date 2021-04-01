@@ -4,8 +4,8 @@
     <div class="p-col-12">
         <menu-secretaria></menu-secretaria>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
+    <div class="p-col-2"><sidemenu-secretaria></sidemenu-secretaria></div>
+    <div class="p-col-9 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="tarjetas p-grid">
                 <div class="p-lg-4 p-md-6 p-sm-12 card" *ngFor="let item of lista">
@@ -39,7 +39,7 @@
                 </form>
         </p-dialog> 
     </div>
-    <div class="p-col-10 noData" *ngIf="!hayDatos">
+    <div class="p-col-9 noData" *ngIf="!hayDatos">
         <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY NINGUNA SOLICITUD DE COMUNIDAD</h3>
     </div>

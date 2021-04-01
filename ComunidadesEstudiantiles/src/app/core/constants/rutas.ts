@@ -18,4 +18,5 @@ export class Rutas{
     public static verActividades = 'admin/tutor/ver-actividades';
     public static reporteActividades = 'admin/tutor/reporte-actividades';
     public static visualizarResultados = 'admin/miembro/visualizar-resultados';
+    public static configuracionesGestor = 'admin/gestor/configuraciones';
   }

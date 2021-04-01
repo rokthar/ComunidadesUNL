@@ -17,7 +17,9 @@ import {FileUploadModule} from 'primeng/fileupload';
 import {DialogModule} from 'primeng/dialog';
 import {ToastModule} from 'primeng/toast';
 import {MenubarModule} from 'primeng/menubar';
-
+import {TabViewModule} from 'primeng/tabview';
+import {SlideMenuModule} from 'primeng/slidemenu';
+import {InplaceModule} from 'primeng/inplace';
 @NgModule({
   imports: [
     ButtonModule,
@@ -37,6 +39,9 @@ import {MenubarModule} from 'primeng/menubar';
     DialogModule,
     ToastModule,
     MenubarModule,
+    TabViewModule,
+    SlideMenuModule,
+    InplaceModule
   ],
   exports: [
     ButtonModule,
@@ -56,6 +61,9 @@ import {MenubarModule} from 'primeng/menubar';
     DialogModule,
     ToastModule,
     MenubarModule,
+    TabViewModule,
+    SlideMenuModule,
+    InplaceModule
   ],
   bootstrap: [AppComponent]
 })

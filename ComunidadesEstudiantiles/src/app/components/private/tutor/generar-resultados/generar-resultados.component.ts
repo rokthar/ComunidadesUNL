@@ -54,9 +54,6 @@ export class GenerarResultadosComponent implements OnInit {
 
     enviar() {
         const values = this.generarResultadosForm.getRawValue();
-        console.log(values);
-        console.log(this.ext_det_act);
-        console.log(this.imagenesResultado);
         for (let i = 0; i < this.imagenesResultado.length; i++) {
             if ((this.imagenesResultado[0].size <= 2000000) && (this.imagenesResultado[0].type == "image/jpeg")
                 || (this.imagenesResultado[0].type == "image/jpg") || (this.imagenesResultado[0].type == "image/png")) {
@@ -66,7 +63,6 @@ export class GenerarResultadosComponent implements OnInit {
         }
         if(this.img == true){
             this.resultados_service.registrarResultado(values, this.ext_det_act).subscribe((resp: any) => {
-                console.log(resp);
                 for (let i = 0; i < this.imagenesResultado.length; i++) {
                     let form = new FormData();
                     form.append('file', this.imagenesResultado[i]);

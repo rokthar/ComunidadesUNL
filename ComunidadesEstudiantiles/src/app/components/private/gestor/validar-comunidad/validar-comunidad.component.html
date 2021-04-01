@@ -4,14 +4,12 @@
     <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-col-10 contenedor" *ngIf="hayDatos">
+    <div class="p-col-2"><sidemenu-gestor></sidemenu-gestor></div>
+    <div class="p-col-9 contenedor" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
-            <div class="p-md-12 p-lg-12">
-                <div *ngFor="let item of lista">
-                    <div class="p-lg-2 p-md-3 p-sm-12 card">
-                        <p-card header="Comunidad {{item.nombres}}" subheader="Tutor: {{item.tutor}}" [style]="{width: '300px'}"
+                    <div class="p-lg-4 p-md-3 p-sm-12 card" *ngFor="let item of lista">
+                        <p-card header="Comunidad {{item.nombres}}" subheader="Tutor: {{item.tutor}}" [style]="{width: '100%', 'height':'400px'}"
                             styleClass="p-card-shadow">
                             <ng-template pTemplate="header">
                                 <div class="img-container">
@@ -25,8 +23,6 @@
                             </ng-template>
                         </p-card>
                     </div>
-                </div>
-            </div>
             <div>
                 <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [(visible)]="displayModal" [style]="{width: '70vw'}"
                     [baseZIndex]="10000">
@@ -53,7 +49,7 @@
             </div>
         </div>
     </div>
-    <div class="noData p-col-10" *ngIf="!hayDatos">
+    <div class="noData p-col-9" *ngIf="!hayDatos">
         <img src="/assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>

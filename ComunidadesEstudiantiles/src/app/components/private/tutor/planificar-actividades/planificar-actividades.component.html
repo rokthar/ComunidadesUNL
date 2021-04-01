@@ -1,11 +1,13 @@
 <p-toast position="top-center" key="tc"></p-toast>
 
 <div class="p-grid container">
-    <div id="nav" class="p-lg-12">
+    <div id="nav" class="p-col-12">
         <menu-tutor></menu-tutor>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-lg-10 cuerpo" *ngIf="!hayDatos">
+    <div class="p-col-2">
+        <sidemenu-tutor></sidemenu-tutor>
+    </div>
+    <div class="p-col-9 cuerpo" *ngIf="!hayDatos">
         <h1>{{titulo}}</h1>
         <small><strong>Nota:</strong> Recuerde revisar el calendario Académico para poder Planificar sus
             Actividaes</small><br><br>
@@ -35,15 +37,24 @@
         </form>
     </div>
 
-    <div class="p-lg-10 cuerpo" *ngIf="hayDatos">
+    <div class="p-col-9 cuerpo" *ngIf="hayDatos">
+        <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
         <div class="p-grid">
-            <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
-            <div class="p-col-12 activ" *ngFor="let item of listaActividades">
-                <p><b>Fecha:</b> {{item.fecha_inicio}}</p>
-                <p><b>Actividad:</b> {{item.nombre_actividad}}</p>
-                <p><b>Descripción:</b> {{item.descripcion_actividad}}</p>
+            <div class="p-col-12 p-lg-7 calendario">
+                <full-calendar class="fecha" [options]="calendarOptions"></full-calendar>   
             </div>
         </div>
+        <p-dialog header="Actividades" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
+            <p-tabView>
+                <p-tabPanel [header]="item.nombre_actividad" *ngFor="let item of actividad; let i = index" [selected]="i == 0">
+                    <p><strong>Fecha Inicio </strong>{{item.fecha_inicio}}</p>
+                    <h3>Descripción</h3>
+                    <p>{{item.descripcion_actividad}}</p>
+                    <h3>Estado de la Actividad</h3>
+                    <h4>{{item.estado}}</h4>
+                </p-tabPanel>
+            </p-tabView>
+        </p-dialog>
     </div>
     <div class="p-col-1"></div>
 

@@ -64,6 +64,7 @@ $router->post('/comunidad/terminaractividad/{external_comunidad}', 'ActividadCon
 //DETALLE ACTIVIDADES
 $router->post('/comunidad/detalleactividad/{external_actividades}', 'ActividadController@RegistrarDetalleActividad');
 $router->get('/comunidad/listar/actividades/{external_comunidad}', 'ActividadController@ListarPlanificacionByComunidad');
+$router->get('/comunidad/generar/resultados/{external_comunidad}', 'ActividadController@ListarPlanificacionResultados');
 
 
 //POSTULACION
@@ -98,4 +99,12 @@ $router->get('/comunidad/listar/resultadoscomunidad/{external_comunidad}', 'Resu
 $router->get('/ver/resultado/{external_resultado}', 'ResultadoController@listarResultado');
 $router->get('/comunidad/presentar/resultado/miembros/{external_estudiante}', 'ResultadoController@listarResultadosByEstudiante');
 
-$router->post('/utilidad/emviar-mail', 'MailController@enviarMail');
+$router->post('/utilidad/emviar-mail', 'MailController@mailAdjunto');
+
+// configuraciones
+$router->post('/configuracion/mail', 'ConfiguracionController@editarMail');
+$router->post('/configuracion/dias', 'ConfiguracionController@editarDias');
+
+$router->get('/configuracion/ver', 'ConfiguracionController@listarConf');
+
+$router->get('/comunidad/buscar-comunidad/{external_comunidad}', 'ComunidadController@BuscarComunidadExternal');

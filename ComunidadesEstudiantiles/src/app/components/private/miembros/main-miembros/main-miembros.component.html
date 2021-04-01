@@ -1,9 +1,9 @@
 <div class="p-grid container">
-    <div class="p-col-121">
+    <div class="p-col-12">
         <menu-miembros></menu-miembros>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
+    <div class="p-col-2"><sidemenu-miembros></sidemenu-miembros></div>
+    <div class="p-col-9 cuerpo" *ngIf="hayDatos">
         <h2>{{titulo}}</h2>
         <div *ngFor="let item of resultados">
             <div class="p-lg-4 p-md-6 p-sm-12 card" >
@@ -18,13 +18,13 @@
                     <br>
                     <small>Fecha de Fin: {{item.fecha_fin}}</small>
                     <ng-template pTemplate="footer">
-                        <p-button label="Ver Mas" (click)="enviar(item.external_resultado)" class="boton-mas" icon="pi pi-plus"></p-button>
+                        <button class="button-detalles" (click)="enviar(item.external_resultado)"><i class="pi pi-info-circle"> Ver Resultado</i></button>
                     </ng-template>
                 </p-card>
             </div>
         </div>
     </div>
-    <div class="p-col-10 noData" *ngIf="!hayDatos">
+    <div class="p-col-9 noData" *ngIf="!hayDatos">
         <img src="/assets/advertencia.png" />
         <h3>POR EL MOMENTO NO HAY RESULTADOS DE NINGUNA ACTIVIDAD</h3>
     </div>

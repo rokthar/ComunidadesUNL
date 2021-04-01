@@ -1,9 +1,13 @@
 import { Location } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { ActividadesService } from 'src/app/services/actividaes.service';
 import { ComunidadService } from 'src/app/services/comunidad.service';
+import { CalendarOptions } from '@fullcalendar/angular';
+import { Calendar } from '@fullcalendar/core';
+import esLocale from '@fullcalendar/core/locales/es';
+
 declare var $: any;
 
 @Component({
@@ -15,7 +19,11 @@ declare var $: any;
 })
 
 export class planificarActividadesComponent implements OnInit {
+    public calendarOptions: CalendarOptions;
+    
+    date: Date;
 
+    @Output() change = new EventEmitter();
     titulo = "";
     logo_comunidad = "";
     private params: any;
@@ -23,6 +31,10 @@ export class planificarActividadesComponent implements OnInit {
     ocultar = "ocultar";
     hayDatos: boolean = false;
     listaActividades;
+    actividad: any = [];
+    listaFechas: any = [];
+    invalidDates: any;
+    displayModal: boolean;
 
     constructor(
         private _builder: FormBuilder,
@@ -39,6 +51,10 @@ export class planificarActividadesComponent implements OnInit {
     }
 
     ngOnInit(): void {
+        let today = new Date();
+        let invalidDate = new Date();
+        invalidDate.setDate(today.getDate() - 1);
+        this.invalidDates = [today, invalidDate];
 
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if (this.params != null && this.params.tipo_docente == "5") {
@@ -47,18 +63,39 @@ export class planificarActividadesComponent implements OnInit {
                 this.actividades_service.listarPlanificacionByComunidad(resp.external_comunidad).subscribe((lista: any) => {
                     if (lista != null) {
                         this.listaActividades = lista;
+                        console.log(this.listaActividades);
+                        for (let i = 0; i < this.listaActividades.length; i++) {
+                                this.listaFechas.push({ "title": this.listaActividades[i].nombre_actividad, "date": this.listaActividades[i].fecha_inicio });
+                        }
                         this.hayDatos = true;
+                        console.log(this.listaFechas);
                     }
                 });
             });
         } else {
             this._location.back();
         }
-
+        this.calendarOptions = {
+            initialView: 'dayGridMonth',
+            locale: esLocale,
+            dateClick: this.handleDateClick.bind(this), // bind is important!
+            events: this.listaFechas
+        };
     }
 
     get getActividades() {
         return this.planificarActividadesForm.get('actividades') as FormArray;
+    }
+
+    handleDateClick(arg) {
+        this.displayModal=true;
+        this.actividad = [];
+        for (let i = 0; i < this.listaActividades.length; i++) {
+            if(arg.dateStr == this.listaActividades[i].fecha_inicio){
+                this.actividad.push(this.listaActividades[i]);
+            }
+        }
+        console.log(this.actividad);
     }
 
     add() {
@@ -92,6 +129,28 @@ export class planificarActividadesComponent implements OnInit {
     cancelar() {
         this.planificarActividadesForm.reset();
     }
+
+    selecDate(event) {
+        this.actividad = [];
+        let dateCalendar = "";
+        let año1 = new Date(event).getFullYear();
+        let mes1 = new Date(event).getMonth() + 1;
+        let dia1 = new Date(event).getDate();
+        dateCalendar = año1 + "-" + mes1 + "-" + dia1;
+        console.log(dateCalendar);
+        for (let i = 0; i < this.listaActividades.length; i++) {
+            let fecha = "";
+            let año = new Date(this.listaActividades[i].fecha_inicio).getFullYear();
+            let mes = new Date(this.listaActividades[i].fecha_inicio).getMonth() + 1;
+            let dia = new Date(this.listaActividades[i].fecha_inicio).getDate() + 1;
+            fecha = año + "-" + mes + "-" + dia;
+            if (fecha == dateCalendar) {
+                this.actividad.push(this.listaActividades[i]);
+            }
+        }
+
+    }
+
 
 
 

@@ -18,6 +18,7 @@ import { VerComunidadesTutorComponent } from './tutor/ver-comunidades-tutor/ver-
 import { VerActividadesComponent } from './tutor/ver-actividades/ver-actividades.component';
 import { ReporteActividadesComponent } from './tutor/reporte-actividades/reporte-actividades.component';
 import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/visualizar-resultados.component';
+import { ConfiguracionComponent } from './gestor/configuracion/configuracion.component';
 
 const routes: Routes = [
   {path:'docente/registrar-comunidad',component: RegistrarComunidadComponent},
@@ -36,7 +37,8 @@ const routes: Routes = [
   {path:'tutor/ver-comunidades-tutor',component:VerComunidadesTutorComponent},
   {path:'tutor/ver-actividades', component:VerActividadesComponent},
   {path:'tutor/reporte-actividades',component:ReporteActividadesComponent},
-  {path:'miembro/visualizar-resultados', component:VisualizarResultadosComponent}
+  {path:'miembro/visualizar-resultados', component:VisualizarResultadosComponent},
+  {path:'gestor/configuraciones', component:ConfiguracionComponent}
 
 ]
 

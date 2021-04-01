@@ -33,13 +33,13 @@ export class MenuDocenteComponent implements OnInit {
                         label: 'Registrar',
                         icon: 'pi pi-file',
                         command: () => this.links('registrarComunidad')
-                    },
-                    {
-                        label: 'Cerrar Sesión',
-                        icon: 'pi pi-power-off',
-                        command: () => this.mensaje()
                     }
                 ]
+            },
+            {
+                label: 'Cerrar Sesión',
+                icon: 'pi pi-power-off',
+                command: () => this.mensaje()
             }
         ];
     }

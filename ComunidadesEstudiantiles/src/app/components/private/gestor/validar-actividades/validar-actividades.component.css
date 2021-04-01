@@ -11,6 +11,7 @@ p{
 }
 .img-container{
     width: 100%;
+    text-align: center
 }
 .img{
     text-align: center;
@@ -41,6 +42,10 @@ p{
     margin: 0.5%;
     font-size: 12pt;
     font-family: 'Montserrat', sans-serif;
+}
+.button-detalles{
+    width: 100%;
+    padding: 3%;
 }
 @media only screen and (max-width: 900px) {
     .actividades{

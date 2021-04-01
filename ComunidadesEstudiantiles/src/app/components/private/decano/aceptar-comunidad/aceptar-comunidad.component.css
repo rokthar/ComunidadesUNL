@@ -12,7 +12,7 @@
     padding-top: 5%;
 }
 .cuerpo{
-    padding-top: 5%;
+    padding-top: 0%;
 }
 .button{
     padding: 1%;
@@ -33,4 +33,9 @@
 }
 .caja-texto{
     width: 100%;
+}
+@media only screen and (max-width: 900px) {
+    .cuerpo{
+        padding: 5%;
+    }
 }

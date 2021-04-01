@@ -4,11 +4,13 @@
     <div class="p-col-12">
         <menu-decano></menu-decano>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-col-10 cuerpo" *ngIf="hayDatos">
+    <div class="p-col-2">
+        <sidemenu-decano></sidemenu-decano>
+    </div>
+    <div class="p-col-9 cuerpo" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
-            <div class="p-md-12 p-lg-12">
+            <!-- <div class="p-md-12 p-lg-12"> -->
                 <div *ngFor="let item of lista">
                     <div class="p-lg-2 p-md-6 p-sm-12 card">
                         <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '300px'}"
@@ -44,10 +46,10 @@
 
                     </p-dialog> 
                 </div>
-            </div>
+            <!-- </div> -->
         </div>
     </div>
-    <div class="noData p-col-10" *ngIf="!hayDatos">
+    <div class="noData p-col-9" *ngIf="!hayDatos">
         <img src="/assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>

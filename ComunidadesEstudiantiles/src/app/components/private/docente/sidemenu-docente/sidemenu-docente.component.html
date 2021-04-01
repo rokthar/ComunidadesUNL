@@ -1,0 +1,21 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-col-2">
+    <div id="header">
+        <i class="pi pi-bars barras" (click)="expanded()"></i>
+    </div>
+    <div id="sidemenu" [class]="sidemenu">
+        <div id="profile">
+            <img src="../../../../../assets/UNL3.jpg" />
+        </div>
+        <div id="items">
+            <div class="item">
+                <a routerLink='../registrar-comunidad' routerLinkActivate="active"><i class="pi pi-user"> Crear Comunidad</i></a>
+            </div>
+            <div class="item">
+                <a (click)="mensaje()"><i class="pi pi-power-off icon"></i> <span> Cerrar Sesión</span></a>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -1,15 +1,11 @@
 <p-toast position="top-center" key="tc"></p-toast>
 
-<div class="p-grid">
-    <div class="p-col-12">
-        <p-menubar class="nav" [model]="items">
-            <ng-template pTemplate="start">
-                <img src="/assets/UNL3.jpg" height="40" class="p-mr-2">
-            </ng-template>
-            <ng-template pTemplate="end">
-                <span>Decano: {{params.nombres}} {{params.apellidos}}</span>
-            </ng-template>
-        </p-menubar>
+<div class="p-grid nav">
+    <div class="p-col-3">
+    </div>
+    <div class="p-col-9 user">
+        <span>{{params.nombres}} {{params.apellidos}}</span><br>
+        <small>Decano</small>
     </div>
 </div>
 <!-- 

@@ -2,8 +2,8 @@
     <div class="p-col-12">
         <menu-estudiante></menu-estudiante>
     </div>
-    <div class="p-col-1"></div>
-    <div class="p-col-10 comunidades" *ngIf="!postulado">
+    <div class="p-col-2"><sidemenu-estudiante></sidemenu-estudiante></div>
+    <div class="p-col-2 comunidades" *ngIf="!postulado">
         <div class="p-grid cuerpo">
             <div class="card p-col-12 p-sm-6 p-md-6 p-lg-3" *ngFor="let item of lista">
                 <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '100%', 'background-color':'#D6DEED'}"
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="noData p-lg-10" *ngIf="postulado">
+    <div class="noData p-lg-2" *ngIf="postulado">
         <img src="/assets/advertencia.png" />
         <p>Por el momento ya cuenta con una solicitud de Postulación a la Comunidad {{datosPostulacion.comunidad}}</p>
     </div>

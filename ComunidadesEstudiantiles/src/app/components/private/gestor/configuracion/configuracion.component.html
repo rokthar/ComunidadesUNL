@@ -1,0 +1,30 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-grid container">
+    <div class="p-col-12">
+        <menu-gestor></menu-gestor>
+    </div>
+    <div class="p-col-2"><sidemenu-gestor></sidemenu-gestor></div>
+    <div class="p-col-9 configuraciones">
+        <h2>CONFIGURACIONES</h2>
+        
+            <form [formGroup]="configuracionesForm">
+                <div *ngFor="let item of configuracion">
+                <div>
+                    <h3>Servidor de Correos</h3>
+                    <label>Host </label><input type="text" pInputText placeholder="{{item.host}}" formControlName="host"/><br><br>
+                    <label>Correo </label><input type="email" pInputText placeholder="{{item.correo}}" formControlName="correo"/><br><br>
+                    <label>Contraseña </label><input type="password" pInputText formControlName="clave"/><br><br>
+                    <label>Repetir Contraseña </label><input type="password" formControlName="repclave" pInputText /><br><br>
+                </div>
+                <div>
+                    <h3>Días Máximos para la revisión de Actividades</h3>
+                    <label>Días </label><input type="number" min="1" pInputText placeholder="{{item.dias}}" formControlName="dias" />
+                </div>
+                <br><br>
+                <button [disabled]="configuracionesForm.invalid" class="button" (click)="guardar()"><i class="pi pi-save"> Guardar</i></button>
+            </div>
+            </form>
+        
+    </div>
+    <div class="p-col-1"></div>

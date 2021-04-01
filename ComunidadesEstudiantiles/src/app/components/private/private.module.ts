@@ -28,7 +28,22 @@ import { VerComunidadesTutorComponent } from './tutor/ver-comunidades-tutor/ver-
 import { VerActividadesComponent } from './tutor/ver-actividades/ver-actividades.component';
 import { ReporteActividadesComponent } from './tutor/reporte-actividades/reporte-actividades.component';
 import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/visualizar-resultados.component';
+import { ConfiguracionComponent } from './gestor/configuracion/configuracion.component';
+import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
+import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin
+import interactionPlugin from '@fullcalendar/interaction'; // a plugin
+import { SideMenuTutorComponent } from './tutor/sidemenu-tutor/sidemenu-tutor.component';
+import { SideMenuDecanoComponent } from './decano/sidemenu-decano/sidemenu-decano.component';
+import { SideMenuEstudianteComponent } from './estudiante/sidemenu-estudiante/sidemenu-estudiante.component';
+import { SideMenuGestorComponent } from './gestor/sidemenu-gestor/sidemenu-gestor.component';
+import { SideMenuMiembrosComponent } from './miembros/sidemenu-miembros/sidemenu-miembros.component';
+import { SideMenuSecretariaComponent } from './secretaria/sidemenu-secretaria/sidemenu-secretaria.component';
+import { SideMenuDocenteComponent } from './docente/sidemenu-docente/sidemenu-docente.component';
 
+FullCalendarModule.registerPlugins([ // register FullCalendar plugins
+  dayGridPlugin,
+  interactionPlugin
+]);
 
 @NgModule({
   declarations: [
@@ -55,7 +70,15 @@ import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/
     VerComunidadesTutorComponent,
     VerActividadesComponent,
     ReporteActividadesComponent,
-    VisualizarResultadosComponent
+    VisualizarResultadosComponent,
+    ConfiguracionComponent,
+    SideMenuTutorComponent,
+    SideMenuDecanoComponent,
+    SideMenuEstudianteComponent,
+    SideMenuGestorComponent,
+    SideMenuMiembrosComponent,
+    SideMenuSecretariaComponent,
+    SideMenuDocenteComponent
   ],
   exports:[
   ],
@@ -65,7 +88,8 @@ import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/
     FormsModule,
     ReactiveFormsModule,
     PrimeNgModule,
-    CommonModule
+    CommonModule,
+    FullCalendarModule
   ],
   providers: []
 })

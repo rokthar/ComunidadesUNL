@@ -1,4 +1,13 @@
 .nav{
     position: fixed;
-    width: 100%
+    width: 100%;
+    z-index: 30;
+    background-color: #1d3557;
+    color: #fafafa;
+    right: 0%;
+}
+.nav .user{
+    text-align: right;
+    padding-right: 3%;
+    padding-top: 2%;
 }

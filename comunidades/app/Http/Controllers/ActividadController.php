@@ -176,7 +176,37 @@ class ActividadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $listas = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->get();
+        $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+
+        $data = array();
+        foreach ($listas as $lista) {
+            $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
+
+            foreach ($actividades as $act) {
+                if($act->estado == 1){
+                    $estado = "Completada";
+                }else if($act->estado == 2){
+                    $estado = "Por Completar";
+                }
+                $datos['data'][] = [
+                    "nombre_actividad"=>$act->nombre_actividad,
+                    "descripcion_actividad"=>$act->descripcion_actividad,
+                    "fecha_inicio"=>$act->fecha_inicio,
+                    "external_det_actividad"=>$act->external_detact,
+                    "estado"=>$estado
+                ];
+            }
+        }
+        
+        self::estadoJson(200, true, '');
+        return response()->json($datos, $estado);
+    }
+
+    public function ListarPlanificacionResultados($external_comunidad){
+        global $estado, $datos;
+        self::iniciarObjetoJSon();
+        $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
+        $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
 
         $data = array();
         foreach ($listas as $lista) {

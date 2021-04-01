@@ -33,6 +33,9 @@ export class ActividadesService {
    listarPlanificacionByComunidad(external_comunidad){
     return this.http.get(URL._url+"comunidad/listar/actividades/"+external_comunidad).pipe(pluck('data'));
    }
+   actividadesGenerarResultados(external_comunidad){
+    return this.http.get(URL._url+"comunidad/generar/resultados/"+external_comunidad).pipe(pluck('data'));
+   }
 
    aceptarActividades(values,external_actividades){
     return this.http.post(URL._url+"comunidad/activaractividad/"+external_actividades,values);

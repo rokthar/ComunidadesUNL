@@ -61,6 +61,10 @@ export class ComunidadService {
     return this.http.get(URL._url+"tutor/buscar/comunidad/"+external_docente).pipe(pluck('data'));
   }
 
+  buscarComunidad(external_comunidad){
+    return this.http.get(URL._url+"comunidad/buscar-comunidad/"+external_comunidad).pipe(pluck('data'));
+  }
+
   subirImagen(file,external_comunidad){
     return this.http.post(URL._url+"comunidad/subirimagen/"+external_comunidad,file);
   }

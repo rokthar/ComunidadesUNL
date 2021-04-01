@@ -1,0 +1,27 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-col-2">
+    <div id="header">
+        <i class="pi pi-bars barras" (click)="expanded()"></i>
+    </div>
+    <div id="sidemenu" [class]="sidemenu">
+        <div id="profile">
+            <img src="../../../../../assets/UNL3.jpg" />
+        </div>
+        <div id="items">
+            <div class="item">
+                <a routerLink='../validar-comunidad' routerLinkActivate="active"><i class="pi pi-check"> Validar Comunidad</i></a>
+            </div>
+            <div class="item">
+                <a routerLink='../validar-actividades' routerLinkActivate="active"><i class="pi pi-check"> Validar Actividades</i></a>
+            </div>
+            <div class="item">
+                <a routerLink='../configuraciones' routerLinkActivate="active"><i class="pi pi-cog"> Configuraciones</i></a>
+            </div>
+            <div class="item">
+                <a (click)="mensaje()"><i class="pi pi-power-off"></i> <span> Cerrar Sesión</span></a>
+            </div>
+
+        </div>
+    </div>
+</div>

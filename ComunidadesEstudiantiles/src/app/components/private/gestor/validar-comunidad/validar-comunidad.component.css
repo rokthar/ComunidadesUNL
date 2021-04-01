@@ -15,6 +15,9 @@ p{
     width: 20%;
     opacity: 60%;
 }
+.img-container{
+    text-align: center;
+}
 .img-container img{
     width: 50%;
 }
