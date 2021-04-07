@@ -96,8 +96,8 @@ class PostulacionController extends Controller{
             $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
             
             if($postulacionObj){
-                $postulacion->estado = 0;
-                $postulacion->save();
+                $postulacionObj->estado = 0;
+                $postulacionObj->save();
                 foreach ($detallePostulacionObj as $lista) {
                     $lista->estado = 0;
                     $lista->save();    
@@ -109,6 +109,28 @@ class PostulacionController extends Controller{
                 return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
             }
         }
+    }
+
+    public function CancelarPostulacion($external_estudiante){
+            $enviar = new MailController();
+            $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            $postulacion = postulacion::where("estado",2)->where("fk_estudiante",$estudiante->id)->first();
+            $detallePost = detallePostulacion::where("fk_postulacion",$postulacion->id)->get();
+            
+            if($postulacion){
+                $postulacion->estado = 0;
+                $postulacion->save();
+                foreach ($detallePost as $lista) {
+                    $lista->estado = 0;
+                    $lista->save();    
+                }
+                $enviar->enviarMail("Estudiante","Postulacion Cancelada","Su postulacion ha sido cancelada <br>");
+                $enviar->enviarMail("Tutor","Postulacion Cancelada","La Postulación del estudiante".$estudiante->nombres." ".$estudiante->apellidos."del cliclo".$estudiante->ciclo." ".$estudiante->paralelo." ha cancelado su postulación.");
+
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            }
     }
     
     
@@ -211,11 +233,27 @@ class PostulacionController extends Controller{
         self::iniciarObjetoJSon();
         $estudiante = estudiante::where("external_es",$external_estudiante)->first();
         $postulacion = postulacion::where("estado",2)->where("fk_estudiante",$estudiante->id)->first();
-        $comunidad = comunidad::where("id",$postulacion->fk_comunidad)->first();
-        $datos['data'] = [
-            "comunidad" => $comunidad->nombre_comunidad,
-            "siglas"=>"OE"
-        ];
+        if($postulacion){
+            $detallePost = detallePostulacion::where("fk_postulacion",$postulacion->id)->get();
+            $comunidad = comunidad::where("id",$postulacion->fk_comunidad)->first();
+            foreach ($detallePost as $detpos) {
+                $datadetpos[] =[
+                    "habilidad"=>$detpos->habilidad,
+                    "nivel"=>$detpos->nivel
+                ];
+            }
+            $datos['data'] = [
+                "comunidad" => $comunidad->nombre_comunidad,
+                "habilidades"=>$datadetpos,
+                "siglas"=>"OE"
+            ];
+        }else{
+            $datos['data'] = [
+                "mensaje"=>"No existen postulaciones",
+                "siglas"=>"NEP"
+            ];
+        }
+        
         self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     } 

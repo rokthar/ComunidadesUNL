@@ -13,8 +13,6 @@ class ConfiguracionController extends Controller{
             $configuracion=configuracion::where("id",1)->first();
             $configuracion->host = $data["host"];
             $configuracion->correo = $data["correo"];
-            // $clave = sha1($data["clave"] . "unl.");
-            $configuracion->clave = $data["clave"];
             $configuracion->dias = $data["dias"];
             $configuracion->save();
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
@@ -22,13 +20,16 @@ class ConfiguracionController extends Controller{
         }
     }
 
-    public function editarDias(Request $request){
+    public function editarClave(Request $request){
         if ($request->json()){
             $data = $request->json()->all();
             
             $configuracion=configuracion::where("id",1)->first();
-            $configuracion->dias = $data["dias"];
+            $configuracion->clave = $data["clave"];
             $configuracion->save();
+            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }else{
+            return response()->json(["mensaje"=>"Error en los datos", "siglas"=>"ED"],200);
         }
     }
 
@@ -36,7 +37,7 @@ class ConfiguracionController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $configuracion=configuracion::where("id",1)->first();
-        $datos['data'][] = [
+        $datos['data'] = [
             "host" => $configuracion->host,
             "correo"=>$configuracion->correo,
             "dias"=>$configuracion->dias

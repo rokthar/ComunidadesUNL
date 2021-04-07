@@ -23,7 +23,7 @@ p{
 
 /* Cuerpo en general */
 .cuerpo{
-    margin-top: 5%;
+    margin-top: 7%;
 }
 
 
@@ -59,4 +59,8 @@ p{
 }
 .img_resultados img{
     width: 100%;
+}
+
+.button{
+    padding: 1%;
 }

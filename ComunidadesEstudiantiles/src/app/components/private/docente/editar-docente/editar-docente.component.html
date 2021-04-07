@@ -1,0 +1,62 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-grid container">
+    <div class="p-col-12">
+        <menu-docente></menu-docente>
+    </div>
+    <div class="p-col-2">
+        <sidemenu-docente></sidemenu-docente>
+    </div>
+    <div class="p-col-9 cuerpo">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <h2>EDICIÓN DE TUS DATOS</h2>
+            </div>
+            <div class="p-col-4">
+                <h3>Nombres</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{nombres}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="nombres" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <h3>Apellidos</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{apellidos}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="apellidos" pInputText>
+                    </ng-template>
+                </p-inplace>
+            </div>
+            <div class="p-col-4">
+                <h3>Correo</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{correo}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="correo" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <h2>Cambiar Contraseña</h2>
+                <a class="clave" (click)="show()">Cambiar Contraseña</a>
+            </div>
+            <div class="p-col-12"><button class="button" (click)="enviar()"><i class="pi pi-save"> Guardar</i></button>
+            </div>
+        </div>
+        <p-dialog header="Cambiar Contraseña" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
+            <h3>Ingrese su nueva Contraseña</h3>
+            <input type="password" pInputText [(ngModel)]="clave1">
+            <h3>Repita la contraseña</h3>
+            <input type="password" pInputText [(ngModel)]="clave2">
+            <ng-template pTemplate="footer">
+                <p-button icon="pi pi-save" (click)="cambiarContrasena()" label="Guardar" styleClass="p-button-text">
+                </p-button>
+            </ng-template>
+        </p-dialog>
+    </div>
+    <div class="p-col-1"></div>

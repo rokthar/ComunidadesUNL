@@ -72,4 +72,8 @@ export class ComunidadService {
   historial(external_comunidad){
     return this.http.get(URL._url+"comunidad/historial/"+external_comunidad).pipe(pluck('data'));
   }
+
+  editarComunidad(values,external_comunidad){
+    return this.http.post(URL._url+"comunidad/editar/"+external_comunidad,values);
+  }
 }

@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { MenuItem } from 'primeng/api';
+import { Resultados } from 'src/app/core/model/resultados';
 import { ResultadosService } from 'src/app/services/resultados.service';
 import { URL } from '../../../core/constants/url';
 
@@ -31,7 +32,7 @@ export class VerResultadosComponent implements OnInit {
         this.external_resultado = sessionStorage.getItem('datosResultado');
         console.log(this.external_resultado);
         if (this.external_resultado != null) {
-            this.resultados_service.listarResultado(this.external_resultado).subscribe((resp: any) => {
+            this.resultados_service.listarResultado(this.external_resultado).subscribe((resp: Resultados) => {
                 this.resultado = resp;
             });
         } else {

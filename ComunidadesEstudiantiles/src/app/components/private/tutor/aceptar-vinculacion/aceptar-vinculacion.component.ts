@@ -46,9 +46,7 @@ export class AceptarVinculacionComponent implements OnInit{
         }
 
        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((comunidad:Comunidad)=>{
-           console.log(comunidad);
-        this.vinculacion_service.listarVinculacionComunidad(comunidad.external_comunidad).subscribe((resp:any)=>{
-            console.log(resp);
+        this.vinculacion_service.listarVinculacionComunidad(comunidad.external_comunidad).subscribe((resp:Vinculacion)=>{
             this.lista=resp;
             if(this.lista != null){
                 this.hayDatos = true;
@@ -95,7 +93,6 @@ export class AceptarVinculacionComponent implements OnInit{
     }
 
     detalles(descripcion,external){
-        // alert(descripcion+" "+external);
         this.descrip = descripcion;
         this.external_vinculacion = external;
         this.displayModal = true;

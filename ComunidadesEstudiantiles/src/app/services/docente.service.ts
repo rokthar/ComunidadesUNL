@@ -21,4 +21,11 @@ export class DocenteService {
     //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
     return this.http.get(URL._url+"docente/perfil/"+external).pipe(pluck('data'));
    }
+
+   editarDocente(values,external_docente){
+    return this.http.post(URL._url+"docente/editar/"+external_docente,values);
+   }
+   editarDocenteClave(values,external_docente){
+    return this.http.post(URL._url+"docente/editar-clave/"+external_docente,values);
+   }
 }

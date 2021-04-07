@@ -2,19 +2,11 @@
 
 <div class="p-grid nav">
     <div class="p-col-3">
-        <img src="{{imagen}}{{logo_comunidad}}" height="43" class="p-mr-2">
+        
     </div>
     <div class="p-col-9 user">
-        <span>{{params.nombres}} {{params.apellidos}}</span><br>
+        <p-splitButton label="{{params.nombres}} {{params.apellidos}}" icon="pi pi-user" class="menu-lateral" [model]="items"></p-splitButton><br>
+        <!-- <span>{{params.nombres}} {{params.apellidos}}</span><br> -->
         <small>Tutor de la comunidad {{comunidad.nombre_comunidad}}</small>
     </div>
 </div>
-
-<!-- <p-menubar class="nav" [model]="items" [style]="{'background-color': '#1d3557', 'color':'#fafafa'}">
-            <ng-template pTemplate="start">
-                <img src="{{imagen}}{{logo_comunidad}}" height="40" class="p-mr-2">
-            </ng-template>
-            <ng-template pTemplate="end">
-                <span>{{params.nombres}} {{params.apellidos}}</span>
-            </ng-template>
-        </p-menubar> -->

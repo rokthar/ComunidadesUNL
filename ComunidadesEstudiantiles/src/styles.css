@@ -48,7 +48,7 @@ a{
 
 /* SIDE MENU GENERAL */
 #header{
-    background-color: #1d3557;
+    background-color: #eeebeb;
     position: fixed;
     width: 50px;
     height: 100%;
@@ -60,12 +60,12 @@ a{
     z-index: 20;
 }
 #header .barras{
-    color: #fafafa;
+    color: #1d3557;
     cursor: pointer;
 }
 
 #sidemenu{
-    background-color: #1d3557;
+    background-color: #eeebeb;
     position: fixed;
     width: 200px;
     height: 100%;
@@ -79,8 +79,9 @@ a{
 }
 #sidemenu #profile{
     padding: 5%;
+    padding-top: 11%;
     text-align: center;
-    border-bottom: solid 1px #071831;
+    border-bottom: solid 1px #b3b3b3;
 }
 #sidemenu #profile img{
     width: 50%;
@@ -128,4 +129,33 @@ a{
     text-align: right;
     padding-right: 3%;
     padding-top: 2%;
+}
+
+.clave{
+    text-decoration: none;
+    cursor: pointer;
+}
+/* ESTILOS DE LOS COMPONENTES PRIMENG */
+
+.menu-lateral .p-splitbutton .p-button{
+    background: #1d3557;
+    border: solid 1px #1d3557;
+}
+.menu-lateral .p-splitbutton .p-button:hover{
+    background: #1d3557;
+    border-color: #1d3557;
+}
+.menu-lateral .p-splitbutton .p-button:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0 0 0 0.2rem #1d3557;
+}
+
+.card .p-card{
+    background: #eeebeb;
+}
+.menu-side .p-panelmenu .p-panelmenu-header > a:focus {
+    outline: 0 none;
+    outline-offset: 0;
+    box-shadow: 0;
 }

@@ -5,6 +5,7 @@ import { EstudianteService } from 'src/app/services/estudiante.service';
 import { MenuItem, MessageService } from 'primeng/api';
 import { URL } from '../../../../core/constants/url';
 import { Rutas } from 'src/app/core/constants/rutas';
+import { Estudiante } from 'src/app/core/model/estudiante';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { Rutas } from 'src/app/core/constants/rutas';
 export class MenuMiembrosComponent implements OnInit {
     items: MenuItem[];
     titulo;
-    params: any;
+    params: Estudiante;
     imagen = URL._imgCom;
     logo_comunidad: any;
     comunidad: any = "";
@@ -33,21 +34,9 @@ export class MenuMiembrosComponent implements OnInit {
     }
     ngOnInit(): void {
         this.items = [
-            {
-                label: 'Perfil',
-                items: [
-                    {
-                        label: 'Ver Resultados',
-                        icon: 'pi pi-eye',
-                        command: () => this.links('verResultados')
-                    }
-                ]
-            },
-            {
-                label: 'Cerrar Sesión',
-                icon: 'pi pi-power-off',
-                command: () => this.mensaje()
-            }
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
         ];
 
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
@@ -58,15 +47,8 @@ export class MenuMiembrosComponent implements OnInit {
         }
     }
 
-    links(opcion){
-        switch (opcion) {
-            case 'verResultados':
-                this.router.navigateByUrl(Rutas.perfilMiembto);
-                break;
-        
-            default:
-                break;
-        }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarMiembro);
     }
     cerrarSesion() {
         sessionStorage.clear();

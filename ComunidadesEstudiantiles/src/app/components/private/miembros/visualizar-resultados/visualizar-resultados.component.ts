@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Resultados } from 'src/app/core/model/resultados';
 import { ActividadesService } from 'src/app/services/actividaes.service';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { ResultadosService } from 'src/app/services/resultados.service';
@@ -15,7 +16,7 @@ import { URL } from '../../../../core/constants/url';
 
 export class VisualizarResultadosComponent implements OnInit{
     external_resultado:string;
-    resultado=null;
+    resultado:any=null;
     imageSource: any;
     imagen = URL._imgResul;
     imagen_com = URL._imgCom;

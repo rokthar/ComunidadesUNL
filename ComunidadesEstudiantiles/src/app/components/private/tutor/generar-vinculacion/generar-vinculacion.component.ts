@@ -36,7 +36,6 @@ export class GenerarVinculacionComponent implements OnInit {
 
     ngOnInit(): void {
         this.external_comunidad = sessionStorage.getItem('datosComunidad');
-        console.log(this.external_comunidad);
         this.titulo = "Generar una Vinculación";
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if (this.params != null && this.params.tipo_docente == "5") {
@@ -55,9 +54,8 @@ export class GenerarVinculacionComponent implements OnInit {
 
     enviar() {
         const values = this.generarVinculacionForm.getRawValue();
-        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: any) => {
+        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: Comunidad) => {
             this.vinculacion_service.registrarVinculacion(resp.external_comunidad, this.external_comunidad, values).subscribe((respu: any) => {
-                console.log(respu);
                 if (respu.siglas == "OE") {
                     this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Solicitud de vinculación ha sido enviada' });
                     setTimeout(() => {

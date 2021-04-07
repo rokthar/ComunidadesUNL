@@ -1,10 +1,5 @@
 .nav{
-    position: fixed;
-    width: 100%;
-    z-index: 30;
-    background-color: #1d3557;
-    color: #fafafa;
-    right: 0%;
+    top: 0%;
 }
 .nav .user{
     text-align: right;

@@ -4,6 +4,7 @@ import { ResultadosService } from 'src/app/services/resultados.service';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { DomSanitizer } from '@angular/platform-browser';
 import { URL } from '../../../core/constants/url';
+import { Resultados } from 'src/app/core/model/resultados';
 
 
 @Component({
@@ -27,7 +28,7 @@ export class ResultadosPreviewComponent implements OnInit{
     }
     ngOnInit(): void {
         this.imagen = URL._imgResul;
-       this.resultados_service.listarResultados().subscribe((resp:any)=>{
+       this.resultados_service.listarResultados().subscribe((resp:Resultados)=>{
         this.resultados = resp;
        });
     }

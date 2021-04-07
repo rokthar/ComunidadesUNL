@@ -27,53 +27,13 @@ export class MenuGestorComponent implements OnInit {
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         this.items = [
-            {
-                label: 'Comunidades',
-                items: [
-                    {
-                        label: 'Validar',
-                        icon: 'pi pi-check',
-                        command: () => this.links('validarComunidades')
-                    }
-                ]
-            },
-            {
-                label: 'Actividades',
-                items: [
-                    {
-                        label: 'Validar',
-                        icon: 'pi pi-check',
-                        command: () => this.links('validarActividades')
-                    }
-                ]
-            },
-            {
-                label: 'Configuraciones',
-                icon: 'pi pi-cog',
-                command: () => this.links('configuraciones')
-            },
-            {
-                label: 'Cerrar Sesión',
-                icon: 'pi pi-power-off',
-                command: () => this.mensaje()
-            }
-            
-        ]
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
+        ];
     }
-    links(opcion){
-        switch (opcion) {
-            case 'validarComunidades':
-                this.router.navigateByUrl(Rutas.validarComunidad);
-                break;
-            case 'validarActividades':
-                this.router.navigateByUrl(Rutas.validarActividades);
-                break;
-            case 'configuraciones':
-                this.router.navigateByUrl(Rutas.configuracionesGestor);
-                break;
-            default:
-                break;
-        }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarGestor);
     }
     cerrarSesion() {
         sessionStorage.clear();

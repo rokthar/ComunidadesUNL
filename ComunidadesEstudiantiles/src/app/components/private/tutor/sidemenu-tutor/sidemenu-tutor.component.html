@@ -6,10 +6,11 @@
     </div>
     <div id="sidemenu" [class]="sidemenu">
         <div id="profile">
-            <img src="../../../../../assets/UNL3.jpg" />
+            <img src="{{imagen}}{{logo_comunidad}}" class="p-mr-2">
         </div>
         <div id="items">
-            <div class="item">
+            <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
+            <!-- <div class="item">
                 <a routerLink='../planificar-actividades'><i class="pi pi-eye icon"></i> <span> Planificar Actividades</span></a>
             </div>
             <div class="item">
@@ -32,7 +33,7 @@
             </div>
             <div class="item">
                 <a (click)="mensaje()"><i class="pi pi-power-off icon"></i> <span> Cerrar Sesión</span></a>
-            </div>
+            </div> -->
 
         </div>
     </div>

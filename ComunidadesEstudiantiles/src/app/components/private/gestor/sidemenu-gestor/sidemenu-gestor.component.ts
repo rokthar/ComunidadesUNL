@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 @Component({
     selector: 'sidemenu-gestor',
@@ -11,28 +12,51 @@ import { MessageService } from 'primeng/api';
 
 export class SideMenuGestorComponent implements OnInit {
     sidemenu: string;
+    items: MenuItem[];
+
     constructor(
         private messageService: MessageService,
         public router: Router
-    ){}
+    ) { }
     ngOnInit(): void {
-        this.sidemenu="ocultar"
+        this.sidemenu = "ocultar";
+        this.items = [
+            {
+                label: 'Validar',
+                icon: 'pi pi-check-square',
+                items: [
+                    { label: 'Comunidades', icon: 'pi pi-globe', command: () => this.links('comunidades') },
+                    { label: 'Actividades', icon: 'pi pi-calendar', command: () => this.links('actividades') }
+                ]
+            },
+            {
+                label: 'Configuraciones',
+                icon: 'pi pi-cog',
+                command: () => this.links('configuraciones')
+            }
+        ];
+
     }
-    expanded(){
-        if(this.sidemenu=="ocultar"){
-            this.sidemenu="mostrar"
-        }else if(this.sidemenu=="mostrar"){
-            this.sidemenu="ocultar"
+    links(opcion) {
+        switch (opcion) {
+            case 'comunidades':
+                this.router.navigateByUrl(Rutas.validarComunidad);
+                break;
+            case 'actividades':
+                this.router.navigateByUrl(Rutas.validarActividades);
+                break;
+            case 'configuraciones':
+                this.router.navigateByUrl(Rutas.configuracionesGestor);
+                break;
+            default:
+                break;
         }
     }
-    cerrarSesion() {
-        sessionStorage.clear();
-        this.router.navigateByUrl('');
-    }
-    mensaje() {
-        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });
-        setTimeout(() => {
-            this.cerrarSesion()
-        }, 1500);
+    expanded() {
+        if (this.sidemenu == "ocultar") {
+            this.sidemenu = "mostrar"
+        } else if (this.sidemenu == "mostrar") {
+            this.sidemenu = "ocultar"
+        }
     }
 }

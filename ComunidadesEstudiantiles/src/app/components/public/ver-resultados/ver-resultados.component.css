@@ -14,8 +14,14 @@
 .cuerpo h2{
     text-align: center;
 }
+.texto{
+    text-align: center;
+}
+.logo{
+    text-align: center;
+}
 .logo img{
-    width: 100%;
+    width: 10%;
     height: auto;
     vertical-align: middle;
 }

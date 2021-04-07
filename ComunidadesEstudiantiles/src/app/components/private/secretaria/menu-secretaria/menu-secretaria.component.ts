@@ -26,32 +26,13 @@ export class MenuSecretariaComponent implements OnInit {
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         this.items = [
-            {
-                label: 'Comunidades',
-                items: [
-                    {
-                        label: 'Verificar',
-                        icon: 'pi pi-check-circle',
-                        command: () => this.links('verificarInformacion')
-                    }
-                ]
-            },
-            {
-                label: 'Cerrar Sesión',
-                icon: 'pi pi-power-off',
-                command: () => this.mensaje()
-            }
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
         ];
     }
-    links(opcion){
-        switch (opcion) {
-            case 'verificarInformacion':
-                this.router.navigateByUrl(Rutas.verificarInformacion);
-                break;
-        
-            default:
-                break;
-        }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarSecretaria);
     }
     cerrarSesion() {
         sessionStorage.clear();

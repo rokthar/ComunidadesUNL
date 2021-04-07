@@ -15,8 +15,8 @@ export class ConfiguracionService {
   editarMail(values){
     return this.http.post(URL._url+"configuracion/mail",values);
   }
-  editarDias(values){
-    return this.http.post(URL._url+"configuracion/dias",values);
+  editarClave(values){
+    return this.http.post(URL._url+"configuracion/clave",values);
   }
   configuraciones(){
     return this.http.get(URL._url+"configuracion/ver").pipe(pluck('data'));

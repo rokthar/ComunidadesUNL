@@ -4,7 +4,9 @@
 .cuerpo{
     padding-top: 5%;
 }
-
+.caja-texto{
+    width: 100%;
+}
 .noData{
     text-align: center;
     padding-top: 5%;

@@ -26,38 +26,19 @@ export class MenuDecanoComponent implements OnInit{
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        this.items=[
-            {
-                label:'Comunidades',
-                items:[
-                    {
-                        label:'Aceptar',
-                        icon:'pi pi-check',
-                        command: () => this.links('validarComunidades')
-                    }
-                ]
-            },
-            {
-                label:'Cerrar Sesión',
-                icon:'pi pi-power-off',
-                command: () => this.mensaje()
-            }
-        ];
+        this.items = [
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
+        ];;
     }
 
     cerrarSesion() {
         sessionStorage.clear();
         this.router.navigateByUrl('');
     }
-    links(opcion){
-        switch (opcion) {
-            case 'validarComunidades':
-                this.router.navigateByUrl(Rutas.aceptarComunidad);
-                break;
-        
-            default:
-                break;
-        }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarDecano);
     }
     mensaje() {
         this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });

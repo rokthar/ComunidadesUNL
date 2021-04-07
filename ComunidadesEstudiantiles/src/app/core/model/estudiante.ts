@@ -3,7 +3,7 @@ export interface Estudiante{
     apellidos: string;
     ciclo: String;
     paralelo: string;
-    externalEstudiante: string;
+    external_estudiante: string;
     estado:String;
   }
   

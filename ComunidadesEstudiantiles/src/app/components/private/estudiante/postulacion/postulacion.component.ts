@@ -60,7 +60,6 @@ export class PostulacionComponent implements OnInit{
         const values = this.postulacionComunidadForm.getRawValue();
         console.log(values);
         this.postulacion_service.postularseComunidad(this.params.external_estudiante,this.external_c).subscribe((resp:any)=>{
-          console.log(resp); //revisar el console.log y falta el subir imagen y el desabilitar esta pag cuando un docente ya alla enviado la solicitud
           this.postulacion_service.detallePostulacion(values.habilidades,resp['external_postulacion']).subscribe((respu:any)=>{
               console.log(respu);
               if(resp.siglas == "OE"){

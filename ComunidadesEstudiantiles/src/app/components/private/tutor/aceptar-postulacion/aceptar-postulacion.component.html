@@ -12,17 +12,24 @@
         <div class="p-grid">
             <div *ngFor="let item of postulaciones">
                 <div class="p-lg-3 p-md-6 p-sm-12">
-                    <p-card header="{{item.estudiante}}" subheader="{{item.ciclo}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
+                    <p-card header="{{item.estudiante}}" subheader="{{item.ciclo}}" class="card"
+                        [style]="{width: '360px'}" styleClass="p-card-shadow">
                         <h3>Habilidades:</h3>
                         <div *ngFor="let pos of item.habilidades">
-                            <p>{{pos.habilidad}}  {{pos.nivel}} <i class="star pi pi-star"></i></p>
+                            <p>{{pos.habilidad}} {{pos.nivel}} <i class="star pi pi-star"></i></p>
+                        </div>
+                        <div>
+                            <strong>Ingrese una Observación</strong>
+                            <textarea maxlength="65000" class="caja-texto" rows="3" placeholder="Observaciones"
+                                pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
                         </div>
                         <ng-template pTemplate="footer">
                             <form [formGroup]="postulacionForm">
-                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
-                                <br><br>
-                                <button class="button" (click)="aceptarPostulacion(item.external_postulacion)"><i class="pi pi-check"></i> Aceptar</button>
-                                <button class="button-delete" (click)="rechazarPostulacion(item.external_postulacion)"><i class="pi pi-times"> Rechazar</i></button>
+                                <button class="button" (click)="aceptarPostulacion(item.external_postulacion)"><i
+                                        class="pi pi-check"></i> Aceptar</button>
+                                <button class="button-delete"
+                                    (click)="rechazarPostulacion(item.external_postulacion)"><i class="pi pi-times">
+                                        Rechazar</i></button>
                             </form>
                         </ng-template>
                     </p-card>

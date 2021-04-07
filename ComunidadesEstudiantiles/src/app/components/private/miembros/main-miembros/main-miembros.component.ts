@@ -5,6 +5,8 @@ import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { DomSanitizer } from '@angular/platform-browser';
 import { URL } from '../../../../core/constants/url';
+import { Resultados } from 'src/app/core/model/resultados';
+import { Estudiante } from 'src/app/core/model/estudiante';
 
 @Component({
     selector: 'main-miembros',
@@ -13,8 +15,8 @@ import { URL } from '../../../../core/constants/url';
 })
 
 export class PerfilMiembrosComponent implements OnInit{
-    params: any;
-    resultados: any;
+    params: Estudiante;
+    resultados: Resultados;
     titulo;
     hayDatos:boolean;
     imageSource: any;
@@ -32,8 +34,7 @@ export class PerfilMiembrosComponent implements OnInit{
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         console.log(this.params);
         if(this.params != null && this.params.estado=="2"){
-            this.resultados_service.listarResultadoByMiembro(this.params.external_estudiante).subscribe((resp:any)=>{
-                console.log(resp);
+            this.resultados_service.listarResultadoByMiembro(this.params.external_estudiante).subscribe((resp:Resultados)=>{
                 this.resultados = resp;
                 if(resp != null){
                     this.hayDatos=true;

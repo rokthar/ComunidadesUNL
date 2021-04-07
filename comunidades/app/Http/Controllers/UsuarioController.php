@@ -60,10 +60,47 @@ class UsuarioController extends Controller
         }
     }
 
+    public function EditarEstudiante(Request $request, $external_estudiante){
+        if ($request->json()) {
+            $data = $request->json()->all();
+            $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            
+            if ($estudiante) {
+                $usuario = usuario::where("id", $estudiante->fk_usuario)->first();
+
+                $usuario->correo = $data["correo"];
+
+                $estudiante->nombres = $data["nombres"];
+                $estudiante->apellidos = $data["apellidos"];
+                $estudiante->ciclo = $data["ciclo"];
+                $estudiante->paralelo = $data["paralelo"];
+                $usuario->save();
+                $estudiante->save();
+                return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+            }
+        } else {
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+        }
+    }
+    public function EditarEstudianteClave(Request $request, $external_estudiante){
+        if ($request->json()) {
+            $data = $request->json()->all();
+            $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            if ($estudiante) {
+                $usuario = usuario::where("id", $estudiante->fk_usuario)->first();
+                $clave = sha1($data["clave"] . "unl.");
+                $usuario->clave = $clave;
+                $usuario->save();
+                return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+            }
+        } else {
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+        }
+    }
+
     //REGISTRO DE DOCENTE
     //0 inactivo, 1 docente, 2 gestor, 3 secretaria, 4 Decano, 5 tutor
-    public function RegistrarDocente(Request $request, $external_id)
-    {
+    public function RegistrarDocente(Request $request, $external_id){
         if ($request->json()) {
             $data = $request->json()->all();
             $usuario = usuario::where("external_us", $external_id)->first();
@@ -76,6 +113,43 @@ class UsuarioController extends Controller
                 $docente->fk_usuario = $usuario->id;
                 $docente->external_do = "Doc" . Utilidades\UUID::v4();
                 $docente->save();
+                return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+            }
+        } else {
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+        }
+    }
+
+    public function EditarDocente(Request $request, $external_docente){
+        if ($request->json()) {
+            $data = $request->json()->all();
+            $docente = docente::where("external_do",$external_docente)->first();
+            
+            if ($docente) {
+                $usuario = usuario::where("id", $docente->fk_usuario)->first();
+
+                $usuario->correo = $data["correo"];
+
+                $docente->nombres = $data["nombres"];
+                $docente->apellidos = $data["apellidos"];
+                $usuario->save();
+                $docente->save();
+                return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+            }
+        } else {
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+        }
+    }
+    public function EditarDocenteClave(Request $request, $external_docente){
+        if ($request->json()) {
+            $data = $request->json()->all();
+            $docente = docente::where("external_do",$external_docente)->first();
+            
+            if ($docente) {
+                $usuario = usuario::where("id", $docente->fk_usuario)->first();
+                $clave = sha1($data["clave"] . "unl.");
+                $usuario->clave = $clave;
+                $usuario->save();
                 return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
             }
         } else {
@@ -135,6 +209,7 @@ class UsuarioController extends Controller
             $estudiante = estudiante::where("fk_usuario", $estudianteObj->id)->first();
             if($estudiante){
                 $datos['data']= [
+                   "correo"=>$estudianteObj->correo, 
                     "nombres" => $estudiante->nombres,
                     "apellidos" => $estudiante->apellidos,
                     "ciclo" => $estudiante->ciclo,

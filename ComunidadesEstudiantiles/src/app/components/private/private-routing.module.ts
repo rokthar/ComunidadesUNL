@@ -16,9 +16,16 @@ import { PerfilMiembrosComponent } from './miembros/main-miembros/main-miembros.
 import { VerComunidadesComponent } from './estudiante/ver-comunidades/ver-comunidades.component';
 import { VerComunidadesTutorComponent } from './tutor/ver-comunidades-tutor/ver-comunidades-tutor.component';
 import { VerActividadesComponent } from './tutor/ver-actividades/ver-actividades.component';
-import { ReporteActividadesComponent } from './tutor/reporte-actividades/reporte-actividades.component';
 import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/visualizar-resultados.component';
 import { ConfiguracionComponent } from './gestor/configuracion/configuracion.component';
+import { EditarTutorComponent } from './tutor/editar-tutor/editar-tutor.component';
+import { EditarEstudianteComponent } from './estudiante/editar-estudiante/editar-estudiante.component';
+import { EditarGestorComponent } from './gestor/editar-gestor/editar-gestor.component';
+import { EditarDecanoComponent } from './decano/editar-decano/editar-decano.component';
+import { EditarSecretariaComponent } from './secretaria/editar-secretaria/editar-secretaria.component';
+import { EditarMiembroComponent } from './miembros/editar-miembro/editar-miembro.component';
+import { EditarDocenteComponent } from './docente/editar-docente/editar-docente.component';
+import { EditarComunidadComponent } from './tutor/editar-comunidad/editar-comunidad.component';
 
 const routes: Routes = [
   {path:'docente/registrar-comunidad',component: RegistrarComunidadComponent},
@@ -36,9 +43,18 @@ const routes: Routes = [
   {path:'estudiante/ver-comunidades',component:VerComunidadesComponent},
   {path:'tutor/ver-comunidades-tutor',component:VerComunidadesTutorComponent},
   {path:'tutor/ver-actividades', component:VerActividadesComponent},
-  {path:'tutor/reporte-actividades',component:ReporteActividadesComponent},
   {path:'miembro/visualizar-resultados', component:VisualizarResultadosComponent},
-  {path:'gestor/configuraciones', component:ConfiguracionComponent}
+  {path:'gestor/configuraciones', component:ConfiguracionComponent},
+  
+  {path:'tutor/editar',component:EditarTutorComponent},
+  {path:'estudiante/editar',component:EditarEstudianteComponent},
+  {path:'gestor/editar',component:EditarGestorComponent},
+  {path:'decano/editar',component:EditarDecanoComponent},
+  {path:'docente/editar',component:EditarDocenteComponent},
+  {path:'secretaria/editar',component:EditarSecretariaComponent},
+  {path:'miembro/editar',component:EditarMiembroComponent},
+  {path:'tutor/editar-comunidad',component:EditarComunidadComponent}
+
 
 ]
 

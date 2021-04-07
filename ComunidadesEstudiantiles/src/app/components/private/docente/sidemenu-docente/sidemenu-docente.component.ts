@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 @Component({
     selector: 'sidemenu-docente',
@@ -11,12 +12,37 @@ import { MessageService } from 'primeng/api';
 
 export class SideMenuDocenteComponent implements OnInit {
     sidemenu: string;
+    items: MenuItem[];
+
     constructor(
         private messageService: MessageService,
         public router: Router
     ){}
     ngOnInit(): void {
-        this.sidemenu="ocultar"
+        this.sidemenu="ocultar";
+        this.items = [
+            {
+                label: 'Registrar',
+                icon:'pi pi-cloud-upload',
+                items: [
+                    {
+                        label: 'Comunidad',
+                        icon: 'pi pi-globe',
+                        command: () => this.links('registrarComunidad')
+                    }
+                ]
+            }
+        ];
+    }
+    links(opcion) {
+        switch (opcion) {
+            case 'registrarComunidad':
+                this.router.navigateByUrl(Rutas.registrarComunidad);
+                break;
+
+            default:
+                break;
+        }
     }
     expanded(){
         if(this.sidemenu=="ocultar"){
@@ -24,15 +50,5 @@ export class SideMenuDocenteComponent implements OnInit {
         }else if(this.sidemenu=="mostrar"){
             this.sidemenu="ocultar"
         }
-    }
-    cerrarSesion() {
-        sessionStorage.clear();
-        this.router.navigateByUrl('');
-    }
-    mensaje() {
-        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });
-        setTimeout(() => {
-            this.cerrarSesion()
-        }, 1500);
     }
 }

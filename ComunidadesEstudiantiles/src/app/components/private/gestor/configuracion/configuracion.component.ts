@@ -13,46 +13,72 @@ import { ConfiguracionService } from 'src/app/services/configuracion.service';
 })
 
 export class ConfiguracionComponent implements OnInit {
-    configuracion: any = "";
-    configuracionesForm: FormGroup;
-
+    host = ""; correo = ""; dias;clave1="";clave2="";
+    values: {};
+    display: boolean;
+    clave: {};
     constructor(
         private conf_service: ConfiguracionService,
-        private _builder: FormBuilder,
         private messageService: MessageService
 
-    ) {
-        this.configuracionesForm = this._builder.group({
-            host: ['', Validators.required],
-            correo: ['', Validators.required],
-            clave: ['', Validators.required],
-            repclave: ['', Validators.required],
-            dias: ['', Validators.required]
-        });
-    }
+    ) { }
     ngOnInit(): void {
         this.conf_service.configuraciones().subscribe((resp: any) => {
-            this.configuracion = resp;
-            console.log(this.configuracion);
+            console.log(resp);
+            this.host = resp.host;
+            this.correo = resp.correo;
+            this.dias = resp.dias;
         });
+    }
+    show() {
+        this.display = true;
     }
 
     guardar() {
-        const values = this.configuracionesForm.getRawValue();
-        console.log(values);
-        if (values.clave == values.repclave) {
-            this.conf_service.editarMail(values).subscribe((resp: any) => {
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Configuración Guardada', detail: 'Las Configuraciones han sifo Guardadas Correctamente' });
+        this.values = {
+            "host": this.host,
+            "correo": this.correo,
+            "dias": this.dias
+        }
+        console.log(this.values);
+        this.conf_service.editarMail(this.values).subscribe((resp: any) => {
+            if (resp.siglas = "OE") {
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Configuración Guardada', detail: 'Las Configuraciones han sido Guardadas Correctamente' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
+            }else{
+                this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error al Guardar', detail: 'Las Contraseñas no son iguales' });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1500);
+            }
+        });
+    }
+    cambiarContrasena(){
+        this.clave={
+            "clave":this.clave1
+        }
+        if(this.clave1 == this.clave2){
+            this.conf_service.editarClave(this.clave).subscribe((resp:any)=>{
+                if(resp.siglas = "OE"){
+                    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Configuración Guardada', detail: 'Su contraseña ha sido cambiada Correctamente' });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }else{
+                    this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error al Guardar', detail: 'La contraseña no ha podido ser guardada' });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
             });
-        } else {
-            this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error al Guardar', detail: 'Las Contraseñas no son iguales' });
+        }else{
+            this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error al Guardar', detail: 'La contraseña no ha podido ser guardada' });
             setTimeout(() => {
                 window.location.reload();
-            }, 1500);
+            }, 1000);
         }
+        this.display=false;
     }
-
 }

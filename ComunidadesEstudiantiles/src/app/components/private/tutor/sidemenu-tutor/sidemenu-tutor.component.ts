@@ -6,6 +6,11 @@ import { Alignment } from 'pdfmake/interfaces';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { ActividadesService } from 'src/app/services/actividaes.service';
 import { Router } from '@angular/router';
+import { Rutas } from '../../../../core/constants/rutas';
+import { MenuItem } from 'primeng/api';
+import { URL } from '../../../../core/constants/url';
+import { Comunidad } from 'src/app/core/model/comunidad';
+import { Actividades } from 'src/app/core/model/actividades';
 
 @Component({
     selector: 'sidemenu-tutor',
@@ -16,28 +21,60 @@ import { Router } from '@angular/router';
 
 export class SideMenuTutorComponent implements OnInit {
     public sidemenu;
+    items: MenuItem[];
+    imagen = URL._imgCom;
     params: any;
-    comunidad: any;
+    comunidad: Comunidad;
     logo_comunidad: any;
     listaHistorial: any;
     actividades: any;
     constructor(
         private messageService: MessageService,
-        private comunidad_service:ComunidadService,
-        private actividad_service:ActividadesService,
+        private comunidad_service: ComunidadService,
+        private actividad_service: ActividadesService,
         public router: Router
-    ){}
+    ) { }
     ngOnInit(): void {
-        this.sidemenu="ocultar";
+        this.items = [
+            {
+                label: 'Actividades',
+                icon: 'pi pi-calendar-plus',
+                items: [
+                    { label: 'Planificar', icon: 'pi pi-calendar', command: () => this.links('planificar') },
+                    { label: 'Resultados', icon: 'pi pi-external-link', command: () => this.links('resultados') }
+                ]
+            },
+            {
+                label: 'Solicitudes',
+                icon: 'pi pi-envelope',
+                items: [
+                    { label: 'Postulaciones', icon: 'pi pi-user', command: () => this.links('postulaciones') },
+                    { label: 'Vinculaciones', icon: 'pi pi-users', command: () => this.links('vinculaciones') },
+                    { label: 'Vincularse', icon: 'pi pi-sitemap', command: () => this.links('vincularse') }
+                ]
+            },
+            {
+                label: 'Reportes',
+                icon: 'pi pi-file-pdf',
+                items: [
+                    { label: 'Actividades', icon: 'pi pi-file', command: () => this.reporteActividades() },
+                    { label: 'Historial', icon: 'pi pi-file', command: () => this.reporteHistorial() }
+                ]
+            }
+
+        ];
+
+
+        this.sidemenu = "ocultar";
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if (this.params != null && this.params.tipo_docente == "5") {
-            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com: any) => {
+            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com: Comunidad) => {
                 this.comunidad = com;
                 this.logo_comunidad = com.ruta_logo;
                 this.comunidad_service.historial(this.comunidad.external_comunidad).subscribe((hsitorial: any) => {
                     this.listaHistorial = hsitorial;
                 });
-                this.actividad_service.listarPlanificacionByComunidad(com.external_comunidad).subscribe((act: any) => {
+                this.actividad_service.listarPlanificacionByComunidad(com.external_comunidad).subscribe((act: Actividades) => {
                     this.actividades = act;
                 });
             });
@@ -45,34 +82,46 @@ export class SideMenuTutorComponent implements OnInit {
 
         }
     }
-    expanded(){
-        if(this.sidemenu=="ocultar"){
-            this.sidemenu="mostrar"
-        }else if(this.sidemenu=="mostrar"){
-            this.sidemenu="ocultar"
+
+    links(opcion) {
+        switch (opcion) {
+            case 'planificar':
+                this.router.navigateByUrl(Rutas.planificarActividades);
+                break;
+            case 'resultados':
+                this.router.navigateByUrl(Rutas.verActividades);
+                break;
+            case 'postulaciones':
+                this.router.navigateByUrl(Rutas.aceptarPostulacion);
+                break;
+            case 'vinculaciones':
+                this.router.navigateByUrl(Rutas.aceptarVinculacion);
+                break;
+            case 'vincularse':
+                this.router.navigateByUrl(Rutas.verComunidadesTutor);
+                break;
+            default:
+                break;
         }
     }
-    cerrarSesion() {
-        sessionStorage.clear();
-        this.router.navigateByUrl('');
+    expanded() {
+        if (this.sidemenu == "ocultar") {
+            this.sidemenu = "mostrar"
+        } else if (this.sidemenu == "mostrar") {
+            this.sidemenu = "ocultar"
+        }
     }
-    mensaje() {
-        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });
-        setTimeout(() => {
-            this.cerrarSesion()
-        }, 1500);
-    }
-    reporteActividades(){
+    reporteActividades() {
         let rowsActividades = [];
 
         rowsActividades.push(["Fecha Inicio", "Actividad", "Descripción"]);
 
-        for (let i in this.listaHistorial.actividades) {
+        for (let i in this.actividades) {
             let datos = [];
             datos.push(
-                this.listaHistorial.actividades[i].fecha_inicio,
-                this.listaHistorial.actividades[i].nombre_actividad,
-                this.listaHistorial.actividades[i].descripcion_actividad
+                this.actividades[i].fecha_inicio,
+                this.actividades[i].nombre_actividad,
+                this.actividades[i].descripcion_actividad
             );
             rowsActividades.push(datos);
         }
@@ -170,7 +219,7 @@ export class SideMenuTutorComponent implements OnInit {
 
         pdfMake.createPdf(docDefinition).open();
     }
-    reporteHistorial(){
+    reporteHistorial() {
         let rowsMiembros = [];
         let rowsActividades = [];
         let rowsResultados = [];
@@ -180,7 +229,6 @@ export class SideMenuTutorComponent implements OnInit {
         rowsActividades.push(["Fecha Inicio", "Actividad", "Descripción"]);
         rowsResultados.push(["Fecha Fin", "Resumen"]);
         rowsVinculaciones.push(["Inicio", "Comunidad Solicitante"]);
-        console.log(this.listaHistorial.vinculaciones);
         if (this.listaHistorial.miembros != null) {
             for (let i in this.listaHistorial.miembros) {
                 let datos = [];

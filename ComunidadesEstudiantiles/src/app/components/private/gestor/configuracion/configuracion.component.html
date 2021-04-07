@@ -4,27 +4,62 @@
     <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-col-2"><sidemenu-gestor></sidemenu-gestor></div>
-    <div class="p-col-9 configuraciones">
-        <h2>CONFIGURACIONES</h2>
-        
-            <form [formGroup]="configuracionesForm">
-                <div *ngFor="let item of configuracion">
-                <div>
-                    <h3>Servidor de Correos</h3>
-                    <label>Host </label><input type="text" pInputText placeholder="{{item.host}}" formControlName="host"/><br><br>
-                    <label>Correo </label><input type="email" pInputText placeholder="{{item.correo}}" formControlName="correo"/><br><br>
-                    <label>Contraseña </label><input type="password" pInputText formControlName="clave"/><br><br>
-                    <label>Repetir Contraseña </label><input type="password" formControlName="repclave" pInputText /><br><br>
-                </div>
-                <div>
-                    <h3>Días Máximos para la revisión de Actividades</h3>
-                    <label>Días </label><input type="number" min="1" pInputText placeholder="{{item.dias}}" formControlName="dias" />
-                </div>
-                <br><br>
-                <button [disabled]="configuracionesForm.invalid" class="button" (click)="guardar()"><i class="pi pi-save"> Guardar</i></button>
-            </div>
-            </form>
-        
+    <div class="p-col-2">
+        <sidemenu-gestor></sidemenu-gestor>
     </div>
-    <div class="p-col-1"></div>
+    <div class="p-col-10 p-lg-6 configuraciones">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <h2>CONFIGURACIONES</h2>
+            </div>
+            <div class="p-col-12 p-lg-8">
+                <h3>Host</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{host}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="host" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <h3>Correo</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{correo}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="correo" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <h3>Días de espera</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{dias}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="number" [(ngModel)]="dias" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <br><br>
+
+                <button class="button" (click)="guardar()"><i class="pi pi-save"> Guardar</i></button>
+                <br><br>
+
+                <h2>Cambiar Contraseña</h2>
+                <a class="clave" (click)="show()">Cambiar Contraseña</a>
+            </div>
+        </div>
+    </div>
+
+    <p-dialog header="Cambiar Contraseña" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
+        <h3>Ingrese su nueva Contraseña</h3>
+        <input type="password" pInputText [(ngModel)]="clave1">
+        <h3>Repita la Contraseña</h3>
+        <input type="password" pInputText [(ngModel)]="clave2">
+        <ng-template pTemplate="footer">
+            <p-button icon="pi pi-save" (click)="cambiarContrasena()" label="Guardar" styleClass="p-button-text">
+            </p-button>
+        </ng-template>
+    </p-dialog>
+</div>
+<div class="p-col-1"></div>

@@ -56,9 +56,14 @@ class ComunidadController extends Controller{
         $image_name = time().$file->getClientOriginalName();
         $file->move($ruta, $image_name);
         $comunidades = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $comunidades->ruta_logo = $image_name;
-        $comunidades->save();
-        return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
+        if($comunidades){
+            $comunidades->ruta_logo = $image_name;
+            $comunidades->save();
+            return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
+        }else{
+            return response()->json(["mensaje"=>"Datos no Existentes", "siglas"=>"DNE"], 400);
+        }
+        
     }
 
     public function ActivarComunidad ($external_comunidad){
@@ -132,16 +137,21 @@ class ComunidadController extends Controller{
         if ($request->json()){
             $data = $request->json()->all();
 
-            $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-            if($comunidadObj){
-                $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+            $comunidad = comunidad::where("external_comunidad", $external_comunidad)->first();
+            if($comunidad){
+                // $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $comunidad->nombre_comunidad = $data["nombre_comunidad"];
                 $comunidad->descripcion = $data["descripcion"];
                 $comunidad->mision = $data["mision"];
                 $comunidad->vision = $data["vision"];
-                $comunidad->ruta_logo = $data["ruta_logo"];
+                // $comunidad->ruta_logo = $data["ruta_logo"];
                 $comunidad->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Error", "siglas"=>"E"],400);
             }
+        }else{
+            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
         }
         
     }
@@ -271,7 +281,10 @@ class ComunidadController extends Controller{
         $datos['data'] = [
             "nombre_comunidad" => $comunidad->nombre_comunidad,
             "external_comunidad"=>$comunidad->external_comunidad,
-            "ruta_logo"=>$comunidad->ruta_logo
+            "ruta_logo"=>$comunidad->ruta_logo,
+            "descripcion"=>$comunidad->descripcion,
+            "mision"=>$comunidad->mision,
+            "vision"=>$comunidad->vision
         ];
         self::estadoJson(200, true, '');
         return response()->json($datos, $estado);

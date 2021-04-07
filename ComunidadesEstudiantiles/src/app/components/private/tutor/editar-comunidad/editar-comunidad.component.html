@@ -1,0 +1,71 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-grid container">
+    <div class="p-col-12">
+        <menu-tutor></menu-tutor>
+    </div>
+    <div class="p-col-2">
+        <sidemenu-tutor></sidemenu-tutor>
+    </div>
+    <div class="p-col-9 cuerpo">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <h2>EDICIÓN DE LA INFORMACIÓN DE LA COMUNIDAD</h2>
+            </div>
+            <div class="p-col-12 p-lg-4">
+                <div class="img">
+                    <img src="{{imagen}}{{ruta_imagen}}" alt="">
+                </div>
+                <br>
+                <p>Cambiar Logo de la comunidad</p>
+                <input pInputText class="textImg" type='file' (change)="fileEvent($event)" />
+                <br><br>
+                <button class="button" (click)="cambiarLogo()"><i class="pi pi-save"> Cambiar Logo</i></button>
+            </div>
+
+            <div class="p-col-12 p-lg-8">
+                <h3>Nombre Comunidad</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{comunidad.nombre_comunidad}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <input type="text" [(ngModel)]="comunidad.nombre_comunidad" pInputText>
+                    </ng-template>
+                </p-inplace>
+                <h3>Descripción</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{comunidad.descripcion}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <textarea class="textArea" type="text" cols="20" [(ngModel)]="comunidad.descripcion"
+                            pInputTextarea></textarea>
+                    </ng-template>
+                </p-inplace>
+                <h3>Misión</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{comunidad.mision}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <textarea class="textArea" type="text" cols="20" [(ngModel)]="comunidad.mision" pInputTextarea></textarea>
+                    </ng-template>
+                </p-inplace>
+                <h3>Visión</h3>
+                <p-inplace closable="closable">
+                    <ng-template pTemplate="display">
+                        {{comunidad.vision}}
+                    </ng-template>
+                    <ng-template pTemplate="content">
+                        <textarea class="textArea" type="text" cols="20" [(ngModel)]="comunidad.vision" pInputTextarea></textarea>
+                    </ng-template>
+                </p-inplace>
+                <br><br>
+                <div class="p-col-12"><button class="button" (click)="enviar()"><i class="pi pi-save">
+                            Guardar</i></button></div>
+            </div>
+
+        </div>
+    </div>
+    <div class="p-col-1"></div>

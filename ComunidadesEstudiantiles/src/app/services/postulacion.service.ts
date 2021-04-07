@@ -16,33 +16,36 @@ export class PostulacionService {
   constructor(
     private http: HttpClient
   ) {
-   }
+  }
 
-   postularseComunidad(external_estudiante,external_comunidad){
-    return this.http.post(URL._url+"estudiante/postulacion/"+external_estudiante+"/"+external_comunidad,null);
-   }
-   detallePostulacion(values, external_postulacion){
-    return this.http.post(URL._url+"estudiante/detallepostulacion/"+external_postulacion,values);
-   }
+  postularseComunidad(external_estudiante, external_comunidad) {
+    return this.http.post(URL._url + "estudiante/postulacion/" + external_estudiante + "/" + external_comunidad, null);
+  }
+  detallePostulacion(values, external_postulacion) {
+    return this.http.post(URL._url + "estudiante/detallepostulacion/" + external_postulacion, values);
+  }
 
-   listarPostulaciones(external_comunidad){
-      //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
-      return this.http.get(URL._url+"comunidad/listarpostulacionespera/"+external_comunidad).pipe(pluck('data'));
-   }
-
-   aceptarPostulacion(values,external_postulacion){
-    return this.http.post(URL._url+"gestor/activarpostulacion/"+external_postulacion,values);
-   }
-
-   rechazarPostulacion(values,external_postulacion){
-    return this.http.post(URL._url+"postulacion/rechazar/"+external_postulacion,values);
-   }
-
-   buscarPostulacion(external_estudiante){
+  listarPostulaciones(external_comunidad) {
     //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
-    return this.http.get(URL._url+"estudiante/buscarpostulacion/"+external_estudiante).pipe(pluck('data'));
- }
-   añadirMiembro(external_postulacion){
-    return this.http.post(URL._url+"miembros/registrar/"+external_postulacion,null);
-   }
+    return this.http.get(URL._url + "comunidad/listarpostulacionespera/" + external_comunidad).pipe(pluck('data'));
+  }
+
+  aceptarPostulacion(values, external_postulacion) {
+    return this.http.post(URL._url + "gestor/activarpostulacion/" + external_postulacion, values);
+  }
+
+  rechazarPostulacion(values, external_postulacion) {
+    return this.http.post(URL._url + "postulacion/rechazar/" + external_postulacion, values);
+  }
+
+  buscarPostulacion(external_estudiante) {
+    //return this.http.get(this.url+"comunidad/listar/comunidadesactivadas");
+    return this.http.get(URL._url + "estudiante/buscarpostulacion/" + external_estudiante).pipe(pluck('data'));
+  }
+  añadirMiembro(external_postulacion) {
+    return this.http.post(URL._url + "miembros/registrar/" + external_postulacion, null);
+  }
+  cancelarPostulacion(external_estudiante){
+    return this.http.post(URL._url+"estudiante/cancelar-postulacion/"+external_estudiante,null);
+  } 
 }

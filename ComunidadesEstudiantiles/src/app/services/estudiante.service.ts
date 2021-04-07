@@ -25,4 +25,11 @@ export class EstudianteService {
    buscarComunidadByMiembro(external_estudiante){
     return this.http.get(URL._url+"miembro/buscar-comunidad/"+external_estudiante).pipe(pluck('data'));
    }
+
+   editarEstudiante(values, external_estudiante){
+    return this.http.post(URL._url+"estudiante/editar/"+external_estudiante,values);
+   }
+   editarEstudianteClave(values, external_estudiante){
+    return this.http.post(URL._url+"estudiante/editar-clave/"+external_estudiante,values);
+   }
 }

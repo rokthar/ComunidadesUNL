@@ -69,7 +69,6 @@ export class VerificarInformacionComponent implements OnInit{
     verificarInformacion(external_comunidad){
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.revisionInformacion(values,external_comunidad).subscribe((resp:any)=>{
-            console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
                 this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo completada' });
@@ -89,7 +88,6 @@ export class VerificarInformacionComponent implements OnInit{
     rechazarInformacion(external_comunidad){
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
-            console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
                 this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo rechazada' });

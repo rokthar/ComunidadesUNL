@@ -13,6 +13,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { URL } from '../../../../core/constants/url';
 import { MenuItem } from 'primeng/api';
 import { Rutas } from '../../../../core/constants/rutas';
+import { Comunidad } from 'src/app/core/model/comunidad';
 (<any>pdfMake).vfs = pdfFonts.pdfMake.vfs;
 
 @Component({
@@ -48,10 +49,31 @@ export class MenuTutorComponent implements OnInit {
        
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if (this.params != null && this.params.tipo_docente == "5") {
-            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com: any) => {
+            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com: Comunidad) => {
                 this.comunidad = com;
                 this.logo_comunidad = com.ruta_logo;
             });
         }
+
+        this.items = [
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {label: 'Editar Comunidad', icon: 'pi pi-pencil', command: () => {this.router.navigateByUrl(Rutas.editarComunidad)}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
+        ];
+    }
+
+    cerrarSesion() {
+        sessionStorage.clear();
+        this.router.navigateByUrl('');
+    }
+    mensaje() {
+        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });
+        setTimeout(() => {
+            this.cerrarSesion()
+        }, 1500);
+    }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarTutor);
     }
 }

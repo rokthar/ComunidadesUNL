@@ -6,6 +6,8 @@ import { ComunidadService } from 'src/app/services/comunidad.service';
 import { ResultadosService } from 'src/app/services/resultados.service';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
+import { Comunidad } from 'src/app/core/model/comunidad';
+import { Actividades } from 'src/app/core/model/actividades';
 
 @Component({
     selector: 'ver-actividades',
@@ -31,8 +33,8 @@ export class VerActividadesComponent implements OnInit{
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if(this.params != null && this.params.tipo_docente=="5"){
             this.estaLogeado=true;
-            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com:any)=>{
-                this.actividad_service.actividadesGenerarResultados(com.external_comunidad).subscribe((act:any)=>{
+            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com:Comunidad)=>{
+                this.actividad_service.actividadesGenerarResultados(com.external_comunidad).subscribe((act:Actividades)=>{
                     this.actividades = act;
                     if(this.actividades != null){
                         this.hayDatos = true;

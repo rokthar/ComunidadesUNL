@@ -10,3 +10,7 @@
 .itemsConf label{
     margin-bottom: 10%;
 }
+.clave{
+    text-decoration: none;
+    cursor: pointer;
+}

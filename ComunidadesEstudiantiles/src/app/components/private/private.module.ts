@@ -26,7 +26,6 @@ import { MenuSecretariaComponent } from './secretaria/menu-secretaria/menu-secre
 import { VerComunidadesComponent } from './estudiante/ver-comunidades/ver-comunidades.component';
 import { VerComunidadesTutorComponent } from './tutor/ver-comunidades-tutor/ver-comunidades-tutor.component';
 import { VerActividadesComponent } from './tutor/ver-actividades/ver-actividades.component';
-import { ReporteActividadesComponent } from './tutor/reporte-actividades/reporte-actividades.component';
 import { VisualizarResultadosComponent } from './miembros/visualizar-resultados/visualizar-resultados.component';
 import { ConfiguracionComponent } from './gestor/configuracion/configuracion.component';
 import { FullCalendarModule } from '@fullcalendar/angular'; // the main connector. must go first
@@ -39,6 +38,14 @@ import { SideMenuGestorComponent } from './gestor/sidemenu-gestor/sidemenu-gesto
 import { SideMenuMiembrosComponent } from './miembros/sidemenu-miembros/sidemenu-miembros.component';
 import { SideMenuSecretariaComponent } from './secretaria/sidemenu-secretaria/sidemenu-secretaria.component';
 import { SideMenuDocenteComponent } from './docente/sidemenu-docente/sidemenu-docente.component';
+import { EditarDecanoComponent } from './decano/editar-decano/editar-decano.component';
+import { EditarDocenteComponent } from './docente/editar-docente/editar-docente.component';
+import { EditarEstudianteComponent } from './estudiante/editar-estudiante/editar-estudiante.component';
+import { EditarGestorComponent } from './gestor/editar-gestor/editar-gestor.component';
+import { EditarMiembroComponent } from './miembros/editar-miembro/editar-miembro.component';
+import { EditarSecretariaComponent } from './secretaria/editar-secretaria/editar-secretaria.component';
+import { EditarTutorComponent } from './tutor/editar-tutor/editar-tutor.component';
+import { EditarComunidadComponent } from './tutor/editar-comunidad/editar-comunidad.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -69,7 +76,6 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     VerComunidadesComponent,
     VerComunidadesTutorComponent,
     VerActividadesComponent,
-    ReporteActividadesComponent,
     VisualizarResultadosComponent,
     ConfiguracionComponent,
     SideMenuTutorComponent,
@@ -78,7 +84,15 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     SideMenuGestorComponent,
     SideMenuMiembrosComponent,
     SideMenuSecretariaComponent,
-    SideMenuDocenteComponent
+    SideMenuDocenteComponent,
+    EditarDecanoComponent,
+    EditarDocenteComponent,
+    EditarEstudianteComponent,
+    EditarGestorComponent,
+    EditarMiembroComponent,
+    EditarSecretariaComponent,
+    EditarTutorComponent,
+    EditarComunidadComponent
   ],
   exports:[
   ],

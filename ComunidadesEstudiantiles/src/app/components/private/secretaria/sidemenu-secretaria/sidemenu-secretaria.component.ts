@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageService } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
+import { Rutas } from 'src/app/core/constants/rutas';
 
 @Component({
     selector: 'sidemenu-secretaria',
@@ -11,12 +12,36 @@ import { MessageService } from 'primeng/api';
 
 export class SideMenuSecretariaComponent implements OnInit {
     sidemenu: string;
+    items: MenuItem[];
+
     constructor(
         private messageService: MessageService,
         public router: Router
     ){}
     ngOnInit(): void {
-        this.sidemenu="ocultar"
+        this.sidemenu="ocultar";
+        this.items = [
+            {
+                label: 'Comunidades',
+                items: [
+                    {
+                        label: 'Verificar',
+                        icon: 'pi pi-check-circle',
+                        command: () => this.links('verificarInformacion')
+                    }
+                ]
+            }
+        ];
+    }
+    links(opcion){
+        switch (opcion) {
+            case 'verificarInformacion':
+                this.router.navigateByUrl(Rutas.verificarInformacion);
+                break;
+        
+            default:
+                break;
+        }
     }
     expanded(){
         if(this.sidemenu=="ocultar"){
@@ -24,15 +49,5 @@ export class SideMenuSecretariaComponent implements OnInit {
         }else if(this.sidemenu=="mostrar"){
             this.sidemenu="ocultar"
         }
-    }
-    cerrarSesion() {
-        sessionStorage.clear();
-        this.router.navigateByUrl('');
-    }
-    mensaje() {
-        this.messageService.add({ key: 'tc', severity: 'info', summary: 'Cerrando Sesión', detail: 'Hasta Luego' });
-        setTimeout(() => {
-            this.cerrarSesion()
-        }, 1500);
     }
 }

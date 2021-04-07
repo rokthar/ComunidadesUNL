@@ -1,6 +1,9 @@
 .noData{
-    text-align: center;
-    padding-top: 2%;
+    text-align: left;
+    padding-top: 7%;
+}
+.noData .icono{
+    color: darkgoldenrod;
 }
 .comunidades{
     padding-top: 7%;
@@ -28,5 +31,8 @@
     .comunidades{
         padding-top: 20%;
         width: 100%;
+    }
+    .noData{
+        padding-top: 20%;
     }
 }

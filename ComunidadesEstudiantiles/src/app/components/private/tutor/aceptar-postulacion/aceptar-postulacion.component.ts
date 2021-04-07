@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Comunidad } from 'src/app/core/model/comunidad';
 
 @Component({
     selector: 'aceptarpostulacion',
@@ -49,10 +50,9 @@ export class AceptarPostulacionComponent implements OnInit {
             this._location.back();
         }
         console.log(this.params);
-        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: any) => {
+        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: Comunidad) => {
             this.postulacion_service.listarPostulaciones(resp.external_comunidad).subscribe((resp: Postulacion[]) => {
                 this.postulaciones = resp;
-                console.log(this.postulaciones);
                 if (this.postulaciones != null) {
                     this.hayDatos = true;
                 } else {
@@ -67,7 +67,6 @@ export class AceptarPostulacionComponent implements OnInit {
     aceptarPostulacion(external_postulacion) {
         const values = this.postulacionForm.getRawValue();
         this.postulacion_service.aceptarPostulacion(values,external_postulacion).subscribe((resp: any) => {
-            console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
                 this.postulacion_service.añadirMiembro(external_postulacion).subscribe(() => {
                     if (resp.siglas == "OE") {
@@ -89,7 +88,6 @@ export class AceptarPostulacionComponent implements OnInit {
     rechazarPostulacion(external_postulacion) {
         const values = this.postulacionForm.getRawValue();
         this.postulacion_service.rechazarPostulacion(values,external_postulacion).subscribe((resp: any) => {
-            console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido rechazada' });
                         setTimeout(() => {

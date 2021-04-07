@@ -33,6 +33,8 @@ $router->get('/docente/lista', 'UsuarioController@listarDocentes');
 // COMUNIDAD
 $router->post('/comunidad/registro/{external_docente}', 'ComunidadController@RegistrarComuidad');
 $router->get('/comunidad/historial/{external_comunidad}', 'ComunidadController@historialComunidad');
+$router->post('/comunidad/editar/{external_comunidad}', 'ComunidadController@EditarComunidad');
+
 
 $router->post('/decano/activar/{external_comunidad}', 'ComunidadController@ActivarComunidad');
 $router->post('/secretaria/activar/{external_comunidad}', 'ComunidadController@RevisionInformacion');
@@ -75,6 +77,7 @@ $router->get('/estudiante/listarpostulacionespera', 'PostulacionController@lista
 $router->get('/comunidad/listarpostulacionespera/{external_comunidad}', 'PostulacionController@listarPostulacionesEsperaByComunidad');
 $router->get('/estudiante/listarpostulacionaceptadas', 'PostulacionController@listarPostulacionesAceptadas');
 $router->get('/estudiante/buscarpostulacion/{external_estudiante}', 'PostulacionController@buscarPostulacion');
+$router->post('/estudiante/cancelar-postulacion/{external_estudiante}', 'PostulacionController@CancelarPostulacion');
 
 
 
@@ -103,8 +106,14 @@ $router->post('/utilidad/emviar-mail', 'MailController@mailAdjunto');
 
 // configuraciones
 $router->post('/configuracion/mail', 'ConfiguracionController@editarMail');
-$router->post('/configuracion/dias', 'ConfiguracionController@editarDias');
+$router->post('/configuracion/clave', 'ConfiguracionController@editarClave');
 
 $router->get('/configuracion/ver', 'ConfiguracionController@listarConf');
 
 $router->get('/comunidad/buscar-comunidad/{external_comunidad}', 'ComunidadController@BuscarComunidadExternal');
+
+// EDITAR
+$router->post('/docente/editar/{external_docente}', 'UsuarioController@EditarDocente');
+$router->post('/estudiante/editar/{external_estudiante}', 'UsuarioController@EditarEstudiante');
+$router->post('/docente/editar-clave/{external_docente}', 'UsuarioController@EditarDocenteClave');
+$router->post('/estudiante/editar-clave/{external_estudiante}', 'UsuarioController@EditarEstudianteClave');

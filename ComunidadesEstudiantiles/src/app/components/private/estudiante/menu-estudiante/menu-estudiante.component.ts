@@ -26,32 +26,13 @@ export class MenuEstudianteComponent implements OnInit {
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         this.items = [
-            {
-                label: 'Comunidades',
-                items: [
-                    {
-                        label: 'Postularse',
-                        icon: 'pi pi-user-plus',
-                        command: () => this.links('postularse')
-                    }
-                ]
-            },
-            {
-                label: 'Cerrar Sesión',
-                icon: 'pi pi-power-off',
-                command: () => this.mensaje()
-            }
+            {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
+            {separator: true},
+            {label: 'Cerrar Sesión', icon: 'pi pi-power-off', command: () => {this.mensaje();}},
         ];
     }
-    links(opcion){
-        switch (opcion) {
-            case 'postularse':
-                this.router.navigateByUrl(Rutas.postulacion);
-                break;
-        
-            default:
-                break;
-        }
+    editar(){
+        this.router.navigateByUrl(Rutas.editarEstudiante);
     }
     cerrarSesion() {
         sessionStorage.clear();

@@ -7,6 +7,8 @@ import { ComunidadService } from 'src/app/services/comunidad.service';
 import { CalendarOptions } from '@fullcalendar/angular';
 import { Calendar } from '@fullcalendar/core';
 import esLocale from '@fullcalendar/core/locales/es';
+import { Comunidad } from 'src/app/core/model/comunidad';
+import { Actividades } from 'src/app/core/model/actividades';
 
 declare var $: any;
 
@@ -25,7 +27,7 @@ export class planificarActividadesComponent implements OnInit {
 
     @Output() change = new EventEmitter();
     titulo = "";
-    logo_comunidad = "";
+    logo_comunidad:String = "";
     private params: any;
     planificarActividadesForm: FormGroup;
     ocultar = "ocultar";
@@ -58,17 +60,15 @@ export class planificarActividadesComponent implements OnInit {
 
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if (this.params != null && this.params.tipo_docente == "5") {
-            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: any) => {
+            this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: Comunidad) => {
                 this.logo_comunidad = resp.ruta_logo;
-                this.actividades_service.listarPlanificacionByComunidad(resp.external_comunidad).subscribe((lista: any) => {
+                this.actividades_service.listarPlanificacionByComunidad(resp.external_comunidad).subscribe((lista: Actividades) => {
                     if (lista != null) {
                         this.listaActividades = lista;
-                        console.log(this.listaActividades);
                         for (let i = 0; i < this.listaActividades.length; i++) {
                                 this.listaFechas.push({ "title": this.listaActividades[i].nombre_actividad, "date": this.listaActividades[i].fecha_inicio });
                         }
                         this.hayDatos = true;
-                        console.log(this.listaFechas);
                     }
                 });
             });
@@ -95,7 +95,6 @@ export class planificarActividadesComponent implements OnInit {
                 this.actividad.push(this.listaActividades[i]);
             }
         }
-        console.log(this.actividad);
     }
 
     add() {
@@ -137,7 +136,6 @@ export class planificarActividadesComponent implements OnInit {
         let mes1 = new Date(event).getMonth() + 1;
         let dia1 = new Date(event).getDate();
         dateCalendar = año1 + "-" + mes1 + "-" + dia1;
-        console.log(dateCalendar);
         for (let i = 0; i < this.listaActividades.length; i++) {
             let fecha = "";
             let año = new Date(this.listaActividades[i].fecha_inicio).getFullYear();

@@ -5,6 +5,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
 import { Comunidad } from 'src/app/core/model/comunidad';
+import { Vinculacion } from 'src/app/core/model/vinculacion';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { VinculacionService } from 'src/app/services/vinculacion.service';
 import { URL } from '../../../../core/constants/url';
@@ -40,8 +41,8 @@ export class VerComunidadesTutorComponent implements OnInit{
         }else{
             this._location.back();
         }
-        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp:any)=>{
-            this.comunidad_service.listarComunidadesVinculacion(resp.external_comunidad).subscribe((resp)=>{
+        this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp:Comunidad)=>{
+            this.comunidad_service.listarComunidadesVinculacion(resp.external_comunidad).subscribe((resp:Comunidad)=>{
                 this.lista=resp;
                 if(this.lista != null){
                     this.hayDatos=true;

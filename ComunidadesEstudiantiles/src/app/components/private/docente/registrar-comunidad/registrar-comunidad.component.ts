@@ -4,6 +4,7 @@ import { ComunidadService } from 'src/app/services/comunidad.service';
 import { Location } from '@angular/common';
 import { MessageService } from 'primeng/api';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { Comunidad } from 'src/app/core/model/comunidad';
 
 
 
@@ -65,7 +66,7 @@ export class RegistrarComunidadComponent implements OnInit {
   enviar() {
     const values = this.registrarComunidadForm.getRawValue();
     if ((this.file.size <= 2000000) && (this.file.type == "image/png")) {
-      this.comunidad_service.registrarComunidad(values, this.params.external_docente).subscribe((resp: any) => {
+      this.comunidad_service.registrarComunidad(values, this.params.external_docente).subscribe((resp: Comunidad) => {
         let form = new FormData();
         form.append('file', this.file);
         this.comunidad_service.subirImagen(form, resp.external_comunidad).subscribe((resp: any) => {
