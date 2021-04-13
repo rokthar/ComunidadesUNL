@@ -32,7 +32,10 @@ export class SideMenuGestorComponent implements OnInit {
             {
                 label: 'Configuraciones',
                 icon: 'pi pi-cog',
-                command: () => this.links('configuraciones')
+                items:[
+                    {label:'Correo', icon:'pi pi-cog', command: () => this.links('configuraciones')},
+                    {label:'Usuarios', icon:'pi pi-user', command: () => this.links('usuarios')}
+                ]
             }
         ];
 
@@ -47,6 +50,9 @@ export class SideMenuGestorComponent implements OnInit {
                 break;
             case 'configuraciones':
                 this.router.navigateByUrl(Rutas.configuracionesGestor);
+                break;
+            case 'usuarios':
+                this.router.navigateByUrl(Rutas.gestionUsuarios);
                 break;
             default:
                 break;

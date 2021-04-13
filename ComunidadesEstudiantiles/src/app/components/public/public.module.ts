@@ -11,13 +11,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MainComponent } from './main/main.component';
 import { ResultadosPreviewComponent } from './resultados-preview/resultados-preview.component';
 import { VerResultadosComponent } from './ver-resultados/ver-resultados.component';
+import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     MainComponent,
     ResultadosPreviewComponent,
-    VerResultadosComponent
+    VerResultadosComponent,
+    RecuperarClaveComponent
   ],
   exports:[
   ],

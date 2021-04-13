@@ -1,0 +1,103 @@
+<p-toast position="top-center" key="tc"></p-toast>
+
+<div class="p-grid container">
+    <div class="p-col-12">
+        <menu-gestor></menu-gestor>
+    </div>
+    <div class="p-col-2">
+        <sidemenu-gestor></sidemenu-gestor>
+    </div>
+    <div class="p-col-9 p-lg-6 cuerpo">
+        <div>
+            <h3>Lista de Docentes</h3>
+            <p-table [value]="listaDocentes" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                urrentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                styleClass="p-datatable-responsive-demo">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <Th>Estado</Th>
+                        <th>Opción</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-objeto let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{objeto.nombres }}</td>
+                        <td>{{objeto.apellidos }}</td>
+
+                        <td>
+                            <span [class]="objeto.estado ==1? 'etiqueta-activo':'etiqueta-inactivo'">{{objeto.estado ==1
+                                ?
+                                'ACTIVO':'INACTIVO'}}</span>
+                        </td>
+
+                        <td>
+                            <ng-container *ngIf="objeto.estado === 1">
+                                <button pButton pRipple type="button" icon="pi pi-trash"
+                                    class="p-button-rounded boton-accion-secundaria p-mr-2"
+                                    (click)="desactivarUsuario(rowIndex, $event)"></button>
+                                <p-confirmPopup></p-confirmPopup>
+                            </ng-container>
+                            <ng-container *ngIf="objeto.estado === 0">
+                                <button pButton pRipple type="button" icon="pi pi-thumbs-up"
+                                    class="p-button-rounded p-button-warning p-mr-2"
+                                    (click)="activarUsuario(rowIndex, $event)"></button>
+                                <p-confirmPopup></p-confirmPopup>
+                            </ng-container>
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div>
+            <h3>Lista de Estudiantes</h3>
+            <p-table [value]="listaEstudiantes" [paginator]="true" [rows]="5" [showCurrentPageReport]="true"
+                urrentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                styleClass="p-datatable-responsive-demo">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
+                        <th>Ciclo</th>
+                        <th>Paralelo</th>
+                        <Th>Estado</Th>
+                        <th>Opción</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-objeto let-rowIndex="rowIndex">
+                    <tr>
+                        <td>{{objeto.nombres }}</td>
+                        <td>{{objeto.apellidos }}</td>
+                        <td>{{objeto.ciclo }}</td>
+                        <td>{{objeto.paralelo }}</td>
+
+                        <td>
+                            <span [class]="objeto.estado ==1? 'etiqueta-activo':'etiqueta-inactivo'">{{objeto.estado ==1
+                                ?
+                                'ACTIVO':'INACTIVO'}}</span>
+                        </td>
+
+                        <td>
+                            <ng-container *ngIf="objeto.estado === 1">
+                                <button pButton pRipple type="button" icon="pi pi-trash"
+                                    class="p-button-rounded boton-accion-secundaria p-mr-2"
+                                    (click)="desactivarUsuario(rowIndex, $event)"></button>
+                                <p-confirmPopup></p-confirmPopup>
+                            </ng-container>
+                            <ng-container *ngIf="objeto.estado === 0">
+                                <button pButton pRipple type="button" icon="pi pi-thumbs-up"
+                                    class="p-button-rounded p-button-warning p-mr-2"
+                                    (click)="activarUsuario(rowIndex, $event)"></button>
+                                <p-confirmPopup></p-confirmPopup>
+                            </ng-container>
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </p-table>
+        </div>
+    </div>
+    <div class="p-col-1"></div>

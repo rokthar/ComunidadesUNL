@@ -9,25 +9,30 @@ class ConfiguracionController extends Controller{
     public function editarMail(Request $request){
         if ($request->json()){
             $data = $request->json()->all();
-            
-            $configuracion=configuracion::where("id",1)->first();
-            $configuracion->host = $data["host"];
-            $configuracion->correo = $data["correo"];
-            $configuracion->dias = $data["dias"];
-            $configuracion->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
-
+            if($data["host"] != "" && $data["correo"] != "" && $data["dias"] != ""){
+                $configuracion=configuracion::where("id",1)->first();
+                $configuracion->host = $data["host"];
+                $configuracion->correo = $data["correo"];
+                $configuracion->dias = $data["dias"];
+                $configuracion->save();
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],400);
+            }
         }
     }
 
     public function editarClave(Request $request){
         if ($request->json()){
             $data = $request->json()->all();
-            
-            $configuracion=configuracion::where("id",1)->first();
-            $configuracion->clave = $data["clave"];
-            $configuracion->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            if($data["clave"] != ""){
+                $configuracion=configuracion::where("id",1)->first();
+                $configuracion->clave = $data["clave"];
+                $configuracion->save();
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],400);
+            }
         }else{
             return response()->json(["mensaje"=>"Error en los datos", "siglas"=>"ED"],200);
         }

@@ -10,10 +10,16 @@
                 <input id="clave" placeholder="Contraseña" class="caja-texto login-txt" type="password" pInputText
                     formControlName="clave">
                 <br><br>
+                <span class="recuperar-clave" (click)="show()">Recuperar Contraseña</span>
+                <br><br>
                 <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
                 <button class="button-delete" (click)="cancelar()">Cancelar</button>
             </form>
         </p-card>
-
+        <p-dialog class="dialog" header="Recuperar Contraseña" [(visible)]="display">
+            <p>Porfavor ingrese su correo electrónico para poder recuperar su contraseña</p>
+            <input type="text" pInputText [(ngModel)]="correo"><br><br>
+            <button pButton type="button" (click)="RecuperarClave(correo)" label="Enviar Petición"></button>
+        </p-dialog>
     </div>
 </div>

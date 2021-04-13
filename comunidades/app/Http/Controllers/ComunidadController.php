@@ -61,7 +61,7 @@ class ComunidadController extends Controller{
             $comunidades->save();
             return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
         }else{
-            return response()->json(["mensaje"=>"Datos no Existentes", "siglas"=>"DNE"], 400);
+            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"], 400);
         }
         
     }
@@ -69,8 +69,9 @@ class ComunidadController extends Controller{
     public function ActivarComunidad ($external_comunidad){
         $enviar = new MailController();
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-        $docenteObj = docente::where("id", $comunidadObj->tutor)->first();
         if($comunidadObj){
+            $docenteObj = docente::where("id", $comunidadObj->tutor)->first();
+
             $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
             $comunidad->estado = 1;
             $comunidad->save();
@@ -80,21 +81,30 @@ class ComunidadController extends Controller{
             $enviar->enviarMail("Docente","Aprobacion de Solicitud","La comunidad ".$comunidadObj["nombre_comunidad"]." ha sido aprobada");
 
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+        }else{
+            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
         }
     }
 
     public function RechazarComunidad (Request $request, $external_comunidad){
         if ($request->json()){
             $data = $request->json()->all();
-        $enviar = new MailController();
-        $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-        if($comunidadObj){
-            $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
-            $comunidad->estado = 0;
-            $comunidad->save();
-            $enviar->enviarMail("Estudiante","Aprobacion de Solicitud","La comunidad ".$comunidadObj["nombre_comunidad"]." ha sido rechazada. <br> ".$data["comentario"]);
-            
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            $enviar = new MailController();
+            $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
+            if($comunidadObj){
+                $docenteObj = docente::where("id", $comunidadObj->tutor)->first();
+
+                $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $comunidad->estado = 0;
+                $comunidad->save();
+
+                $docenteObj->tipoDocente = 1;
+                $docenteObj->save();
+                $enviar->enviarMail("Estudiante","Aprobacion de Solicitud","La comunidad ".$comunidadObj["nombre_comunidad"]." ha sido rechazada. <br> ".$data["comentario"]);
+                
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
             }
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
@@ -113,6 +123,8 @@ class ComunidadController extends Controller{
                 $enviar->enviarMail("Gestor/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido verificada por la Secretaria <br>".$data["comentario"]);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
             }
         }
     }
@@ -126,9 +138,11 @@ class ComunidadController extends Controller{
                 $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $comunidad->estado = 2;
                 $comunidad->save();
-                // $enviar->enviarMail("Decano/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido validada por el Gestor de la Carrera <br> ".$data["comentario"]);
+                $enviar->enviarMail("Decano/a","Solicitud de Comunidad","La solicitud de la comunidad ".$comunidadObj["nombre_comunidad"]." ha sido validada por el Gestor de la Carrera <br> ".$data["comentario"]);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
             }
         }
     }
@@ -139,16 +153,14 @@ class ComunidadController extends Controller{
 
             $comunidad = comunidad::where("external_comunidad", $external_comunidad)->first();
             if($comunidad){
-                // $comunidad = comunidad::where("id", $comunidadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $comunidad->nombre_comunidad = $data["nombre_comunidad"];
                 $comunidad->descripcion = $data["descripcion"];
                 $comunidad->mision = $data["mision"];
                 $comunidad->vision = $data["vision"];
-                // $comunidad->ruta_logo = $data["ruta_logo"];
                 $comunidad->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Error", "siglas"=>"E"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"],400);
             }
         }else{
             return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
@@ -187,7 +199,6 @@ class ComunidadController extends Controller{
         foreach ($listas as $lista) {
             $tutor = docente::where("id", $lista->tutor)->first();
             if($lista->external_comunidad == $external_comunidad){
-
             }else{
                 $datos['data'][] = [
                     "nombres" => $lista->nombre_comunidad,
@@ -198,9 +209,10 @@ class ComunidadController extends Controller{
                     "external_comunidad"=>$lista->external_comunidad,
                     "ruta_logo"=>$lista->ruta_logo
                 ];
+                self::estadoJson(200, true, '');
             }
         }
-        self::estadoJson(200, true, '');
+        
         return response()->json($datos, $estado);
     }
 
@@ -277,16 +289,24 @@ class ComunidadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $docente = docente::where("external_do",$external_docente)->first();
+        if($docente){
         $comunidad = comunidad::where("tutor",$docente->id)->first();
-        $datos['data'] = [
-            "nombre_comunidad" => $comunidad->nombre_comunidad,
-            "external_comunidad"=>$comunidad->external_comunidad,
-            "ruta_logo"=>$comunidad->ruta_logo,
-            "descripcion"=>$comunidad->descripcion,
-            "mision"=>$comunidad->mision,
-            "vision"=>$comunidad->vision
-        ];
-        self::estadoJson(200, true, '');
+            if($comunidad){
+                $datos['data'] = [
+                    "nombre_comunidad" => $comunidad->nombre_comunidad,
+                    "external_comunidad"=>$comunidad->external_comunidad,
+                    "ruta_logo"=>$comunidad->ruta_logo,
+                    "descripcion"=>$comunidad->descripcion,
+                    "mision"=>$comunidad->mision,
+                    "vision"=>$comunidad->vision
+                ];
+                self::estadoJson(200, true, '');
+            }else{
+                self::estadoJson(400, false, 'El docente no es tutor de una comunidad');
+            }
+        }else{
+            self::estadoJson(400, false, 'El docente no esta registrado');
+        }
         return response()->json($datos, $estado);
     }
 
@@ -294,17 +314,21 @@ class ComunidadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $docente = docente::where("id",$comunidad->tutor)->first();
-
-        $datos['data'] = [
-            "nombre_comunidad" => $comunidad->nombre_comunidad,
-            "external_comunidad"=>$comunidad->external_comunidad,
-            "tutor"=>$docente->nombres." ".$docente->apellidos,
-            "descripcion"=>$comunidad->descripcion,
-            "mision"=>$comunidad->mision,
-            "vision"=>$comunidad->vision
-        ];
-        self::estadoJson(200, true, '');
+        if($comunidad){
+            $docente = docente::where("id",$comunidad->tutor)->first();
+            $datos['data'] = [
+                "nombre_comunidad" => $comunidad->nombre_comunidad,
+                "external_comunidad"=>$comunidad->external_comunidad,
+                "tutor"=>$docente->nombres." ".$docente->apellidos,
+                "descripcion"=>$comunidad->descripcion,
+                "mision"=>$comunidad->mision,
+                "vision"=>$comunidad->vision
+            ];
+            self::estadoJson(200, true, '');
+        }else{
+            self::estadoJson(400, false, 'La comunidad no esta registrada');
+        }
+        
         return response()->json($datos, $estado);
     }
 
@@ -312,14 +336,22 @@ class ComunidadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $estudiante = estudiante::where("external_es",$external_estudiante)->first();
-        $miembro = miembros::where("fk_estudiante",$estudiante->id)->first();
-        $comunidad = comunidad::where("id",$miembro->fk_comunidad)->first();
-        $datos['data'] = [
-            "nombre_comunidad" => $comunidad->nombre_comunidad,
-            "external_comunidad"=>$comunidad->external_comunidad,
-            "ruta_logo"=>$comunidad->ruta_logo
-        ];
-        self::estadoJson(200, true, '');
+        if($estudiante){
+            $miembro = miembros::where("fk_estudiante",$estudiante->id)->first();
+            if($miembro){
+                $comunidad = comunidad::where("id",$miembro->fk_comunidad)->first();
+                    $datos['data'] = [
+                        "nombre_comunidad" => $comunidad->nombre_comunidad,
+                        "external_comunidad"=>$comunidad->external_comunidad,
+                        "ruta_logo"=>$comunidad->ruta_logo
+                    ];
+                    self::estadoJson(200, true, '');
+            }else{
+                self::estadoJson(400, false, 'El estudiante no es miembro de una comunidad');
+            }
+        }else{
+            self::estadoJson(400, false, 'El estudiante no esta registrado');
+        }
         return response()->json($datos, $estado);
     }
 
@@ -330,57 +362,61 @@ class ComunidadController extends Controller{
         $dataRes=null;
         $dataAct=null;
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $miembro = miembros::where("fk_comunidad",$comunidad->id)->get();
-        $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
-        $vinculaciones = vinculacion::where("fk_comunidad_solicitada",$comunidad->id)->get();
-        foreach ($miembro as $item) {
-            $data=null;
-            $estudiante = estudiante::where("id",$item->fk_estudiante)->first();
-            $data[] = [
-                "estudiante"=>$estudiante->nombres." ".$estudiante->apellidos,
-                "ciclo"=>$estudiante->ciclo,
-                "paralelo"=>$estudiante->paralelo
-            ];
-        }
-        foreach($vinculaciones as $vinc){
-            $comunidad = comunidad::where("id",$vinc->fk_comunidad_solicitante)->first();
-            $dataVinc[]=[
-                "fecha_solicitud"=>$vinc->fecha_inicio,
-                "comunidad_solicitante"=>$comunidad->nombre_comunidad
-            ];
-        }
-        foreach ($listas as $act) {
-            // $dataAct = null;
-            $actividades = detalleActividad::where("fk_actividades",$act->id)->get();
-            foreach ($actividades as $item) {
-                $dataAct[] =[
-                    "nombre_actividad"=>$item->nombre_actividad,
-                    "descripcion_actividad"=>$item->descripcion_actividad,
-                    "fecha_inicio"=>$item->fecha_inicio
+        if($comunidad){
+            $miembro = miembros::where("fk_comunidad",$comunidad->id)->get();
+            $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+            $vinculaciones = vinculacion::where("fk_comunidad_solicitada",$comunidad->id)->get();
+            foreach ($miembro as $item) {
+                $data=null;
+                $estudiante = estudiante::where("id",$item->fk_estudiante)->first();
+                $data[] = [
+                    "estudiante"=>$estudiante->nombres." ".$estudiante->apellidos,
+                    "ciclo"=>$estudiante->ciclo,
+                    "paralelo"=>$estudiante->paralelo
                 ];
-                $resultados = resultado::where("fk_det_actividad",$item->id)->get();
-                foreach ($resultados as $res) {
-                    if($resultados != null){
-                        $dataRes[] = [
-                            "resumen_resultado"=>$res->resumen_resultado,
-                            "fecha_fin"=>$res->fecha_fin
-                        ];
-                    }else{
-                        $dataRes=null;
+            }
+            foreach($vinculaciones as $vinc){
+                $comunidad = comunidad::where("id",$vinc->fk_comunidad_solicitante)->first();
+                $dataVinc[]=[
+                    "fecha_solicitud"=>$vinc->fecha_inicio,
+                    "comunidad_solicitante"=>$comunidad->nombre_comunidad
+                ];
+            }
+            foreach ($listas as $act) {
+                // $dataAct = null;
+                $actividades = detalleActividad::where("fk_actividades",$act->id)->get();
+                foreach ($actividades as $item) {
+                    $dataAct[] =[
+                        "nombre_actividad"=>$item->nombre_actividad,
+                        "descripcion_actividad"=>$item->descripcion_actividad,
+                        "fecha_inicio"=>$item->fecha_inicio
+                    ];
+                    $resultados = resultado::where("fk_det_actividad",$item->id)->get();
+                    foreach ($resultados as $res) {
+                        if($resultados != null){
+                            $dataRes[] = [
+                                "resumen_resultado"=>$res->resumen_resultado,
+                                "fecha_fin"=>$res->fecha_fin
+                            ];
+                        }else{
+                            $dataRes=null;
+                        }
+                        
                     }
-                    
                 }
+                
             }
             
+            $datos['data'] = [
+                "miembros" => $data,
+                "actividades"=>$dataAct,
+                "resultados"=>$dataRes,
+                "vinculaciones"=>$dataVinc
+            ];
+            self::estadoJson(200, true, '');
+        }else{
+            self::estadoJson(400, false, 'La comunidad no esta registrada');
         }
-        
-        $datos['data'] = [
-            "miembros" => $data,
-            "actividades"=>$dataAct,
-            "resultados"=>$dataRes,
-            "vinculaciones"=>$dataVinc
-        ];
-        self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     }
 

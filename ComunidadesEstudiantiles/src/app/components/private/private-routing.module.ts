@@ -26,6 +26,7 @@ import { EditarSecretariaComponent } from './secretaria/editar-secretaria/editar
 import { EditarMiembroComponent } from './miembros/editar-miembro/editar-miembro.component';
 import { EditarDocenteComponent } from './docente/editar-docente/editar-docente.component';
 import { EditarComunidadComponent } from './tutor/editar-comunidad/editar-comunidad.component';
+import { GestionUsuariosComponent } from './gestor/gestion-usuarios/gestion-usuarios.component';
 
 const routes: Routes = [
   {path:'docente/registrar-comunidad',component: RegistrarComunidadComponent},
@@ -53,7 +54,8 @@ const routes: Routes = [
   {path:'docente/editar',component:EditarDocenteComponent},
   {path:'secretaria/editar',component:EditarSecretariaComponent},
   {path:'miembro/editar',component:EditarMiembroComponent},
-  {path:'tutor/editar-comunidad',component:EditarComunidadComponent}
+  {path:'tutor/editar-comunidad',component:EditarComunidadComponent},
+  {path:'gestor/gestion-usuarios',component:GestionUsuariosComponent}
 
 
 ]

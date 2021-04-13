@@ -25,4 +25,24 @@ export class UsuarioService {
    enviarMail(values){
     return this.http.post(URL._url+"utilidad/emviar-mail",values);
    }
+
+   listarDocentesEstado(){
+    return this.http.get(URL._url+"docente/listar-docentes").pipe(pluck('data'));
+   }
+
+   listarEstudiantesEstado(){
+    return this.http.get(URL._url+"estudiante/listar-estudiantes").pipe(pluck('data'));
+   }
+
+   ActivarUsuario(external_usuario){
+    return this.http.post(URL._url+"usuarios/activar/"+external_usuario,null);
+   }
+
+   DesactivarUsuario(external_usuario){
+    return this.http.post(URL._url+"usuarios/desactivar/"+external_usuario,null);
+   }
+
+   recuperarClave(value){
+    return this.http.post(URL._url+"usuarios/recuperar-clave",value);
+   }
 }

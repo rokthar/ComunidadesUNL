@@ -31,7 +31,7 @@ export class PostulacionService {
   }
 
   aceptarPostulacion(values, external_postulacion) {
-    return this.http.post(URL._url + "gestor/activarpostulacion/" + external_postulacion, values);
+    return this.http.post(URL._url + "tutor/activarpostulacion/" + external_postulacion, values);
   }
 
   rechazarPostulacion(values, external_postulacion) {

@@ -25,8 +25,9 @@ export class LoginComponent {
     public titulo: string;
     public comentario: string;
     
-
+    correo="";
     loginForm: FormGroup;
+    display: boolean= false;
     constructor(
         private usuarioService:UsuarioService,
         private docenteService:DocenteService,
@@ -87,6 +88,23 @@ export class LoginComponent {
                 window.location.reload();
             }, 1500);
         }
+        });
+    }
+
+    show(){
+        this.display = true;
+    }
+    RecuperarClave(correo){
+        let value = {"correo":correo}
+        this.usuarioService.recuperarClave(value).subscribe((resp:any)=>{
+            if(resp.siglas == "OE"){
+                this.messageService.add({key: 'tc', severity:'success', summary: 'Operación Exitosa', detail: 'Se ha enviado un correo para la recuperación de su cuenta'});
+                setTimeout(() => {
+                    this._location.back();
+                }, 2000);
+            }else{
+            this.messageService.add({key: 'tc', severity:'error', summary: 'Error', detail: 'Se ha producido un error'});
+            }
         });
     }
 

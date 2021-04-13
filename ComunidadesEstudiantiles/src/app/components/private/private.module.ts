@@ -46,6 +46,7 @@ import { EditarMiembroComponent } from './miembros/editar-miembro/editar-miembro
 import { EditarSecretariaComponent } from './secretaria/editar-secretaria/editar-secretaria.component';
 import { EditarTutorComponent } from './tutor/editar-tutor/editar-tutor.component';
 import { EditarComunidadComponent } from './tutor/editar-comunidad/editar-comunidad.component';
+import { GestionUsuariosComponent } from './gestor/gestion-usuarios/gestion-usuarios.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -92,7 +93,8 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EditarMiembroComponent,
     EditarSecretariaComponent,
     EditarTutorComponent,
-    EditarComunidadComponent
+    EditarComunidadComponent,
+    GestionUsuariosComponent
   ],
   exports:[
   ],

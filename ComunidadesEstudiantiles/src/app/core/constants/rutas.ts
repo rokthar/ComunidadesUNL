@@ -2,7 +2,7 @@ export class Rutas{
   // GENERAL
   public static login = 'login';
   public static verResultados = 'ver-resultado';
-
+  public static recuperarClave = 'recuperar-clave';
   // DECANO
   public static aceptarComunidad = 'admin/decano/aceptar-comunidad';
   public static editarDecano = 'admin/decano/editar';
@@ -13,6 +13,7 @@ export class Rutas{
   public static validarActividades = 'admin/gestor/validar-actividades';
   public static configuracionesGestor = 'admin/gestor/configuraciones';
   public static editarGestor = 'admin/gestor/editar';
+  public static gestionUsuarios = 'admin/gestor/gestion-usuarios';
 
 
   // SECRETARIA

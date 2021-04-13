@@ -15,18 +15,23 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $docente=docente::where("external_do",$external_docente)->first();
-            $comunidadObj=comunidad::where("tutor",$docente->id)->first();
-            //$comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
-            if($comunidadObj){
-                $actividades = new actividades();
-                $actividades->fk_comunidad = $comunidadObj->id;
-                $actividades->estado=3;
-                $external = "Act".Utilidades\UUID::v4();
-                $actividades->external_actividades = $external;
-                $actividades->save();
-                $enviar->enviarMail("Gestor","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias");
+                if($docente){
+                    $comunidadObj=comunidad::where("tutor",$docente->id)->first();
+                if($comunidadObj){
+                    $actividades = new actividades();
+                    $actividades->fk_comunidad = $comunidadObj->id;
+                    $actividades->estado=3;
+                    $external = "Act".Utilidades\UUID::v4();
+                    $actividades->external_actividades = $external;
+                    $actividades->save();
+                    $enviar->enviarMail("Gestor","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias");
 
-                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
+                    return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
+                }else{
+                    return response()->json(["mensaje"=>"El Docente no es tutor de una comunidad", "siglas"=>"DNT"],400);
+                }
+            }else{
+                return response()->json(["mensaje"=>"El Docente no esta registrado", "siglas"=>"DNE"],400);
             }
     }
 
@@ -53,7 +58,7 @@ class ActividadController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+                return response()->json(["mensaje"=>"La Planificación no ha sido registrada","siglas"=>"DI"],400);
             }
         }
     }
@@ -64,8 +69,9 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-            $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+            
             if($actividadObj){
+                $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
                 foreach ($detalleactividadObj as $lista) {
                     $lista->estado = 2;
                     $lista->save();    
@@ -77,7 +83,7 @@ class ActividadController extends Controller{
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],400);
             }
         }
     }
@@ -88,8 +94,8 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-            $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
             if($actividadObj){
+                $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
                 foreach ($detalleactividadObj as $lista) {
                     $lista->estado = 0;
                     $lista->save();    
@@ -97,11 +103,11 @@ class ActividadController extends Controller{
                 $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $actividad->estado = 0;
                 $actividad->save();
-                $enviar->enviarMail("Tutor","Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"]);
+                //$enviar->enviarMail("Tutor","Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"]);
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],400);
             }
         }
     }
@@ -176,29 +182,36 @@ class ActividadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
-
-        $data = array();
-        foreach ($listas as $lista) {
-            $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
-
-            foreach ($actividades as $act) {
-                if($act->estado == 1){
-                    $estado = "Completada";
-                }else if($act->estado == 2){
-                    $estado = "Por Completar";
-                }
-                $datos['data'][] = [
-                    "nombre_actividad"=>$act->nombre_actividad,
-                    "descripcion_actividad"=>$act->descripcion_actividad,
-                    "fecha_inicio"=>$act->fecha_inicio,
-                    "external_det_actividad"=>$act->external_detact,
-                    "estado"=>$estado
-                ];
-            }
-        }
+        if($comunidad){
+            $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+            if($listas != null){
+                $data = array();
+                foreach ($listas as $lista) {
+                    $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
         
-        self::estadoJson(200, true, '');
+                    foreach ($actividades as $act) {
+                        if($act->estado == 1){
+                            $estado = "Completada";
+                        }else if($act->estado == 2){
+                            $estado = "Por Completar";
+                        }
+                        $datos['data'][] = [
+                            "nombre_actividad"=>$act->nombre_actividad,
+                            "descripcion_actividad"=>$act->descripcion_actividad,
+                            "fecha_inicio"=>$act->fecha_inicio,
+                            "external_det_actividad"=>$act->external_detact,
+                            "estado"=>$estado
+                        ];
+                    }
+                }
+                self::estadoJson(200, true, '');
+            }else{
+                self::estadoJson(400, false, 'La comunidad no tiene ninguna planificación');
+            }
+        }else{
+            self::estadoJson(400, false, 'La comunidad no esta registrada');
+        }
+       
         return response()->json($datos, $estado);
     }
 
@@ -206,23 +219,27 @@ class ActividadController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+        if($comunidad){
+            $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+            $data = array();
+            foreach ($listas as $lista) {
+                $actividades = detalleActividad::where("fk_actividades",$lista->id)->where("estado",2)->get();
 
-        $data = array();
-        foreach ($listas as $lista) {
-            $actividades = detalleActividad::where("fk_actividades",$lista->id)->where("estado",2)->get();
-
-            foreach ($actividades as $act) {
-                $datos['data'][] = [
-                    "nombre_actividad"=>$act->nombre_actividad,
-                    "descripcion_actividad"=>$act->descripcion_actividad,
-                    "fecha_inicio"=>$act->fecha_inicio,
-                    "external_det_actividad"=>$act->external_detact
-                ];
+                foreach ($actividades as $act) {
+                    $datos['data'][] = [
+                        "nombre_actividad"=>$act->nombre_actividad,
+                        "descripcion_actividad"=>$act->descripcion_actividad,
+                        "fecha_inicio"=>$act->fecha_inicio,
+                        "external_det_actividad"=>$act->external_detact
+                    ];
+                }
             }
+            
+            self::estadoJson(200, true, '');
+        }else{
+            self::estadoJson(400, false, 'La comunidad no esta registrada');
         }
         
-        self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     }
 

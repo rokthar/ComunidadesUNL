@@ -12,16 +12,20 @@ class MiembroController extends Controller{
         $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
         
         if($postulacionObj){
-            $miembros = new miembros();
-            $miembros->fk_estudiante = $postulacionObj->fk_estudiante;
-            $miembros->fk_comunidad = $postulacionObj->fk_comunidad;
-            $miembros->estado = 1;
-            $external = "Mmbs".Utilidades\UUID::v4();
-            $miembros->external_miembro = $external;
-            $miembros->save();
-            return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            if($postulacionObj->estado == 1){
+                $miembros = new miembros();
+                $miembros->fk_estudiante = $postulacionObj->fk_estudiante;
+                $miembros->fk_comunidad = $postulacionObj->fk_comunidad;
+                $miembros->estado = 1;
+                $external = "Mmbs".Utilidades\UUID::v4();
+                $miembros->external_miembro = $external;
+                $miembros->save();
+                return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
+            }else{
+                return response()->json(["mensaje"=>"La postulación no ha sido aceptada","siglas"=>"PNA"],400);
+            }
         }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            return response()->json(["mensaje"=>"La postulación no ha sido registrada","siglas"=>"PNR"],400);
         }
     }
 
@@ -29,12 +33,11 @@ class MiembroController extends Controller{
         global $estado, $datos;
         self::iniciarObjetoJSon();
         $listas = miembros::where("fk_comunidad",intval($id_comunidad))->get();
-
         $data = array();
         foreach ($listas as $lista) {
             $estudiante = estudiante::where("id",$lista->fk_estudiante)->first();
            
-            $datos['data'] = [
+            $datos['data'][] = [
                 "estudiante"=>$estudiante->nombres." ". $estudiante->apellidos
             ];
         }

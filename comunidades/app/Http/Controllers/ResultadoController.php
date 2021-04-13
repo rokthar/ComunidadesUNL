@@ -21,23 +21,25 @@ class ResultadoController extends Controller{
         $detActividad = detalleActividad::where("external_detact",$external_det_actividad)->first();
         
         if($detActividad){
-            $resultado = new resultado();
-            $resultado->fk_det_actividad = $detActividad->id;
-            $resultado->resumen_resultado = $data["resumen_resultado"];
-            $resultado->descripcion_resultado = $data["descripcion_resultado"];
-            $resultado->fecha_fin = $data["fecha_fin"];
-            $resultado->estado = 1;
-            $external = "Res".Utilidades\UUID::v4();
-            $resultado->external_resultado = $external;
-            $resultado->save();
+            if($data["resumen_resultado"] != "" && $data["descripcion_resultado"] != "" && $data["fecha_fin"] != ""){
+                $resultado = new resultado();
+                $resultado->fk_det_actividad = $detActividad->id;
+                $resultado->resumen_resultado = $data["resumen_resultado"];
+                $resultado->descripcion_resultado = $data["descripcion_resultado"];
+                $resultado->fecha_fin = $data["fecha_fin"];
+                $resultado->estado = 1;
+                $external = "Res".Utilidades\UUID::v4();
+                $resultado->external_resultado = $external;
+                $resultado->save();
 
-            $detActividad->estado=1;
-            $detActividad->save();
-            return response()->json(["mensaje"=>"Operacion existosa","external_resultado"=>$external ,"siglas"=>"OE"], 200);
-
+                $detActividad->estado=1;
+                $detActividad->save();
+                return response()->json(["mensaje"=>"Operacion existosa","external_resultado"=>$external ,"siglas"=>"OE"], 200);
+            }else{
+                return response()->json(["mensaje"=>"Datos Faltantes","siglas"=>"DF"], 400);
+            }
         }else{
-            return response()->json(["mensaje"=>"Error","siglas"=>"Error"], 400);
-
+            return response()->json(["mensaje"=>"La actividad no ha sido registrada","siglas"=>"ANR"], 400);
         }
     }
 
@@ -48,28 +50,25 @@ class ResultadoController extends Controller{
         $file = $request->file('file');
         $ruta= '../imagenes/resultados';
         $image_name = time().$file->getClientOriginalName();
-        // $tipo = $_FILES['file']['type'];
-        // $tamano = $_FILES['file']['size'];
-        // if(((strpos(tipo,"jpeg")) || (strpos($tipo,"jpg")) || (strpos(tipo,"png")) && (strpos($tamano<2000000)))){
             $file->move($ruta, $image_name);
             $resultado = resultado::where("external_resultado",$external_resultado)->first();
-            $imagenes = new imagenes();
-            $imagenes->fk_resultado = $resultado->id;
-            $imagenes->ruta_imagen = $image_name;
-            $imagenes->estado = 1;
-            $external = "Img".Utilidades\UUID::v4();
-            $imagenes->external_imagen = $external;
-            $imagenes->save();
-            return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
-        // }else{
-        //     return response()->json(["mensaje"=>"Imagen Erronea","siglas"=>"IE"], 200);
-        // }
+            if($resultado){
+                $imagenes = new imagenes();
+                $imagenes->fk_resultado = $resultado->id;
+                $imagenes->ruta_imagen = $image_name;
+                $imagenes->estado = 1;
+                $external = "Img".Utilidades\UUID::v4();
+                $imagenes->external_imagen = $external;
+                $imagenes->save();
+                return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
+            }else{
+                return response()->json(["mensaje"=>"La actividad no ha sido registrada", "siglas"=>"ANR"], 400);
+            }
     
     }
 
 
     public function listarResultados(){
-        $ruta="http://localhost/TT/ComunidadesUNL/comunidades/imagenes/resultados/";
         global $estado, $datos; 
         self::iniciarObjetoJSon();
         $listas = resultado::where("estado",1)->get();
@@ -82,9 +81,6 @@ class ResultadoController extends Controller{
             $comunidad = comunidad::where("id",$actividad->fk_comunidad)->first();
             $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
             foreach ($imagenes as $img) {
-                // $img = $ruta.$img->ruta_imagen
-                // $codificar = file_get_contents($img);
-                // $base64 = base64_encode($codificar);
                 $lista_imagenes[] =[
                     "ruta_imagen"=>$img->ruta_imagen//transformas base64
                 ];
@@ -109,33 +105,44 @@ class ResultadoController extends Controller{
         global $estado, $datos; 
         self::iniciarObjetoJSon();
         $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
-        $actividad = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->first();
-        $detActividad = detalleActividad::where("fk_actividades", $actividad->id)->first();
-        $listas = resultado::where("estado",1)->where("fk_det_actividad",$detActividad->id)->get();
-        
-        $data = array();
-        foreach ($listas as $lista) {
-            $lista_imagenes=null;
-
-            $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
-            foreach ($imagenes as $img) {
-                //$lista_imagenes[]="";
-                $lista_imagenes[] =[
-                    "ruta_imagen"=>$img->ruta_imagen
-                ];
+        if($comunidad){
+            $actividad = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->first();
+            if($actividad){
+                $detActividad = detalleActividad::where("fk_actividades", $actividad->id)->first();
+                $listas = resultado::where("estado",1)->where("fk_det_actividad",$detActividad->id)->get();
+                if($listas){
+                    $data = array();
+                    foreach ($listas as $lista) {
+                        $lista_imagenes=null;
+            
+                        $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
+                        foreach ($imagenes as $img) {
+                            //$lista_imagenes[]="";
+                            $lista_imagenes[] =[
+                                "ruta_imagen"=>$img->ruta_imagen
+                            ];
+                        }
+            
+                        $datos['data'][] = [
+                            "actividad" => $detActividad->nombre_actividad,
+                            "resumen_resultado"=>$lista->resumen_resultado,
+                            "descripcion_resultado"=>$lista->descripcion_resultado,
+                            "fecha_inicio"=>$detActividad->fecha_inicio,
+                            "fecha_fin"=>$lista->fecha_fin,
+                            "imagenes"=>$lista_imagenes,
+                            "external_resultado"=>$lista->external_resultado
+                        ];
+                    }
+                    self::estadoJson(200, true, '');
+                }else{
+                    self::estadoJson(400, false, 'La comunidad no ha generado resultados');
+                }
+            }else{
+                self::estadoJson(400, false, 'La comunidad no ha planificado actividades');
             }
-
-            $datos['data'][] = [
-                "actividad" => $detActividad->nombre_actividad,
-                "resumen_resultado"=>$lista->resumen_resultado,
-                "descripcion_resultado"=>$lista->descripcion_resultado,
-                "fecha_inicio"=>$detActividad->fecha_inicio,
-                "fecha_fin"=>$lista->fecha_fin,
-                "imagenes"=>$lista_imagenes,
-                "external_resultado"=>$lista->external_resultado
-            ];
+        }else{
+            self::estadoJson(400, false, 'La comunidad no esta registrada');
         }
-        self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     }
 
@@ -143,35 +150,44 @@ class ResultadoController extends Controller{
         global $estado, $datos; 
         self::iniciarObjetoJSon();
         $estudiante = estudiante::where("external_es",$external_estudiante)->first();
-        $miembro = miembros::where("fk_estudiante",$estudiante->id)->first();
-        $comunidad = comunidad::where("id",$miembro->fk_comunidad)->first();
-        $actividad = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->first();
-        $detActividad = detalleActividad::where("fk_actividades", $actividad->id)->first();
-        $listas = resultado::where("estado",1)->where("fk_det_actividad",$detActividad->id)->get();
-        
-        $data = array();
-        foreach ($listas as $lista) {
-            $lista_imagenes=null;
-
-            $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
-            foreach ($imagenes as $img) {
-                //$lista_imagenes[]="";
-                $lista_imagenes[] =[
-                    "ruta_imagen"=>$img->ruta_imagen
-                ];
+        if($estudiante){
+            $miembro = miembros::where("fk_estudiante",$estudiante->id)->first();
+            if($miembro){
+                $comunidad = comunidad::where("id",$miembro->fk_comunidad)->first();
+                $actividad = actividades::where("estado",1)->where("fk_comunidad",$comunidad->id)->first();
+                if($actividad){
+                    $detActividad = detalleActividad::where("fk_actividades", $actividad->id)->first();
+                    $listas = resultado::where("estado",1)->where("fk_det_actividad",$detActividad->id)->get();
+                    
+                    $data = array();
+                    foreach ($listas as $lista) {
+                        $lista_imagenes=null;
+                        $imagenes = imagenes::where("fk_resultado",$lista->id)->get();
+                        foreach ($imagenes as $img) {
+                            $lista_imagenes[] =[
+                                "ruta_imagen"=>$img->ruta_imagen
+                            ];
+                        }
+                        $datos['data'][] = [
+                            "actividad" => $detActividad->nombre_actividad,
+                            "resumen_resultado"=>$lista->resumen_resultado,
+                            "descripcion_resultado"=>$lista->descripcion_resultado,
+                            "fecha_inicio"=>$detActividad->fecha_inicio,
+                            "fecha_fin"=>$lista->fecha_fin,
+                            "imagenes"=>$lista_imagenes,
+                            "external_resultado"=>$lista->external_resultado
+                        ];
+                    }
+                    self::estadoJson(200, true, '');
+                }else{
+                self::estadoJson(400, false, 'La comunidad no ha planificado actividades');
+                }
+            }else{
+                self::estadoJson(400, false, 'El estudiante no es miembro de una comunidad');
             }
-
-            $datos['data'][] = [
-                "actividad" => $detActividad->nombre_actividad,
-                "resumen_resultado"=>$lista->resumen_resultado,
-                "descripcion_resultado"=>$lista->descripcion_resultado,
-                "fecha_inicio"=>$detActividad->fecha_inicio,
-                "fecha_fin"=>$lista->fecha_fin,
-                "imagenes"=>$lista_imagenes,
-                "external_resultado"=>$lista->external_resultado
-            ];
+        }else{
+            self::estadoJson(400, false, 'El estudiante no esta registrado');
         }
-        self::estadoJson(200, true, '');
         return response()->json($datos, $estado);
     }
 
@@ -180,31 +196,35 @@ class ResultadoController extends Controller{
         self::iniciarObjetoJSon();
 
         $resultado = resultado::where("external_resultado",$external_resultado)->first();
-        $detActividad = detalleActividad::where("id", $resultado->fk_det_actividad)->first();
-        $actividad = actividades::where("id",$detActividad->fk_actividades)->first();
-        $comunidad = comunidad::where("id",$actividad->fk_comunidad)->first();
-        
-        $imagenes = imagenes::where("fk_resultado",$resultado->id)->get();
-        $lista_imagenes=null;
-            foreach ($imagenes as $img) {
-                //$datadetpos[]="";
-                $lista_imagenes[] =[
-                    "ruta_imagen"=>$img->ruta_imagen
-                ];
-            }
-        $datos['data'] = [
-            "actividad" => $detActividad->nombre_actividad,
-            "descripcion_resultado"=>$resultado->descripcion_resultado,
-            "descripcion_actividad"=>$detActividad->descripcion_actividad,
-            "fecha_inicio"=>$detActividad->fecha_inicio,
-            "fecha_fin"=>$resultado->fecha_fin,
-            "imagenes"=>$lista_imagenes,
-            "external_resultado"=>$resultado->external_resultado,
-            "comunidad"=>$comunidad->nombre_comunidad,
-            "comunidad_logo"=>$comunidad->ruta_logo
-        ];
+        if($resultado){
+            $detActividad = detalleActividad::where("id", $resultado->fk_det_actividad)->first();
+            $actividad = actividades::where("id",$detActividad->fk_actividades)->first();
+            $comunidad = comunidad::where("id",$actividad->fk_comunidad)->first();
+            
+            $imagenes = imagenes::where("fk_resultado",$resultado->id)->get();
+            $lista_imagenes=null;
+                foreach ($imagenes as $img) {
+                    //$datadetpos[]="";
+                    $lista_imagenes[] =[
+                        "ruta_imagen"=>$img->ruta_imagen
+                    ];
+                }
+            $datos['data'] = [
+                "actividad" => $detActividad->nombre_actividad,
+                "descripcion_resultado"=>$resultado->descripcion_resultado,
+                "descripcion_actividad"=>$detActividad->descripcion_actividad,
+                "fecha_inicio"=>$detActividad->fecha_inicio,
+                "fecha_fin"=>$resultado->fecha_fin,
+                "imagenes"=>$lista_imagenes,
+                "external_resultado"=>$resultado->external_resultado,
+                "comunidad"=>$comunidad->nombre_comunidad,
+                "comunidad_logo"=>$comunidad->ruta_logo
+            ];
 
-        self::estadoJson(200, true, '');
+            self::estadoJson(200, true, '');
+        }else{
+            self::estadoJson(400, false, 'El resultado no esta registrado');
+        }   
         return response()->json($datos, $estado);
     }
 

@@ -1,18 +1,5 @@
 <?php
 
-/** @var \Laravel\Lumen\Routing\Router $router */
-
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register all of the routes for an application.
-| It is a breeze. Simply tell Lumen the URIs it should respond to
-| and give it the Closure to call when that URI is requested.
-|
-*/
-
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
@@ -72,7 +59,7 @@ $router->get('/comunidad/generar/resultados/{external_comunidad}', 'ActividadCon
 //POSTULACION
 $router->post('/estudiante/postulacion/{external_estudiante}/{external_comunidad}', 'PostulacionController@RegistrarPostulacion');
 $router->post('/estudiante/detallepostulacion/{external_postulacion}', 'PostulacionController@RegistrarDetallePostulacion');
-$router->post('/gestor/activarpostulacion/{external_postulacion}', 'PostulacionController@ActivarPostulacion');
+$router->post('/tutor/activarpostulacion/{external_postulacion}', 'PostulacionController@ActivarPostulacion');
 $router->get('/estudiante/listarpostulacionespera', 'PostulacionController@listarPostulacionesEspera');
 $router->get('/comunidad/listarpostulacionespera/{external_comunidad}', 'PostulacionController@listarPostulacionesEsperaByComunidad');
 $router->get('/estudiante/listarpostulacionaceptadas', 'PostulacionController@listarPostulacionesAceptadas');
@@ -117,3 +104,9 @@ $router->post('/docente/editar/{external_docente}', 'UsuarioController@EditarDoc
 $router->post('/estudiante/editar/{external_estudiante}', 'UsuarioController@EditarEstudiante');
 $router->post('/docente/editar-clave/{external_docente}', 'UsuarioController@EditarDocenteClave');
 $router->post('/estudiante/editar-clave/{external_estudiante}', 'UsuarioController@EditarEstudianteClave');
+
+$router->get('/docente/listar-docentes', 'UsuarioController@listarDocentesConf');
+$router->get('/estudiante/listar-estudiantes', 'UsuarioController@listarEstudiantesConf');
+$router->post('/usuarios/activar/{external_usuario}', 'UsuarioController@ActivarUsuario');
+$router->post('/usuarios/desactivar/{external_usuario}', 'UsuarioController@DesactivarUsuario');
+$router->post('/usuarios/recuperar-clave', 'UsuarioController@recuperarClave');
