@@ -1,2 +1,2 @@
-# ComunidadesOdoo
-Modulo Odoo para las comunidades estudiantiles de la UNL
+# Comunidades Estudiantiles
+Software web desarrollado en Lumen y Angular
