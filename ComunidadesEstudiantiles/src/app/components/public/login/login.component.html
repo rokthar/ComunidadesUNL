@@ -3,6 +3,11 @@
     <div class="fondo"></div>
     <div class="p-lg-4 p-md-6 p-sm-10 login">
         <p-card header="UNIVERSIDAD NACIONAL DE LOJA " subheader=" CARRERA DE INGENIRIA EN SISTEMAS Y COMPUTACIÓN">
+            <ng-template pTemplate="header">
+                <div class="img-container">
+                    <img alt="Ingenieria en Sistemas" src="../../../../assets/logo-unl.png">
+                </div>
+            </ng-template>
             <form [formGroup]="loginForm">
                 <input id="correo" placeholder="Correo Electrónico" class="caja-texto login-txt" type="text" pInputText
                     formControlName="correo">
