@@ -36,16 +36,17 @@ export class VerComunidadesComponent implements OnInit{
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        this.comunidad_service.listarComunidades().subscribe((resp:Comunidad)=>{
-            this.lista = resp;
-            this.postulacion_service.buscarPostulacion(this.params.external_estudiante).subscribe((post:any)=>{
-                if(post.siglas != "OE"){
-                    this.postulado=false;
-                }else{
-                    this.postulado=true;
-                    this.datosPostulacion = post;
-                }
-            });
+        
+        this.postulacion_service.buscarPostulacion(this.params.external_estudiante).subscribe((post:any)=>{
+            if(post.siglas != "OE"){
+                this.postulado=false;
+                this.comunidad_service.listarComunidades().subscribe((resp:Comunidad)=>{
+                    this.lista = resp;
+                });
+            }else{
+                this.postulado=true;
+                this.datosPostulacion = post;
+            }
         });
     }
     cancelar(){

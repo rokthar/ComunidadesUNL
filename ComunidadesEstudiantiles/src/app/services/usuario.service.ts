@@ -22,6 +22,13 @@ export class UsuarioService {
     return this.http.post(URL._url+"usuario/login",values).pipe(pluck('data'));
    }
 
+   registrarUsuario(values){
+     return this.http.post(URL._url+"usuario/registro",values);
+   }
+   registrarEstudiante(values, external_us){
+    return this.http.post(URL._url+"estudiante/registro/"+external_us,values);
+   }  
+
    enviarMail(values){
     return this.http.post(URL._url+"utilidad/emviar-mail",values);
    }

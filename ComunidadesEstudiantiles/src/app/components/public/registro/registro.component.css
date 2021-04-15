@@ -17,32 +17,11 @@
     height: 100%;
     position: absolute;
 }
-
-.login{
+.registro{
     text-align: center;
     z-index: 100;
     margin: auto;
 }
-.img-container{
+.txt-reg{
     width: 100%;
-}
-.login-txt{
-    width: 100%;
-}
-.login .recuperar-clave{
-    text-align: left;
-}
-.recuperar-clave{
-    cursor: pointer;
-}
-.dialog{
-    text-align: justify;
-}
-.opciones{
-    text-align: left;
-    margin-top: 2%;
-}
-.opciones span{
-    margin-top: 2%;
-    font-size: 13px;
 }

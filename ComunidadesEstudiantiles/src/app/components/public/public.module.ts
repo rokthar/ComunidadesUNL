@@ -12,6 +12,7 @@ import { MainComponent } from './main/main.component';
 import { ResultadosPreviewComponent } from './resultados-preview/resultados-preview.component';
 import { VerResultadosComponent } from './ver-resultados/ver-resultados.component';
 import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.component';
+import { RegistroComponent } from './registro/registro.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.compo
     MainComponent,
     ResultadosPreviewComponent,
     VerResultadosComponent,
-    RecuperarClaveComponent
+    RecuperarClaveComponent,
+    RegistroComponent
   ],
   exports:[
   ],

@@ -111,4 +111,7 @@ export class LoginComponent {
     cancelar(){
         this._location.back();
     }
+    registrarse(){
+        this.router.navigateByUrl(Rutas.registro);
+    }
 }

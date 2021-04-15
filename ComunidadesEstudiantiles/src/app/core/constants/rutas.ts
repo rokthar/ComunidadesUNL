@@ -3,6 +3,7 @@ export class Rutas{
   public static login = 'login';
   public static verResultados = 'ver-resultado';
   public static recuperarClave = 'recuperar-clave';
+  public static registro = 'registro';
   // DECANO
   public static aceptarComunidad = 'admin/decano/aceptar-comunidad';
   public static editarDecano = 'admin/decano/editar';

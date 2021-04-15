@@ -30,10 +30,11 @@ class UsuarioController extends Controller
                     $usuario->clave = $clave;
                     $usuario->tipoUsuario = $data["tipo"];
                     $usuario->estado = 1;
-                    $usuario->external_us = "UuA" . Utilidades\UUID::v4();
+                    $external_usuario = "UuA" . Utilidades\UUID::v4();
+                    $usuario->external_us = $external_usuario;
 
                     $usuario->save();
-                    return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+                    return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE","external_us"=>$external_usuario], 200);
                 }
             }else{
                 return response()->json(["mensaje" => "El usuario ya existe", "siglas" => "UE"], 400);

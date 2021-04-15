@@ -7,7 +7,7 @@
     <div class="p-col-2"><sidemenu-estudiante></sidemenu-estudiante></div>
     <div class="p-col-9 comunidades" *ngIf="!postulado">
         <div class="p-grid cuerpo">
-            <div class="card p-col-12 p-sm-6 p-md-6 p-lg-4" *ngFor="let item of lista">
+            <div class="card p-col-12 p-sm-6 p-md-6 p-lg-6 p-xl-4" *ngFor="let item of lista">
                 <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '100%'}"
                     styleClass="p-card-shadow">
                     <ng-template pTemplate="header">

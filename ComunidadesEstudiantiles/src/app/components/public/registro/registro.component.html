@@ -1,0 +1,19 @@
+<p-toast position="top-center" key="tc"></p-toast>
+<div class="body p-grid">
+    <div class="fondo"></div>
+    <div class="p-lg-4 p-md-6 p-sm-10 registro">
+        <p-card header="REGISTRO DE ESTUDIANTES" subheader=" CARRERA DE INGENIRIA EN SISTEMAS Y COMPUTACIÓN">
+            <p><input type="email" class="txt-reg" name="correo" placeholder="Correo" id="correo" [(ngModel)]="correo" pInputText></p>
+            <p><input type="password" class="txt-reg" name="pass1" placeholder="Contraseña" id="pass1" [(ngModel)]="pass1" pInputText></p>
+            <p><input type="password" class="txt-reg" name="pass2" placeholder="Repita la contraseña" id="pass2" [(ngModel)]="pass2" pInputText></p>
+            <p><input type="text" class="txt-reg" name="nombre" placeholder="Nombres" id="nombre" [(ngModel)]="nombre" pInputText></p>
+            <p><input type="text" class="txt-reg" name="apellido" placeholder="Apellidos" id="apellido" [(ngModel)]="apellido" pInputText></p>
+            <p><input type="text" class="txt-reg" name="ciclo" placeholder="Ciclo" id="ciclo" [(ngModel)]="ciclo" pInputText></p>
+            <p><input type="text" class="txt-reg" name="paralelo" placeholder="Paralelo" id="paralelo" [(ngModel)]="paralelo" pInputText></p>
+            <ng-template pTemplate="footer">
+                <button class="button" (click)="registrarse()" ><i class="pi pi-user-plus"> Registrarse</i></button>
+                <button class="button-delete" (click)="cancelar()" > <i class="pi pi-times"> Cancelar</i></button>
+            </ng-template>
+        </p-card>
+    </div>
+</div>
