@@ -22,10 +22,10 @@ class MiembroController extends Controller{
                 $miembros->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La postulación no ha sido aceptada","siglas"=>"PNA"],400);
+                return response()->json(["mensaje"=>"La postulación no ha sido aceptada","siglas"=>"PNA"],200);
             }
         }else{
-            return response()->json(["mensaje"=>"La postulación no ha sido registrada","siglas"=>"PNR"],400);
+            return response()->json(["mensaje"=>"La postulación no ha sido registrada","siglas"=>"PNR"],200);
         }
     }
 

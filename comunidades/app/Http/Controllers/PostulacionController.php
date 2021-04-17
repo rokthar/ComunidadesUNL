@@ -266,12 +266,15 @@ class PostulacionController extends Controller{
                 self::estadoJson(200, true, '');
             }else{
                 $datos['data'] = [
-                    "siglas"=>"ENR"
+                    "siglas"=>"ENTP"
                 ];
                 self::estadoJson(200, false, 'El estudiante no tiene ninguna postulación');
             }
         }else{
-            self::estadoJson(400, false, 'El estudiante no esta registrado');
+            $datos['data'] = [
+                "siglas"=>"ENP"
+            ];
+            self::estadoJson(200, false, 'El estudiante no esta postulado');
         }
         return response()->json($datos, $estado);
     } 

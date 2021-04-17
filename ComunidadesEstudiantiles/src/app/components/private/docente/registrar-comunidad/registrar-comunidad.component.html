@@ -16,7 +16,7 @@
                 <textarea maxlength="65000" class="caja-texto" rows="3"  pInputTextarea placeholder="Visión de la Comunidad" autoResize="autoResize" formControlName="vision"></textarea>
             <br><br>
             <small>Sr Usuario su imagen debe ser de tipo PNG y no debe pesar mas de 2Mb</small><br>
-            <input pInputText type='file' s (change)="fileEvent($event)" />
+            <input pInputText type='file'  (change)="fileEvent($event)" />
             <br><br>
             <button class="button" [disabled]="registrarComunidadForm.invalid" (click)="enviar()"><i class="pi pi-send"> Enviar Solicitud</i></button>
             <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"> Cancelar</i></button>

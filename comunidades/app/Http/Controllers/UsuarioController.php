@@ -257,17 +257,17 @@ class UsuarioController extends Controller
                         $datos['data'] = [
                             "siglas"=>"DI"
                         ];
-                        self::estadoJson(400, true, 'Datos Incorrectos');
+                        self::estadoJson(200, true, 'Datos Incorrectos');
                     }
                 }else{
-                    self::estadoJson(400, false, 'Datos Faltantes');
+                    self::estadoJson(200, false, 'Datos Faltantes');
                 }
                 
             } catch (\Exception $e) {
                 $datos['data'] = [
                     "siglas"=>"Error"
                 ];
-                self::estadoJson(400, false, 'Error Inesperado');
+                self::estadoJson(200, false, 'Error Inesperado');
                 
             }
             return response()->json($datos, $estado);

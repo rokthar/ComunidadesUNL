@@ -44,6 +44,7 @@ export class VerComunidadesComponent implements OnInit{
                     this.lista = resp;
                 });
             }else{
+                console.log(post);
                 this.postulado=true;
                 this.datosPostulacion = post;
             }
