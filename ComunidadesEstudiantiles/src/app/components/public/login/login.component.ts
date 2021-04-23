@@ -28,6 +28,7 @@ export class LoginComponent {
     correo="";
     loginForm: FormGroup;
     display: boolean= false;
+    displayReg:boolean=false;
     constructor(
         private usuarioService:UsuarioService,
         private docenteService:DocenteService,
@@ -51,7 +52,6 @@ export class LoginComponent {
     login(){
         const values = this.loginForm.getRawValue();
         this.usuarioService.loginUsuarios(values).subscribe((resp: any)=>{
-            console.log(resp);
             if(resp.siglas == "OE"){
             if(resp.tipoUsuario == 1){
                 this.docenteService.buscarDocente(resp.external_us).subscribe((docente:Docente)=>{
@@ -94,6 +94,13 @@ export class LoginComponent {
     show(){
         this.display = true;
     }
+    registrate (opcion){
+        if(opcion == "estudiante"){
+            this.router.navigateByUrl(Rutas.registro);
+        }else{
+            this.router.navigateByUrl(Rutas.registroDocente);
+        }
+    }
     RecuperarClave(correo){
         let value = {"correo":correo}
         this.usuarioService.recuperarClave(value).subscribe((resp:any)=>{
@@ -112,6 +119,6 @@ export class LoginComponent {
         this._location.back();
     }
     registrarse(){
-        this.router.navigateByUrl(Rutas.registro);
+        this.displayReg= true;
     }
 }

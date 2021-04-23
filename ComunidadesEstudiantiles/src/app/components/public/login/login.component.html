@@ -28,5 +28,9 @@
             <input type="text" pInputText [(ngModel)]="correo"><br><br>
             <button pButton type="button" (click)="RecuperarClave(correo)" label="Enviar Petición"></button>
         </p-dialog>
+        <p-dialog class="dialog" header="Como desea registrarse" [(visible)]="displayReg">
+            <button pButton type="button" (click)="registrate('estudiante')" label="Registrarte como estudiante"></button><br><br>
+            <button pButton type="button" (click)="registrate('docente')" label="Registrarte como docente"></button>
+        </p-dialog>
     </div>
 </div>

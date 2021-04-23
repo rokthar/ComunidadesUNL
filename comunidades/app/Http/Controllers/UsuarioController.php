@@ -22,7 +22,7 @@ class UsuarioController extends Controller
             $user = Usuario::where("correo",$data["correo"])->first();
             if($user == ""){
                 if($data["correo"] == "" || $data["clave"] == "" || $data["tipo"] == ""){
-                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 400);
+                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
                     $usuario = new usuario();
                     $usuario->correo = $data["correo"];
@@ -37,10 +37,10 @@ class UsuarioController extends Controller
                     return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE","external_us"=>$external_usuario], 200);
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario ya existe", "siglas" => "UE"], 400);
+                return response()->json(["mensaje" => "El usuario ya existe", "siglas" => "UE"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 

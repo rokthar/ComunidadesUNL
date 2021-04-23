@@ -1,17 +1,14 @@
 <p-toast position="top-center" key="tc"></p-toast>
 
-<div class="p-grid">
-    <div class="p-col-12">
-        <p-menubar class="nav" [model]="items">
-            <ng-template pTemplate="start">
-                <img src="../../../../../assets/unl2.png" height="40" class="p-mr-2">
-            </ng-template>
-            <ng-template pTemplate="end">
-                <p-splitButton label="{{params.nombres}} {{params.apellidos}}" icon="pi pi-user" class="menu-lateral" [model]="items"></p-splitButton><br>
-                <!-- <span>Docente: {{params.nombres}} {{params.apellidos}}</span><br> -->
-                <small>Docente</small>
-            </ng-template>
-        </p-menubar>
+<div class="p-grid nav">
+    <div class="p-col-3 img">
+        <img src="../../../../../assets/unl2.png" alt="UNL logo">
+
+    </div>
+    <div class="p-col-9 user">
+        <p-splitButton label="{{params.nombres}} {{params.apellidos}}" icon="pi pi-user" class="menu-lateral" [model]="items"></p-splitButton><br>
+        <!-- <span>{{params.nombres}} {{params.apellidos}}</span><br> -->
+        <small>Decano de la Carrera</small>
     </div>
 </div>
 

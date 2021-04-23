@@ -27,6 +27,10 @@ export class UsuarioService {
    }
    registrarEstudiante(values, external_us){
     return this.http.post(URL._url+"estudiante/registro/"+external_us,values);
+   }
+   
+   registrarDocente(values, external_us){
+    return this.http.post(URL._url+"docente/registro/"+external_us,values);
    }  
 
    enviarMail(values){

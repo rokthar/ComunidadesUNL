@@ -4,6 +4,7 @@ use App\Models\actividades;
 use App\Models\comunidad;
 use App\Models\docente;
 use App\Models\detalleActividad;
+use App\Models\usuario;
 use App\Http\Controllers\MailController;
 
 use Illuminate\Http\Request;
@@ -12,6 +13,8 @@ use Illuminate\Http\Request;
 class ActividadController extends Controller{
 
     public function PlanificarActividades ($external_docente){
+        $docenteG = docente::where("estado","2")->first();
+        $gestor = usuario::where("id",$docenteG->fk_usuario)->first();
             $enviar = new MailController();
 
             $docente=docente::where("external_do",$external_docente)->first();
@@ -24,7 +27,7 @@ class ActividadController extends Controller{
                     $external = "Act".Utilidades\UUID::v4();
                     $actividades->external_actividades = $external;
                     $actividades->save();
-                    $enviar->enviarMail("Gestor","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias");
+                    $enviar->enviarMail($docenteG->nombres." ".$docenteG->apellidos." Gestor de la carrera","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias", $gestor->correo);
 
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
                 }else{
@@ -54,7 +57,6 @@ class ActividadController extends Controller{
                     $detalleActividad->external_detact = $external;
                     $detalleActividad->save();
                 }
-                $enviar->enviarMail("Tutor","Planificacion de Actividades","Su planificacion de actividades ha sido enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -69,6 +71,9 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
+            $comunidad = comunidad::where("id",$actividad_fk_comunidad)->first();
+            $tutor = docente::where("id", $comunidad->tutor)->first();
+            $usuarioT = usuario::where("id", $tutor->fk_usuario)->first();
             
             if($actividadObj){
                 $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
@@ -79,7 +84,7 @@ class ActividadController extends Controller{
                 $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $actividad->estado = 2;
                 $actividad->save();
-                $enviar->enviarMail("Tutor","Planificacion de Actividades Aprobada","Su planificacion de actividades ha sido aprobada por el Gestor de la Carrera <br>".$data["comentario"]);
+                $enviar->enviarMail("Tutor ".$tutor->nombres." ".$tutor->apellidos,"Planificacion de Actividades Aprobada","Su planificacion de actividades ha sido aprobada por el Gestor de la Carrera <br>".$data["comentario"], $usuarioT->correo);
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -94,6 +99,9 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
+            $comunidad = comunidad::where("id",$actividad_fk_comunidad)->first();
+            $tutor = docente::where("id", $comunidad->tutor)->first();
+            $usuarioT = usuario::where("id", $tutor->fk_usuario)->first();
             if($actividadObj){
                 $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
                 foreach ($detalleactividadObj as $lista) {
@@ -103,7 +111,7 @@ class ActividadController extends Controller{
                 $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $actividad->estado = 0;
                 $actividad->save();
-                //$enviar->enviarMail("Tutor","Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"]);
+                $enviar->enviarMail("Tutor ".$tutor->nombres." ". $tutor->apellidos,"Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"], $usuarioT->correo);
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{

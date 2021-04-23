@@ -13,6 +13,7 @@ import { ResultadosPreviewComponent } from './resultados-preview/resultados-prev
 import { VerResultadosComponent } from './ver-resultados/ver-resultados.component';
 import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.component';
 import { RegistroComponent } from './registro/registro.component';
+import { RegistroDocenteComponent } from './registro-docente/registro-docente.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { RegistroComponent } from './registro/registro.component';
     ResultadosPreviewComponent,
     VerResultadosComponent,
     RecuperarClaveComponent,
-    RegistroComponent
+    RegistroComponent,
+    RegistroDocenteComponent
   ],
   exports:[
   ],

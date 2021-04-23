@@ -35,12 +35,16 @@ export class RegistroComponent{
                 "paralelo":this.paralelo
             }
             this.usuario_service.registrarUsuario(user).subscribe((resp:any)=>{
-                this.usuario_service.registrarEstudiante(estudiante,resp.external_us).subscribe((resp:any)=>{
-                    this.messageService.add({key: 'tc', severity:'success', summary: 'Operación Exitosa', detail: 'Su usuario ha sido registrado correctamente'});
-                    setTimeout(() => {
-                        this._location.back();
-                    }, 1000);
-                });
+                if(resp.siglas == "OE"){
+                    this.usuario_service.registrarEstudiante(estudiante,resp.external_us).subscribe((resp:any)=>{
+                        this.messageService.add({key: 'tc', severity:'success', summary: 'Operación Exitosa', detail: 'Su usuario ha sido registrado correctamente'});
+                        setTimeout(() => {
+                            this._location.back();
+                        }, 1000);
+                    });
+                }else{
+                    this.messageService.add({key: 'tc', severity:'error', summary: 'Error al registrarse', detail: 'Ha ocurrido un error al registrar el usuario'}); 
+                }
             });
         }else{
             this.messageService.add({key: 'tc', severity:'error', summary: 'Error al registrarse', detail: 'Las Contraseñas no coinciden'});

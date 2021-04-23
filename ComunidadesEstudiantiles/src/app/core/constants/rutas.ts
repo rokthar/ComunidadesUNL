@@ -4,6 +4,7 @@ export class Rutas{
   public static verResultados = 'ver-resultado';
   public static recuperarClave = 'recuperar-clave';
   public static registro = 'registro';
+  public static registroDocente = 'registro-docente';
   // DECANO
   public static aceptarComunidad = 'admin/decano/aceptar-comunidad';
   public static editarDecano = 'admin/decano/editar';

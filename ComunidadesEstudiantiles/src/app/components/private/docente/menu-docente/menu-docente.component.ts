@@ -15,6 +15,7 @@ export class MenuDocenteComponent implements OnInit {
     titulo;
     params: any = null;
     items: MenuItem[];
+    items2:MenuItem[];
     logo_comunidad: any;
     ocultar: string = "ocultar";
     constructor(

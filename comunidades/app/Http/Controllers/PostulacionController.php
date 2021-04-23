@@ -4,6 +4,8 @@ use App\Models\postulacion;
 use App\Models\comunidad;
 use App\Models\estudiante;
 use App\Models\detallePostulacion;
+use App\Models\usuario;
+use App\Models\docente;
 use App\Http\Controllers\MailController;
 
 use Illuminate\Http\Request;
@@ -13,9 +15,11 @@ class PostulacionController extends Controller{
 
     public function RegistrarPostulacion($external_estudiante, $external_comunidad){
         $enviar = new MailController();
-
         $comunidadObj = comunidad::where("external_comunidad", $external_comunidad)->first();
+        $docente = docente::where("id",$comunidad->tutor)->first();
         $estudianteObj = estudiante::where("external_es", $external_estudiante)->first();
+        $usuarioEst = usuario::where("id", $estudianteObj->fk_usuario)->first();
+        $usuarioDo = usuario::where("id", $docente->fk_usuario)->first();
         if($comunidadObj){
             if($estudianteObj){
                 $postulacion = new postulacion();
@@ -26,8 +30,8 @@ class PostulacionController extends Controller{
                 $postulacion->external_postulacion = $external;
                 $postulacion->save();
                 
-                $enviar->enviarMail("Tutor","Postulacion","El estudiante ".$estudianteObj->nombres." ".$estudianteObj->apellidos." del ciclo ".$estudianteObj->ciclo." paralelo ".$estudianteObj->paralelo." ha enviado una postulacion a la comunidad");
-                $enviar->enviarMail($estudianteObj->nombres." ".$estudianteObj->apellidos,"Postulacion","Su postulacion a la comunidad ".$comunidadObj->nombre_comunidad." ha sifo enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
+                $enviar->enviarMail("Tutor","Postulacion","El estudiante ".$estudianteObj->nombres." ".$estudianteObj->apellidos." del ciclo ".$estudianteObj->ciclo." paralelo ".$estudianteObj->paralelo." ha enviado una postulacion a la comunidad",$usuarioDo->correo);
+                $enviar->enviarMail($estudianteObj->nombres." ".$estudianteObj->apellidos,"Postulacion","Su postulacion a la comunidad ".$comunidadObj->nombre_comunidad." ha sifo enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta",$usuarioEst->correo);
             
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_postulacion"=>$external],200);
             }else{
@@ -67,7 +71,8 @@ class PostulacionController extends Controller{
             $enviar = new MailController();
 
             $postulacionObj = postulacion::where("external_postulacion", $external_postulacion)->first();
-            
+            $estudianteObj = estudiante::where("id",$postulacionObj->id)->first();
+            $usuarioEst = usuario::where("id", $estudianteObj->fk_usuario)->first();
             if($postulacionObj){
                 $detallePostulacionObj = detallePostulacion::where("fk_postulacion", $postulacionObj->id)->get();
                 $postulacionObj->estado = 1;
@@ -81,7 +86,7 @@ class PostulacionController extends Controller{
                 $estudiante->estado = 2; //estado del estudiante en 2 indica que es miembro de comunidad
                 $estudiante->save();
 
-                $enviar->enviarMail($estudiante->nombres." ".$estudiante->apellidos,"Postulacion Aceptada","Su postulacion ha sido aceptada. <br>".$data["comentario"]);
+                $enviar->enviarMail($estudiante->nombres." ".$estudiante->apellidos,"Postulacion Aceptada","Su postulacion ha sido aceptada. <br>".$data["comentario"],$usuarioEst->correo);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -106,10 +111,12 @@ class PostulacionController extends Controller{
                     $lista->save();    
                 }
                 $estudiante = estudiante::where("id", $postulacionObj->fk_estudiante)->first();
+                $usuarioEst = usuario::where("id", $estudiante->fk_usuario)->first();
+
                 $estudiante->estado = 1; //estado del estudiante en 1 indica que es un estudiante normal
                 $estudiante->save();
 
-                $enviar->enviarMail("Estudiante","Postulacion Rechazada","Su postulacion ha sido rechazada <br>".$data["comentario"]);
+                $enviar->enviarMail($estudiante->nombres." ".$estudiante->apellidos,"Postulacion Rechazada","Su postulacion ha sido rechazada <br>".$data["comentario"], $usuarioEst->correo);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -121,6 +128,7 @@ class PostulacionController extends Controller{
     public function CancelarPostulacion($external_estudiante){
             $enviar = new MailController();
             $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            $usuarioEst = usuarioEst::where("id",$estudiante->fk_usuario)->first();
             
             if($estudiante){
                 $postulacion = postulacion::where("estado",2)->where("fk_estudiante",$estudiante->id)->first();
@@ -135,8 +143,7 @@ class PostulacionController extends Controller{
                     $estudiante->estado=1;
                     $estudiante->save();
                     
-                    // $enviar->enviarMail("Estudiante","Postulacion Cancelada","Su postulacion ha sido cancelada <br>");
-                    // $enviar->enviarMail("Tutor","Postulacion Cancelada","La Postulación del estudiante".$estudiante->nombres." ".$estudiante->apellidos."del cliclo".$estudiante->ciclo." ".$estudiante->paralelo." ha cancelado su postulación.");
+                    $enviar->enviarMail($estudiante->nombres." ".$estudiante->apellidos,"Postulacion Cancelada","Su postulacion ha sido cancelada <br>", $usuarioEst->correo);
     
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
                 }else{
@@ -246,6 +253,7 @@ class PostulacionController extends Controller{
     public function buscarPostulacion($external_estudiante){
         global $estado, $datos;
         self::iniciarObjetoJSon();
+        $datadetpos=[];
         $estudiante = estudiante::where("external_es",$external_estudiante)->first();
         if($estudiante){
             $postulacion = postulacion::where("estado",2)->where("fk_estudiante",$estudiante->id)->first();

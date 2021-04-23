@@ -8,7 +8,7 @@ require 'Utilidades/PHPMailer/vendor/autoload.php';
 class MailController extends Controller{
 
     
-    public function enviarMail($usuario,$asunto,$mensaje){
+    public function enviarMail($usuario,$asunto,$mensaje,$correo){
         $mail = new PHPMailer(true);
         // if ($request->json()){
         //     $data = $request->json()->all();
@@ -25,7 +25,7 @@ class MailController extends Controller{
 
                 //Recipients
                 $mail->setFrom('comunidades.estudiantile@gmail.com', 'ComunidadesEstudiantiles');
-                $mail->addAddress("riky.paramore@gmail.com");               //Name is optional
+                $mail->addAddress($correo);               //Name is optional
 
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
@@ -112,7 +112,7 @@ class MailController extends Controller{
         }
     }
 
-    public function enviarMailClave($usuario,$asunto,$mensaje){
+    public function enviarMailClave($usuario,$asunto,$mensaje,$correo){
         $mail = new PHPMailer(true);
         // if ($request->json()){
         //     $data = $request->json()->all();
@@ -128,7 +128,7 @@ class MailController extends Controller{
                 $mail->Port       = 587;                                    //TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
                 //Recipients
                 $mail->setFrom('comunidades.estudiantile@gmail.com', 'ComunidadesEstudiantiles');
-                $mail->addAddress("riky.paramore@gmail.com");               //Name is optional
+                $mail->addAddress($correo);               //Name is optional
                 //Content
                 $mail->isHTML(true);                                  //Set email format to HTML
                 $mail->Subject = $asunto;
