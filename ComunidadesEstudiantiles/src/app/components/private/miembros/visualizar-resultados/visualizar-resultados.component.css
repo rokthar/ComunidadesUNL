@@ -15,10 +15,10 @@ p{
     margin-top: 1%;
     width: 100%;
 }
-.titulos{
-    background-color: #0C2342;
-    color: #fafafa;
-    text-align: center;
+.enlace a{
+    color: #1d3557;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
 }
 
 /* Cuerpo en general */
@@ -39,14 +39,14 @@ p{
     text-align: center;
 }
 .actividad{
-    margin-top: 10%;
+    margin-top: 5%;
 }
 .actividad h2{
     text-align: center;
 }
 
 .resultado{
-    margin-top: 8%;
+    margin-top: 5%;
 }
 .resultado h2{
     text-align: center;

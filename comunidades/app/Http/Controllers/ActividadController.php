@@ -31,10 +31,10 @@ class ActividadController extends Controller{
 
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
                 }else{
-                    return response()->json(["mensaje"=>"El Docente no es tutor de una comunidad", "siglas"=>"DNT"],400);
+                    return response()->json(["mensaje"=>"El Docente no es tutor de una comunidad", "siglas"=>"DNT"],200);
                 }
             }else{
-                return response()->json(["mensaje"=>"El Docente no esta registrado", "siglas"=>"DNE"],400);
+                return response()->json(["mensaje"=>"El Docente no esta registrado", "siglas"=>"DNE"],200);
             }
     }
 
@@ -60,7 +60,7 @@ class ActividadController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La Planificación no ha sido registrada","siglas"=>"DI"],400);
+                return response()->json(["mensaje"=>"La Planificación no ha sido registrada","siglas"=>"DI"],200);
             }
         }
     }
@@ -88,7 +88,7 @@ class ActividadController extends Controller{
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],400);
+                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],200);
             }
         }
     }
@@ -115,7 +115,7 @@ class ActividadController extends Controller{
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],400);
+                return response()->json(["mensaje"=>"La planificación no ha sido registrada","siglas"=>"PNR"],200);
             }
         }
     }
@@ -214,10 +214,10 @@ class ActividadController extends Controller{
                 }
                 self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'La comunidad no tiene ninguna planificación');
+                self::estadoJson(200, false, 'La comunidad no tiene ninguna planificación');
             }
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
        
         return response()->json($datos, $estado);
@@ -245,7 +245,7 @@ class ActividadController extends Controller{
             
             self::estadoJson(200, true, '');
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
         
         return response()->json($datos, $estado);

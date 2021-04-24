@@ -1,12 +1,42 @@
 .nav{
     position: fixed;
     width: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fafafa;
+    color: #1d3557;
+    
 }
-.nav a{
-    color: #fafafa;
+.nav .login{
+    text-align: right;
+    vertical-align: middle;
+    margin: auto;
+}
+.nav img{
+    padding-top: 1%;
+}
+a{
     cursor: pointer;
 }
 
+/* CABECERA */
+.cabecera{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.texto{
+    text-align: center;
+}
+.fechas{
+    text-align: right;
+}
+.logo{
+    text-align: left;
+}
+.logo img{
+    vertical-align: middle;
+    width:30%;
+}
 /* CUERPO */
 .cuerpo{
     padding-top: 7%;
@@ -14,17 +44,7 @@
 .cuerpo h2{
     text-align: center;
 }
-.texto{
-    text-align: center;
-}
-.logo{
-    text-align: center;
-}
-.logo img{
-    width: 10%;
-    height: auto;
-    vertical-align: middle;
-}
+
 .img img{
     width: 100%;
     height: auto;
@@ -35,3 +55,8 @@
     padding-right: 5%;
 }
 
+@media only screen and (max-width: 800px) {
+    .cuerpo{
+        padding-top:20%;
+    }
+}

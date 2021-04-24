@@ -30,7 +30,6 @@ export class VerResultadosComponent implements OnInit {
     }
     ngOnInit(): void {
         this.external_resultado = sessionStorage.getItem('datosResultado');
-        console.log(this.external_resultado);
         if (this.external_resultado != null) {
             this.resultados_service.listarResultado(this.external_resultado).subscribe((resp: Resultados) => {
                 this.resultado = resp;

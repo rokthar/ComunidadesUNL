@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
-    private $estado = 400;
+    private $estado = 200;
     private $datos = [];
 
     //REGISTRO DE USUARIO
@@ -53,7 +53,7 @@ class UsuarioController extends Controller
             
             if ($usuario->tipoUsuario == 2) {
                 if($data["nombres"] == "" || $data["apellidos"] == "" || $data["ciclo"] == "" || $data["paralelo"] == ""){
-                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 400);
+                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
                     $est = estudiante::where("fk_usuario",$usuario->id)->first();
                     if($est == ""){
@@ -68,14 +68,14 @@ class UsuarioController extends Controller
                         $persona->save();
                         return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
                     }else{
-                        return response()->json(["mensaje" => "El estudiante ya esta registrado", "siglas" => "ER"], 400);
+                        return response()->json(["mensaje" => "El estudiante ya esta registrado", "siglas" => "ER"], 200);
                     }
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 
@@ -97,13 +97,13 @@ class UsuarioController extends Controller
                     $estudiante->save();
                     return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
                 }else{
-                    return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 400);
+                    return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 200);
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
     public function EditarEstudianteClave(Request $request, $external_estudiante){
@@ -113,7 +113,7 @@ class UsuarioController extends Controller
             if ($estudiante) {
                 $usuario = usuario::where("id", $estudiante->fk_usuario)->first();
                 if($data["clave"] == ""){
-                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 400);
+                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
                     $clave = sha1($data["clave"] . "unl.");
                     $usuario->clave = $clave;
@@ -121,10 +121,10 @@ class UsuarioController extends Controller
                     return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo estudiante", "siglas" => "UNE"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 
@@ -136,11 +136,11 @@ class UsuarioController extends Controller
             $usuario = usuario::where("external_us", $external_id)->first();
             if ($usuario->tipoUsuario == 1) {
                 if($data["nombres"] == "" || $data["apellidos"] == "" || $data['tipo_docente']==""){
-                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 400);
+                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
                     $doc = docente::where("fk_usuario",$usuario->id)->first();
                     if($doc){
-                        return response()->json(["mensaje" => "El docente ya esta registrado", "siglas" => "DR"], 400);
+                        return response()->json(["mensaje" => "El docente ya esta registrado", "siglas" => "DR"], 200);
                     }else{
                         $docente = new docente();
                         $docente->nombres = $data["nombres"];
@@ -154,10 +154,10 @@ class UsuarioController extends Controller
                     }
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 
@@ -177,10 +177,10 @@ class UsuarioController extends Controller
                 $docente->save();
                 return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
     public function EditarDocenteClave(Request $request, $external_docente){
@@ -190,7 +190,7 @@ class UsuarioController extends Controller
             
             if ($docente) {
                 if($data["clave"] == ""){
-                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 400);
+                    return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
                     $usuario = usuario::where("id", $docente->fk_usuario)->first();
                     $clave = sha1($data["clave"] . "unl.");
@@ -199,10 +199,10 @@ class UsuarioController extends Controller
                     return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
                 }
             }else{
-                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 400);
+                return response()->json(["mensaje" => "El usuario no es de tipo Docente", "siglas" => "UND"], 200);
             }
         } else {
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 
@@ -296,10 +296,10 @@ class UsuarioController extends Controller
                 ];
                 self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'El usuario no esta registrado');
+                self::estadoJson(200, false, 'El usuario no esta registrado');
             }
             }else{
-                self::estadoJson(400, false, 'El usuario no es de tipo Estudiante');
+                self::estadoJson(200, false, 'El usuario no es de tipo Estudiante');
             } 
         return response()->json($datos, $estado);
     }
@@ -325,10 +325,10 @@ class UsuarioController extends Controller
                 ];
                 self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'El usuario no esta registrado');
+                self::estadoJson(200, false, 'El usuario no esta registrado');
             }
         }else{
-            self::estadoJson(400, false, 'El usuario no es de tipo Docente');
+            self::estadoJson(200, false, 'El usuario no es de tipo Docente');
         }
         return response()->json($datos, $estado);
     }
@@ -407,13 +407,13 @@ class UsuarioController extends Controller
                     $enviar->enviarMailClave("Usuario","Recuperacion de Contraseña","Su solicitud ha sido eviada correctamente <br> Pofavor usar la siguiente contraseña generada automaticamente <strong>".$auxClave."</strong>, recuerde cambiar su contraeña cuando ingrese al sistrema.");
                     return response()->json(["mensaje" => "Operación Exitosa", "siglas" => "OE"], 200);
                 }else{
-                    return response()->json(["mensaje" => "El usuario no existe", "siglas" => "UNE"], 400);
+                    return response()->json(["mensaje" => "El usuario no existe", "siglas" => "UNE"], 200);
                 }
             }   else{
-                return response()->json(["mensaje" => "No hay Datos", "siglas" => "NHD"], 400);
+                return response()->json(["mensaje" => "No hay Datos", "siglas" => "NHD"], 200);
             }
         }else{
-            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 400);
+            return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
 

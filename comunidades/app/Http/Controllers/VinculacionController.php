@@ -19,7 +19,7 @@ class VinculacionController extends Controller{
 
             if($comunidadSolicitante && $comunidadSolicitada){
                 if($data["descripcion"] == "" || $data["fecha_inicio"] == ""){
-                    return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],400);
+                    return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],200);
                 }else{
                     $vinculacion = new vinculacion();
                     $vinculacion->fk_comunidad_solicitante = $comunidadSolicitante->id;
@@ -38,7 +38,7 @@ class VinculacionController extends Controller{
                 
                 }
             }else{
-                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"],200);
             }
 
         }
@@ -59,7 +59,7 @@ class VinculacionController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La Vinculación no esta registrada","siglas"=>"VNR"],400);
+                return response()->json(["mensaje"=>"La Vinculación no esta registrada","siglas"=>"VNR"],200);
             }
         }
     }
@@ -79,10 +79,10 @@ class VinculacionController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La vinculación no esta registrada","siglas"=>"DI"],400);
+                return response()->json(["mensaje"=>"La vinculación no esta registrada","siglas"=>"DI"],200);
             }
         }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],400);
+            return response()->json(["mensaje"=>"Datos Incorrectos","siglas"=>"DI"],200);
         }
     }
 
@@ -110,7 +110,7 @@ class VinculacionController extends Controller{
     
                 self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'La comunidad no esta registrada');
+                self::estadoJson(200, false, 'La comunidad no esta registrada');
             }
             return response()->json($datos, $estado);
     }

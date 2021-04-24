@@ -1,51 +1,58 @@
 <div class="p-grid">
-    <div class="p-col-12">
-        <p-menubar class="nav" [model]="items" [style]="{'background-color': '#1d3557'}">
-            <ng-template pTemplate="start">
-                <img src="/assets/sistemasUNL_2.svg" height="60" class="p-mr-2">
-            </ng-template>
-            <ng-template pTemplate="end">
-                <a (click)="regresar()"><i class="pi pi-arrow-circle-left"></i> Regresar</a>
-            </ng-template>
-        </p-menubar>
+  <div class="p-col-12">
+    <div class="nav p-grid">
+      <div class="p-col-6">
+        <img src="/assets/sistemasUNL_2.svg" height="60" class="p-mr-2" />
+      </div>
+      <div class="p-col-6 login">
+        <a (click)="regresar()"
+          ><i class="pi pi-arrow-circle-left"></i> Regresar</a
+        >
+      </div>
     </div>
-    <div class="p-col-12 cuerpo">
-        <div class="p-grid info">
-            <div class="p-col-12 logo">
-                <img src="{{img_con}}{{resultado.comunidad_logo}}" /><h2>Comunidad {{resultado.comunidad}}</h2>
-            </div>
-            <div class="p-col-12 texto">
-                <h2>{{resultado.actividad}}</h2>
-                <small><strong>Fecha Inicio:</strong> {{resultado.fecha_inicio}} / <strong>Fecha Fin:</strong>
-                    {{resultado.fecha_fin}}</small>
-            </div>
-            <div class="p-col-12 p-lg-6 info">
-                <div class="actividad">
-                    <h2>Descripción de la Actividad</h2>
-                    <p>{{resultado.descripcion_actividad}}</p>
-                </div>
-            </div>
-            <div class="p-col-12 p-lg-6">
-                <div class="resultado">
-                    <h2>Resultados Obtenidos</h2>
-                    <p>{{resultado.descripcion_resultado}}</p>
-                </div>
-            </div>
+  </div>
+  <div class="p-col-12 cuerpo">
+      <div class="p-grid cabecera">
+        <div class="p-col-12 p-lg-3 logo">
+            <img src="{{ img_con }}{{ resultado.comunidad_logo }}" />
+            <!-- <h2>Comunidad {{ resultado.comunidad }}</h2> -->
+          </div>
+          <div class="p-col-6 texto">
+            <h2>{{ resultado.actividad }}</h2>
+          </div>
+          <div class="p-col-3 fechas">
+            <small><strong>Fecha Inicio:</strong> {{ resultado.fecha_inicio }}</small> <br>
+            <small><strong>Fecha Fin:</strong> {{ resultado.fecha_fin }}</small>
+          </div>
+      </div>
+    <div class="p-grid info">
+      <div class="p-col-12 p-lg-12">
+        <div class="actividad">
+          <h2>Descripción de la Actividad</h2>
+          <p>{{ resultado.descripcion_actividad }}</p>
         </div>
-        <div class="p-col-12 img">
-            <div class="p-grid">
-                <div class="p-col-1"></div>
-                <div class="p-col-10">
-                <h2>Evidencias de los Resultados</h2>
-                    <div class="p-grid">
-                        <div class="p-col-6" *ngFor="let item of resultado.imagenes">
-                            <img alt="Card"  src="{{imagen}}{{item.ruta_imagen}}">
-                        </div>
-                    </div>
-                    
-                <div class="p-col-1"></div>
-            </div>
+      </div>
+      <div class="p-col-12 p-lg-12">
+        <div class="resultado">
+          <h2>Resultados Obtenidos</h2>
+          <p>{{ resultado.descripcion_resultado }}</p>
         </div>
+      </div>
     </div>
+    <div class="p-col-12 img">
+      <div class="p-grid">
+        <div class="p-col-1"></div>
+        <div class="p-col-10">
+          <h2>Evidencias de los Resultados</h2>
+          <div class="p-grid">
+            <div class="p-col-6" *ngFor="let item of resultado.imagenes">
+              <img alt="Card" src="{{ imagen }}{{ item.ruta_imagen }}" />
+            </div>
+          </div>
 
+          <div class="p-col-1"></div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

@@ -46,7 +46,7 @@ class ComunidadController extends Controller{
                     
                     return response()->json(["mensaje"=>"Operación Exitosa","external_comunidad"=>$external ,"siglas"=>"OE"],200);
                 }else{
-                    return response()->json(["mensaje"=>"Docente no enconrado", "siglas"=>"DNE"],400);
+                    return response()->json(["mensaje"=>"Docente no enconrado", "siglas"=>"DNE"],200);
                 } 
             }
     }
@@ -63,7 +63,7 @@ class ComunidadController extends Controller{
             $comunidades->save();
             return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
         }else{
-            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"], 400);
+            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"], 200);
         }
         
     }
@@ -84,7 +84,7 @@ class ComunidadController extends Controller{
 
             return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
         }else{
-            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
+            return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],200);
         }
     }
 
@@ -106,10 +106,10 @@ class ComunidadController extends Controller{
                 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],200);
             }
         }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
+            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],200);
         }
     }
 
@@ -129,7 +129,7 @@ class ComunidadController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],200);
             }
         }
     }
@@ -149,7 +149,7 @@ class ComunidadController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"OE"],200);
             }
         }
     }
@@ -167,10 +167,10 @@ class ComunidadController extends Controller{
                 $comunidad->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"],400);
+                return response()->json(["mensaje"=>"La comunidad no esta registrada", "siglas"=>"CNR"],200);
             }
         }else{
-            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],400);
+            return response()->json(["mensaje"=>"Datos Incorrectos", "siglas"=>"DI"],200);
         }
         
     }
@@ -309,10 +309,10 @@ class ComunidadController extends Controller{
                 ];
                 self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'El docente no es tutor de una comunidad');
+                self::estadoJson(200, false, 'El docente no es tutor de una comunidad');
             }
         }else{
-            self::estadoJson(400, false, 'El docente no esta registrado');
+            self::estadoJson(200, false, 'El docente no esta registrado');
         }
         return response()->json($datos, $estado);
     }
@@ -333,7 +333,7 @@ class ComunidadController extends Controller{
             ];
             self::estadoJson(200, true, '');
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
         
         return response()->json($datos, $estado);
@@ -354,10 +354,10 @@ class ComunidadController extends Controller{
                     ];
                     self::estadoJson(200, true, '');
             }else{
-                self::estadoJson(400, false, 'El estudiante no es miembro de una comunidad');
+                self::estadoJson(200, false, 'El estudiante no es miembro de una comunidad');
             }
         }else{
-            self::estadoJson(400, false, 'El estudiante no esta registrado');
+            self::estadoJson(200, false, 'El estudiante no esta registrado');
         }
         return response()->json($datos, $estado);
     }
@@ -422,7 +422,7 @@ class ComunidadController extends Controller{
             ];
             self::estadoJson(200, true, '');
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
         return response()->json($datos, $estado);
     }

@@ -35,10 +35,10 @@ class PostulacionController extends Controller{
             
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_postulacion"=>$external],200);
             }else{
-                return response()->json(["mensaje"=>"El estudiante no esta registrado","siglas"=>"ENR"],400);
+                return response()->json(["mensaje"=>"El estudiante no esta registrado","siglas"=>"ENR"],200);
             }
         }else{
-            return response()->json(["mensaje"=>"La comunidad no esta registrada","siglas"=>"CNR"],400);
+            return response()->json(["mensaje"=>"La comunidad no esta registrada","siglas"=>"CNR"],200);
         }
     }
 
@@ -60,7 +60,7 @@ class PostulacionController extends Controller{
                 }
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La Postulación no esta registrada","siglas"=>"PNR"],400);
+                return response()->json(["mensaje"=>"La Postulación no esta registrada","siglas"=>"PNR"],200);
             }
         }
     }
@@ -90,7 +90,7 @@ class PostulacionController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La postulación no esta registrada","siglas"=>"PNR"],400);
+                return response()->json(["mensaje"=>"La postulación no esta registrada","siglas"=>"PNR"],200);
             }
         }
     }
@@ -120,7 +120,7 @@ class PostulacionController extends Controller{
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"La postulación no esta registrada","siglas"=>"PNR"],400);
+                return response()->json(["mensaje"=>"La postulación no esta registrada","siglas"=>"PNR"],200);
             }
         }
     }
@@ -147,10 +147,10 @@ class PostulacionController extends Controller{
     
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
                 }else{
-                    return response()->json(["mensaje"=>"El estudiante no ha realizado ninguna postulación","siglas"=>"ENRP"],400);
+                    return response()->json(["mensaje"=>"El estudiante no ha realizado ninguna postulación","siglas"=>"ENRP"],200);
                 }
             }else{
-                return response()->json(["mensaje"=>"El estudiante no esta registrado","siglas"=>"ENR"],400);
+                return response()->json(["mensaje"=>"El estudiante no esta registrado","siglas"=>"ENR"],200);
             }
     }
     
@@ -216,7 +216,7 @@ class PostulacionController extends Controller{
             }
             self::estadoJson(200, true, '');
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
         return response()->json($datos, $estado);
     }

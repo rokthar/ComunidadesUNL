@@ -3,26 +3,30 @@
         <menu-miembros></menu-miembros>
     </div>
     <div class="p-col-2"><sidemenu-miembros></sidemenu-miembros></div>
-    <div class="p-col-9">
-        <div class="p-grid cuerpo">
-            <div class="p-col-12 verResultados">
-                <div class="titulosCabecera">
-                    <img class="logo_comunidad" src="{{imagen_com}}{{resultado.comunidad_logo}}" />
-                    <h2>{{resultado.actividad}}</h2>
-                    <h3>Comunidad {{resultado.comunidad}}</h3>
-                </div>
-                <div class="fechas">
-                    <small>Fecha Inicio: {{resultado.fecha_inicio}}  |  Fecha Fin: {{resultado.fecha_fin}}</small>
-                </div>
-                <button (click)="regresar()" class="button"><i class="pi pi-arrow-circle-left"> Regresar</i></button>
+    <div class="p-col-9 cuerpo">
+        <div class="p-grid cabecera">
+            <div class="p-col-3 verResultados">
+                <img class="logo_comunidad" src="{{imagen_com}}{{resultado.comunidad_logo}}" />
             </div>
-            <div class="p-col-12 p-lg-6">
+                <div class="p-col-7 fechas">
+                    <div class="titulosCabecera">
+                        <h2>{{resultado.actividad}}</h2>
+                        <h3>Comunidad {{resultado.comunidad}}</h3>
+                    <small>Fecha Inicio: {{resultado.fecha_inicio}}  |  Fecha Fin: {{resultado.fecha_fin}}</small><br>
+                    </div>
+                </div>
+                <div class="p-col-2 enlace">
+                    <a (click)="regresar()" ><i class="pi pi-arrow-circle-left"></i> Regresar</a>
+                </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-lg-12">
                 <div class="actividad">
                     <h2>Descripción de la Actividad</h2>
                     <p>{{resultado.descripcion_actividad}}</p>
                 </div>
             </div>
-            <div class="p-col-12 p-lg-6">
+            <div class="p-col-12 p-lg-12">
                 <div class="resultado">
                     <h2>Resultados Obtenidos</h2>
                     <p>{{resultado.descripcion_resultado}}</p>

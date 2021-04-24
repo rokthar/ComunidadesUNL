@@ -17,7 +17,7 @@ class ConfiguracionController extends Controller{
                 $configuracion->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],400);
+                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],200);
             }
         }
     }
@@ -31,7 +31,7 @@ class ConfiguracionController extends Controller{
                 $configuracion->save();
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
-                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],400);
+                return response()->json(["mensaje"=>"Datos Faltantes", "siglas"=>"DF"],200);
             }
         }else{
             return response()->json(["mensaje"=>"Error en los datos", "siglas"=>"ED"],200);

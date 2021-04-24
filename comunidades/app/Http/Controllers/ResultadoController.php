@@ -36,10 +36,10 @@ class ResultadoController extends Controller{
                 $detActividad->save();
                 return response()->json(["mensaje"=>"Operacion existosa","external_resultado"=>$external ,"siglas"=>"OE"], 200);
             }else{
-                return response()->json(["mensaje"=>"Datos Faltantes","siglas"=>"DF"], 400);
+                return response()->json(["mensaje"=>"Datos Faltantes","siglas"=>"DF"], 200);
             }
         }else{
-            return response()->json(["mensaje"=>"La actividad no ha sido registrada","siglas"=>"ANR"], 400);
+            return response()->json(["mensaje"=>"La actividad no ha sido registrada","siglas"=>"ANR"], 200);
         }
     }
 
@@ -62,7 +62,7 @@ class ResultadoController extends Controller{
                 $imagenes->save();
                 return response()->json(["mensaje"=>"Operacion existosa","nombre_imagen" => $image_name, "siglas"=>"OE"], 200);
             }else{
-                return response()->json(["mensaje"=>"La actividad no ha sido registrada", "siglas"=>"ANR"], 400);
+                return response()->json(["mensaje"=>"La actividad no ha sido registrada", "siglas"=>"ANR"], 200);
             }
     
     }
@@ -135,13 +135,13 @@ class ResultadoController extends Controller{
                     }
                     self::estadoJson(200, true, '');
                 }else{
-                    self::estadoJson(400, false, 'La comunidad no ha generado resultados');
+                    self::estadoJson(200, false, 'La comunidad no ha generado resultados');
                 }
             }else{
-                self::estadoJson(400, false, 'La comunidad no ha planificado actividades');
+                self::estadoJson(200, false, 'La comunidad no ha planificado actividades');
             }
         }else{
-            self::estadoJson(400, false, 'La comunidad no esta registrada');
+            self::estadoJson(200, false, 'La comunidad no esta registrada');
         }
         return response()->json($datos, $estado);
     }
@@ -180,13 +180,13 @@ class ResultadoController extends Controller{
                     }
                     self::estadoJson(200, true, '');
                 }else{
-                self::estadoJson(400, false, 'La comunidad no ha planificado actividades');
+                self::estadoJson(200, false, 'La comunidad no ha planificado actividades');
                 }
             }else{
-                self::estadoJson(400, false, 'El estudiante no es miembro de una comunidad');
+                self::estadoJson(200, false, 'El estudiante no es miembro de una comunidad');
             }
         }else{
-            self::estadoJson(400, false, 'El estudiante no esta registrado');
+            self::estadoJson(200, false, 'El estudiante no esta registrado');
         }
         return response()->json($datos, $estado);
     }
@@ -223,7 +223,7 @@ class ResultadoController extends Controller{
 
             self::estadoJson(200, true, '');
         }else{
-            self::estadoJson(400, false, 'El resultado no esta registrado');
+            self::estadoJson(200, false, 'El resultado no esta registrado');
         }   
         return response()->json($datos, $estado);
     }
