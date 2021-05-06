@@ -95,7 +95,6 @@ export class ValidarComunidadComponent implements OnInit{
     rechazarComunidad(external_comunidad){
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
-            console.log(resp); //revisar respuesta
             if(resp.siglas=="OE"){
                 this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido rechazada' });
@@ -218,7 +217,6 @@ export class ValidarComunidadComponent implements OnInit{
             const pdfDocGenerator = pdfMake.createPdf(docDefinition);
             pdfDocGenerator.getBase64((data) => {
                 this.usuario_service.enviarMail({"pdf":data}).subscribe((resp:any)=>{
-                    console.log(resp);
                 });
             });
         });

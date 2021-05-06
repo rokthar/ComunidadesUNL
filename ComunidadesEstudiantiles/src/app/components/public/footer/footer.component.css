@@ -1,0 +1,22 @@
+.footer{
+    margin-top: 7%;
+    background-color: #132641;
+    padding: 1%;
+    color: #fafafa;
+}
+.footer .derechos{
+    text-align: center;
+    margin-top: 1%;
+}
+
+.footer .logoCIS img{
+    width: fit-content;
+}
+.footer .container{
+    padding-top: 1.5%;
+}
+@media only screen and (max-width: 900px) {
+    .footer .datos{
+        padding: 5%;
+    }
+}

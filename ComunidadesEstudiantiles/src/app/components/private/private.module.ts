@@ -47,6 +47,13 @@ import { EditarSecretariaComponent } from './secretaria/editar-secretaria/editar
 import { EditarTutorComponent } from './tutor/editar-tutor/editar-tutor.component';
 import { EditarComunidadComponent } from './tutor/editar-comunidad/editar-comunidad.component';
 import { GestionUsuariosComponent } from './gestor/gestion-usuarios/gestion-usuarios.component';
+import { FooterDecanoComponent } from './decano/footer-decano/footer-decano.component';
+import { FooterGestorComponent } from './gestor/footer-gestor/footer-gestor.component';
+import { FooterSecretariaComponent } from './secretaria/footer-secretaria/footer-secretaria.component';
+import { FooterDocenteComponent } from './docente/footer-docente/footer-docente.component';
+import { FooterEstudianteComponent } from './estudiante/footer-estudiante/footer-estudiante.component';
+import { FooterMiembrosComponent } from './miembros/footer-miembros/footer-miembros.component';
+import { FooterTutorComponent } from './tutor/footer-tutor/footer-tutor.component';
 
 FullCalendarModule.registerPlugins([ // register FullCalendar plugins
   dayGridPlugin,
@@ -94,7 +101,14 @@ FullCalendarModule.registerPlugins([ // register FullCalendar plugins
     EditarSecretariaComponent,
     EditarTutorComponent,
     EditarComunidadComponent,
-    GestionUsuariosComponent
+    GestionUsuariosComponent,
+    FooterDecanoComponent,
+    FooterGestorComponent,
+    FooterSecretariaComponent,
+    FooterDocenteComponent,
+    FooterEstudianteComponent,
+    FooterMiembrosComponent,
+    FooterTutorComponent
   ],
   exports:[
   ],

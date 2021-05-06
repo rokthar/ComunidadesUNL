@@ -33,13 +33,6 @@ export class EditarComunidadComponent implements OnInit {
         this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp:Comunidad) => {
             this.comunidad = resp;
             this.ruta_imagen = resp.ruta_logo;
-            console.log(this.comunidad);
-            // this.nombre_comunidad = resp.nombre_comunidad;
-            // this.descripcion = resp.descripcion;
-            // this.mision = resp.mision;
-            // this.vision = resp.vision;
-            // this.ruta_imagen = resp.ruta_logo;
-            // this.external_comunidad = resp.external_comunidad;
         });
 
     }
@@ -54,11 +47,6 @@ export class EditarComunidadComponent implements OnInit {
                 }, 1000);
                 this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((com:Comunidad) => {
                     this.comunidad = com;
-                    // this.nombre_comunidad = com.nombre_comunidad;
-                    // this.descripcion = com.descripcion;
-                    // this.mision = com.mision;
-                    // this.vision = com.vision;
-                    // this.ruta_imagen = com.ruta_logo;
                 });
             } else {
                 this.messageService.add({ key: 'tc', severity: 'error', summary: 'Error', detail: 'Los cambios no se pudieron guardar' });

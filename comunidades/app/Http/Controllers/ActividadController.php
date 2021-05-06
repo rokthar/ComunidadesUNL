@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 class ActividadController extends Controller{
 
     public function PlanificarActividades ($external_docente){
-        $docenteG = docente::where("estado","2")->first();
+        $docenteG = docente::where("tipoDocente","2")->first();
         $gestor = usuario::where("id",$docenteG->fk_usuario)->first();
             $enviar = new MailController();
 
@@ -71,7 +71,7 @@ class ActividadController extends Controller{
             $enviar = new MailController();
 
             $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-            $comunidad = comunidad::where("id",$actividad_fk_comunidad)->first();
+            $comunidad = comunidad::where("id",$actividadObj->fk_comunidad)->first();
             $tutor = docente::where("id", $comunidad->tutor)->first();
             $usuarioT = usuario::where("id", $tutor->fk_usuario)->first();
             

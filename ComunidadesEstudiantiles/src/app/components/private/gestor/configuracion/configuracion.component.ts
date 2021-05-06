@@ -24,7 +24,6 @@ export class ConfiguracionComponent implements OnInit {
     ) { }
     ngOnInit(): void {
         this.conf_service.configuraciones().subscribe((resp: any) => {
-            console.log(resp);
             this.host = resp.host;
             this.correo = resp.correo;
             this.dias = resp.dias;
@@ -40,7 +39,6 @@ export class ConfiguracionComponent implements OnInit {
             "correo": this.correo,
             "dias": this.dias
         }
-        console.log(this.values);
         this.conf_service.editarMail(this.values).subscribe((resp: any) => {
             if (resp.siglas = "OE") {
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Configuración Guardada', detail: 'Las Configuraciones han sido Guardadas Correctamente' });

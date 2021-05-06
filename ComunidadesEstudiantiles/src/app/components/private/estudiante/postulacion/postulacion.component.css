@@ -35,7 +35,15 @@
     background: #372e88;
     cursor: pointer;
   }
-
+.footer-main{
+    margin-top: 5%;
+    padding: 0%;
+}
+.bg-footer{
+    margin-top: 10.82%;
+    padding: 0%;
+    background-color: #132641;
+}
 
 @media only screen and (max-width: 900px) {
     .cuerpo{

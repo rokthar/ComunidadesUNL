@@ -32,7 +32,6 @@ export class PerfilMiembrosComponent implements OnInit{
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        console.log(this.params);
         if(this.params != null && this.params.estado=="2"){
             this.resultados_service.listarResultadoByMiembro(this.params.external_estudiante).subscribe((resp:Resultados)=>{
                 this.resultados = resp;
@@ -49,7 +48,6 @@ export class PerfilMiembrosComponent implements OnInit{
     }
 
     enviar(external_resultado){
-        console.log(external_resultado);
         sessionStorage.setItem('datosResultado',external_resultado);
         this.router.navigateByUrl(Rutas.visualizarResultados);
     }   

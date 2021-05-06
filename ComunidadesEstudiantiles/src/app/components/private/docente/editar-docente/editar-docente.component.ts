@@ -46,7 +46,6 @@ export class EditarDocenteComponent implements OnInit{
         this.messageService.add({key: 'tc', severity:'error', summary: 'Error', detail: 'Los cambios no se pudieron guardar'});
         }
       });
-      // console.log(values);
     }
 
     show(){

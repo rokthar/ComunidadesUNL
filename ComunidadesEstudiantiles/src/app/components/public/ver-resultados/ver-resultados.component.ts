@@ -42,9 +42,4 @@ export class VerResultadosComponent implements OnInit {
     regresar() {
         this._location.back();
     }
-
-    mostrarImg(img){
-        // this.displayResponsive = true;
-        // this.imagen = URL._imgResul+img;
-    }
 }

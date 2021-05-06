@@ -49,7 +49,6 @@ export class AceptarPostulacionComponent implements OnInit {
         } else {
             this._location.back();
         }
-        console.log(this.params);
         this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp: Comunidad) => {
             this.postulacion_service.listarPostulaciones(resp.external_comunidad).subscribe((resp: Postulacion[]) => {
                 this.postulaciones = resp;
@@ -61,7 +60,6 @@ export class AceptarPostulacionComponent implements OnInit {
             });
         });
 
-        console.log(this.lista);
     }
 
     aceptarPostulacion(external_postulacion) {

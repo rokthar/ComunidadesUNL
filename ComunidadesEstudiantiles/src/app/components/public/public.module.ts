@@ -14,6 +14,7 @@ import { VerResultadosComponent } from './ver-resultados/ver-resultados.componen
 import { RecuperarClaveComponent } from './recuperar-clave/recuperar-clave.component';
 import { RegistroComponent } from './registro/registro.component';
 import { RegistroDocenteComponent } from './registro-docente/registro-docente.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { RegistroDocenteComponent } from './registro-docente/registro-docente.co
     VerResultadosComponent,
     RecuperarClaveComponent,
     RegistroComponent,
-    RegistroDocenteComponent
+    RegistroDocenteComponent,
+    FooterComponent
   ],
   exports:[
   ],

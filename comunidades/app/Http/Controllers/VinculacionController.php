@@ -32,8 +32,8 @@ class VinculacionController extends Controller{
     
                     $vinculacion->save();
     
-                    $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Su solicitud de vinculacion con la comunidad ".$comunidadSolicitada->nombre_comunidad." ha sido enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
-                    $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Ha sido enviada una nueva solicitud para vincularse con la comunidad ".$comunidadSolicitante->nombre_comunidad.", dispone de 3-8 dias para dar su respuesta");
+                    // $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Su solicitud de vinculacion con la comunidad ".$comunidadSolicitada->nombre_comunidad." ha sido enviada correctamente, debera esperar un aproximado de 3-8 dias para su respuesta");
+                    // $enviar->enviarMail("Tutor","Solicitud de Vinculacion","Ha sido enviada una nueva solicitud para vincularse con la comunidad ".$comunidadSolicitante->nombre_comunidad.", dispone de 3-8 dias para dar su respuesta");
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_vinculacion"=>$external],200);
                 
                 }
@@ -55,7 +55,7 @@ class VinculacionController extends Controller{
                 $comunidad=comunidad::where("id",$vinculacionObj->fk_comunidad_solicitada)->first();
                 $vinculacionObj->estado = 1;
                 $vinculacionObj->save();
-                $enviar->enviarMail("Tutor","Solicitud de Vinculacion Aceptada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido aceptada.<br>".$data["comentario"]);
+                // $enviar->enviarMail("Tutor","Solicitud de Vinculacion Aceptada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido aceptada.<br>".$data["comentario"]);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -75,7 +75,7 @@ class VinculacionController extends Controller{
                 $comunidad=comunidad::where("id",$vinculacionObj->fk_comunidad_solicitada)->first();
                 $vinculacionObj->estado = 0;
                 $vinculacionObj->save();
-                $enviar->enviarMail("Tutor","Solicitud de Vinculacion Rechazada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido rechazada <br>".$data["comentario"]);
+                // $enviar->enviarMail("Tutor","Solicitud de Vinculacion Rechazada","Su solicitud de vinculacion con la comunidad ".$comunidad->nombre_comunidad." ha sido rechazada <br>".$data["comentario"]);
 
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{

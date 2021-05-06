@@ -43,7 +43,6 @@ export class VerificarInformacionComponent implements OnInit{
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
         if(this.params != null && this.params.tipo_docente=="3"){
             this.estaLogeado = true;
-            console.log(this.params);
         }else{
             this._location.back();
         }
@@ -71,7 +70,7 @@ export class VerificarInformacionComponent implements OnInit{
         this.comunidad_service.revisionInformacion(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo completada' });
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sido completada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
@@ -90,7 +89,7 @@ export class VerificarInformacionComponent implements OnInit{
         this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sifo rechazada' });
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sido rechazada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);

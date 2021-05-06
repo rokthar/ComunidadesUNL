@@ -37,7 +37,6 @@ export class RegistroDocenteComponent{
                 apellidos:this.apellido,
                 tipo_docente:this.selected['value']
             }
-            console.log(user);
             
             this.usuario_service.registrarUsuario(user).subscribe((resp:any)=>{
                 if(resp.siglas == "OE"){

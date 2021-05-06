@@ -63,9 +63,7 @@ export class AceptarComunidadComponent implements OnInit {
     }
 
     aceptarComunidad(external_comunidad) {
-        console.log(external_comunidad);
         this.comunidad_service.aceptarComunidad(external_comunidad).subscribe((resp: any) => {
-            console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
                 this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Comunidad Aceptada correctamente' });
@@ -86,7 +84,6 @@ export class AceptarComunidadComponent implements OnInit {
     rechazarComunidad(external_comunidad) {
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values, external_comunidad).subscribe((resp: any) => {
-            console.log(resp); //revisar respuesta
             if (resp.siglas == "OE") {
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La comunidad ha sido rechazada' });
                 setTimeout(() => {

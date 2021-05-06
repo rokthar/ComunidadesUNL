@@ -7,7 +7,7 @@
     <div class="p-col-2">
         <sidemenu-gestor></sidemenu-gestor>
     </div>
-    <div class="p-col-10 p-lg-6 configuraciones">
+    <div class="p-col-9 configuraciones">
         <div class="p-grid">
             <div class="p-col-12">
                 <h2>CONFIGURACIONES</h2>
@@ -50,7 +50,11 @@
             </div>
         </div>
     </div>
-
+    <div class="p-col-1"></div>
+    <div class="p-col-2 bg-footer"></div>
+    <div class="p-col-10 footer-main">
+        <footer-gestor></footer-gestor>
+    </div>
     <p-dialog header="Cambiar Contraseña" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
         <h3>Ingrese su nueva Contraseña</h3>
         <input type="password" pInputText [(ngModel)]="clave1">
@@ -62,4 +66,3 @@
         </ng-template>
     </p-dialog>
 </div>
-<div class="p-col-1"></div>

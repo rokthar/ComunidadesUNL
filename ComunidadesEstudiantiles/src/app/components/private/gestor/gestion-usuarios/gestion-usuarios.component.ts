@@ -20,24 +20,19 @@ export class GestionUsuariosComponent implements OnInit{
     ngOnInit(): void {
         this.usuario_service.listarDocentesEstado().subscribe((docentes:any)=>{
             this.listaDocentes = docentes;
-            console.log(docentes);
         });
         this.usuario_service.listarEstudiantesEstado().subscribe((estudiantes:any)=>{
             this.listaEstudiantes = estudiantes;
-            console.log(estudiantes);
         });
     }
 
     activarUsuario(indice, event){
-        console.log(this.listaDocentes[indice].external_usuario);
         this.usuario_service.ActivarUsuario(this.listaDocentes[indice].external_usuario).subscribe((resp:any) => {
-            console.log(resp);
             window.location.reload();
           });
     }
     desactivarUsuario(indice, event){
         this.usuario_service.DesactivarUsuario(this.listaDocentes[indice].external_usuario).subscribe((resp:any) => {
-            console.log(resp);
             window.location.reload();
           });
     }

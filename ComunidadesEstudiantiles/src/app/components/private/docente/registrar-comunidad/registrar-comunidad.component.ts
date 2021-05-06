@@ -56,7 +56,6 @@ export class RegistrarComunidadComponent implements OnInit {
 
   fileEvent(fileInput: Event) {
     this.file = (<HTMLInputElement>fileInput.target).files[0];
-    console.log(this.file);
     if ((this.file.size <= 2000000) && (this.file.type == "image/png")) {
     } else {
       this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error Imagen', detail: 'Su imagen no es del tipo especificado o pesa mas de 2Mb' });

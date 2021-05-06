@@ -252,7 +252,7 @@ export class SideMenuTutorComponent implements OnInit {
                 rowsMiembros.push(datos);
             }
         } else {
-            rowsMiembros.push(["0", "No cuenta con ninguna miembro"]);
+            rowsMiembros.push(["0", "No cuenta con ninguna miembro","",""]);
         }
         if (this.listaHistorial.actividades != null) {
             for (let i in this.listaHistorial.actividades) {
@@ -287,9 +287,12 @@ export class SideMenuTutorComponent implements OnInit {
                 rowsVinculaciones.push(datos);
             }
         } else {
-            rowsVinculaciones.push(["0", "No cuenta con niguna vinculación"]);
+            rowsVinculaciones.push(["0", "No cuenta con nigun resultado"]);
         }
-
+        console.log(rowsVinculaciones);
+        console.log(rowsActividades);
+        
+        
         let docDefinition = {
             content: [
                 {

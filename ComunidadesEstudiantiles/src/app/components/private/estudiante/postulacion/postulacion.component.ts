@@ -58,10 +58,8 @@ export class PostulacionComponent implements OnInit{
     
     enviar(){
         const values = this.postulacionComunidadForm.getRawValue();
-        console.log(values);
         this.postulacion_service.postularseComunidad(this.params.external_estudiante,this.external_c).subscribe((resp:any)=>{
           this.postulacion_service.detallePostulacion(values.habilidades,resp['external_postulacion']).subscribe((respu:any)=>{
-              console.log(respu);
               if(resp.siglas == "OE"){
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido enviada' });
                 setTimeout(() => {
@@ -79,7 +77,6 @@ export class PostulacionComponent implements OnInit{
       }
     
       cancelar(){
-        console.log("he sido funado");
         this._location.back();
       }
       slider(value){

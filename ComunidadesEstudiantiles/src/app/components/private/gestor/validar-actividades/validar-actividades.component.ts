@@ -59,16 +59,15 @@ export class validarActividadesComponent implements OnInit{
     aceptarActividades(external_actividades){
         const values = this.actividadesForm.getRawValue();
         this.actividades_service.aceptarActividades(values,external_actividades).subscribe((resp:any)=>{
-            console.log(resp);
             if(resp.siglas == "OE"){
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido Validada' });
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Las actividades ha sido Validadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser validada' });
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Las actividades no pudieron ser validadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
@@ -79,16 +78,15 @@ export class validarActividadesComponent implements OnInit{
     rechazarActividades(external_actividades){
         const values = this.actividadesForm.getRawValue();
         this.actividades_service.rechazarActividades(values,external_actividades).subscribe((resp:any)=>{
-            console.log(resp);
             if(resp.siglas == "OE"){
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido Rechazada' });
+                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Las actividades han sido rechazadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
                 this.displayModal = false
-                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad ha sido rechazada' });
+                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Las actividades no pudieron ser rechazadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
@@ -104,8 +102,5 @@ export class validarActividadesComponent implements OnInit{
                 this.ext_act = this.lista[i].external_actividades;
             }
         }
-        console.log(this.lista);
-        console.log(this.actividades);
-
     }
 }

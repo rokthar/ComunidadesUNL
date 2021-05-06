@@ -29,7 +29,6 @@ export class RecuperarClaveComponent{
 
     actualizarClave(){
         const values = this.claveForm.getRawValue();
-        console.log(values);
     }
 
     cancelar(){

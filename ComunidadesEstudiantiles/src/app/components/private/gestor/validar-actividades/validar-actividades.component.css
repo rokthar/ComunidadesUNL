@@ -43,6 +43,15 @@ p{
     font-size: 12pt;
     font-family: 'Montserrat', sans-serif;
 }
+.footer-main{
+    margin-top: 5%;
+    padding: 0%;
+}
+.bg-footer{
+    margin-top: 10.82%;
+    padding: 0%;
+    background-color: #132641;
+}
 .button-detalles{
     width: 100%;
     padding: 3%;
