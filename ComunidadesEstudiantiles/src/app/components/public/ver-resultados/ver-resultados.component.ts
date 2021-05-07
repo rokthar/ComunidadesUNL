@@ -19,7 +19,7 @@ export class VerResultadosComponent implements OnInit {
     imageSource: any;
     imagen = URL._imgResul;
     img_con = URL._imgCom;
-    imagenes: any=[];
+    imagenes: any[];
     constructor(
         private _location: Location,
         private resultados_service: ResultadosService,
@@ -33,10 +33,12 @@ export class VerResultadosComponent implements OnInit {
         if (this.external_resultado != null) {
             this.resultados_service.listarResultado(this.external_resultado).subscribe((resp: Resultados) => {
                 this.resultado = resp;
+                this.imagenes = resp.imagenes;
             });
         } else {
             this._location.back();
         }
+        
     }
 
     regresar() {

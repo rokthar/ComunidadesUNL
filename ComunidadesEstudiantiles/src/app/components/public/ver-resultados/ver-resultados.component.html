@@ -44,15 +44,17 @@
         <div class="p-col-1"></div>
         <div class="p-col-10">
           <h2>Evidencias de los Resultados</h2>
-          <div class="p-grid">
-            <div class="p-col-6" *ngFor="let item of resultado.imagenes">
-              <img alt="Card" src="{{ imagen }}{{ item.ruta_imagen }}" />
-            </div>
-          </div>
-
+          <p-galleria [value]="imagenes">
+            <ng-template pTemplate="item" let-item>
+                <img src="{{imagen}}{{item.ruta_imagen}}" [alt]="" />
+            </ng-template>
+        </p-galleria> 
           <div class="p-col-1"></div>
         </div>
       </div>
     </div>
+  </div>
+  <div class="p-col-12">
+    <footer></footer>
   </div>
 </div>

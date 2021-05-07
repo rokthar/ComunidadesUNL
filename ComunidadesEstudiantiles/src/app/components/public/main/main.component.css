@@ -22,3 +22,8 @@
 .about{
     margin-top: 7%;
 }
+
+
+.img-container img{
+    width: 100%;
+}

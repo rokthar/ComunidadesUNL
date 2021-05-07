@@ -13,23 +13,39 @@
     </div>
     <div class="p-col-12 about">
         <div class="p-grid p-jc-center">
-            <div class="p-col-5">
+            <div class="p-col-12 p-lg-5">
                 <p>El sistema web “Comunidades Estudiantiles”, se enfoca en la administración de las
                     comunidades estudiantiles, el sistema desarrollado apoya a docentes, estudiantes y
                     personal administrativo con los procesos de creación de comunidades estudiantiles,
                     planificación de actividades, generación de resultados, vinculaciones, postulaciones a
                     una comunidad.</p>
             </div>
-            <div class="p-col-5">
-                <p>img</p>
+            <p-galleria [(value)]="imagenes" [(visible)]="displayCustom" [(activeIndex)]="activeIndex"
+                [responsiveOptions]="responsiveOptions" [containerStyle]="{'max-width': '950px'}" [numVisible]="7"
+                [circular]="true" [fullScreen]="true" [showItemNavigators]="true" [showThumbnails]="false"
+                [baseZIndex]="100000">
+                <ng-template pTemplate="item" let-item>
+                    <img [src]="item" style="width: 100%; display: block;" />
+                </ng-template>
+                <ng-template pTemplate="thumbnail" let-item>
+                    <div class="p-grid p-nogutter p-justify-center">
+                        <img [src]="item" style="display: block;" />
+                    </div>
+                </ng-template>
+            </p-galleria>
+            <div class="p-col-12 p-lg-5">
+                <div *ngIf="imagenes" class="p-grid">
+                    <div *ngFor="let image of imagenes; let index = index;" class="p-col-4 img-container" key="index">
+                        <img [src]="image" [alt]="image" style="cursor: pointer" (click)="imageClick(index)" />
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="resultados">
+            <h1>RESULTADOS GENERADOS POR LAS COMUNIDADES ESTUDIANTILES</h1>
+            <resultados-preview></resultados-preview>
+        </div>
     </div>
-    <div class="resultados">
-        <h1>RESULTADOS GENERADOS POR LAS COMUNIDADES ESTUDIANTILES</h1>
-        <resultados-preview></resultados-preview>
+    <div>
+        <footer></footer>
     </div>
-</div>
-<div>
-    <footer></footer>
-</div>
