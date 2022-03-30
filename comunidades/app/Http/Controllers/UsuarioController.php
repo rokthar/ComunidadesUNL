@@ -444,7 +444,7 @@ class UsuarioController extends Controller
                     $auxClave = random_int(2,5)."unl";
                     $usuario->clave = sha1($auxClave);
                     $usuario->save();
-                    //$enviar->enviarMail("Usuario","Recuperacion de Contraseña","Su solicitud ha sido eviada correctamente <br> Pofavor usar la siguiente contraseña generada automaticamente <strong>".$auxClave."</strong>, recuerde cambiar su contraeña cuando ingrese al sistrema.", $usuario->correo);
+                    $enviar->enviarMail("Usuario","Recuperacion de Contraseña","Su solicitud ha sido eviada correctamente <br> Pofavor usar la siguiente contraseña generada automaticamente <strong>".$auxClave."</strong>, recuerde cambiar su contraeña cuando ingrese al sistrema.", $usuario->correo);
                     return response()->json(["mensaje" => "Operación Exitosa", "siglas" => "OE"], 200);
                 }else{
                     return response()->json(["mensaje" => "El usuario no existe", "siglas" => "UNE"], 200);
