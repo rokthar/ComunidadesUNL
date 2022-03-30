@@ -15,91 +15,109 @@ import { MessageService } from 'primeng/api';
 
 })
 
-export class PostulacionComponent implements OnInit{
+export class PostulacionComponent implements OnInit {
     val: number = 1;
     public titulo: string;
     postulacionComunidadForm: FormGroup;
     private params;
-    lista:Comunidad;
+    lista: Comunidad;
     private external_c;
-    estaLogeado: Boolean=false;
-    postulado:boolean;
+    estaLogeado: Boolean = false;
+    postulado: boolean;
     datosPostulacion;
     constructor(
-        private _builder:FormBuilder,
-        private postulacion_service:PostulacionService,
-        private comunidad_service:ComunidadService,
+        private _builder: FormBuilder,
+        private postulacion_service: PostulacionService,
+        private comunidad_service: ComunidadService,
         private _location: Location,
         private messageService: MessageService
-    ){
-        this.titulo="Solicitud para la Postulación a una Comunidad";
+    ) {
+        this.titulo = "Solicitud para la Postulación a una Comunidad";
         this.postulacionComunidadForm = this._builder.group({
-        habilidades:_builder.array([_builder.group({habilidad:[''],nivel:['']})])
-    });
+            habilidades: _builder.array([_builder.group({ habilidad: [''], nivel: [''] })])
+        });
 
     }
 
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        if((this.params != null) && (this.params.estado == "1")){
-            this.estaLogeado=true;
+        if ((this.params != null) && (this.params.estado == "1")) {
+            this.estaLogeado = true;
             this.external_c = sessionStorage.getItem('datosComunidad');
-            
-            this.comunidad_service.listarComunidades().subscribe((resp:Comunidad)=>{
-                this.lista = resp;
+
+            this.comunidad_service.listarComunidades().subscribe((resp: Comunidad) => {
+                this.lista = resp;                
             });
-            
-        }else{
+
+        } else {
             this._location.back();
         }
-        
-    
+
+
     }
-    
-    enviar(){
+
+    enviar() {
+        let estado = true;
         const values = this.postulacionComunidadForm.getRawValue();
-        this.postulacion_service.postularseComunidad(this.params.external_estudiante,this.external_c).subscribe((resp:any)=>{
-          this.postulacion_service.detallePostulacion(values.habilidades,resp['external_postulacion']).subscribe((respu:any)=>{
-              if(resp.siglas == "OE"){
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido enviada' });
-                setTimeout(() => {
-                    this._location.back();
-                }, 1500);
-            }else{
-                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Postulación no pudo ser enviada' });
-                setTimeout(() => {
-                    this._location.back();
-                }, 1500);
-            }   
-              
-          });
-        });
-      }
-    
-      cancelar(){
+        if(values.habilidades.length <= 0){
+            this.messageService.add({key: 'tc', severity:'warn', summary: 'Alerta', detail: 'Se debe tener al menos una habilidad para poder postularse.'});
+            return;
+        }   
+        for (let i = 0; i < values.habilidades.length; i++) {
+            if (values.habilidades[i].habilidad == "" || values.habilidades[i].nivel == "" || values.habilidades[i].nivel < 0 || values.habilidades[i].nivel > 5) {
+                estado = false;
+            }
+
+        }
+
+        if (estado) {
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
+
+            this.postulacion_service.postularseComunidad(this.params.external_estudiante, this.external_c).subscribe((resp: any) => {
+                this.postulacion_service.detallePostulacion(values.habilidades, resp['external_postulacion']).subscribe((respu: any) => {
+                    if (resp.siglas == "OE") {
+                        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido enviada' });
+                        setTimeout(() => {
+                            this._location.back();
+                        }, 1500);
+                    } else {
+                        this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Postulación no pudo ser enviada' });
+                        setTimeout(() => {
+                            this._location.back();
+                        }, 1500);
+                    }
+
+                });
+            });
+        }else{
+            this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Los campos son obligatorios y no se aceptan niveles negativos o mayores a 5' });
+        }
+    }
+
+    cancelar() {
         this._location.back();
-      }
-      slider(value){
+    }
+    slider(value) {
         this.val = value;
-      }
+    }
 
-      get getHabilidades(){
-          return this.postulacionComunidadForm.get('habilidades') as FormArray;
-      }
+    get getHabilidades() {
+        return this.postulacionComunidadForm.get('habilidades') as FormArray;
+    }
 
-      add(){
-          const control = <FormArray>this.postulacionComunidadForm.controls['habilidades'];
-          control.push(this._builder.group({habilidad:[''],nivel:['']}));
-      }
+    add() {
+        const control = <FormArray>this.postulacionComunidadForm.controls['habilidades'];
+        control.push(this._builder.group({ habilidad: [''], nivel: [''] }));
+    }
 
-      less(index:number){
+    less(index: number) {
         const control = <FormArray>this.postulacionComunidadForm.controls['habilidades'];
         control.removeAt(index);
     }
 
-      escogerComunidad(external_comunidad){
-          this.external_c = external_comunidad;
+    escogerComunidad(external_comunidad) {
+        this.external_c = external_comunidad;
     }
-    
-    
+
+
 }

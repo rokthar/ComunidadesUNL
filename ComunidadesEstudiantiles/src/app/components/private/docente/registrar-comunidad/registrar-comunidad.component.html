@@ -18,12 +18,12 @@
             <small>Sr Usuario su imagen debe ser de tipo PNG y no debe pesar mas de 2Mb</small><br>
             <input pInputText type='file'  (change)="fileEvent($event)" />
             <br><br>
-            <button class="button" [disabled]="registrarComunidadForm.invalid" (click)="enviar()"><i class="pi pi-send"> Enviar Solicitud</i></button>
-            <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"> Cancelar</i></button>
+            <button pButton pRipple type="button" icon="pi pi-check" label="Enviar Solicitud" class="buton-primeng" [disabled]="registrarComunidadForm.invalid" (click)="enviar()"></button>
+            <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar" class="p-button-danger buton-primeng"(click)="cancelar()"></button>
         </form>
     </div>
     <div class="p-col-9 noData" *ngIf="esTutor">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h3>POR EL MOMENTO YA CUENTA CON UNA SOLICITUD PARA LA CREACIÓN DE UNA COMUNIDAD</h3>
     </div>
     <div class="p-col-1"></div>

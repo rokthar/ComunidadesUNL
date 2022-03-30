@@ -12,34 +12,38 @@
         <div class="p-grid">
             <div *ngFor="let item of postulaciones">
                 <div class="p-lg-3 p-md-6 p-sm-12">
-                    <p-card header="{{item.estudiante}}" subheader="{{item.ciclo}}" class="card"
-                        [style]="{width: '360px'}" styleClass="p-card-shadow">
+                    <p-card header="{{item.estudiante}}" subheader="Ciclo: {{item.ciclo}}" class="card"
+                        [style]="{width: '360px', 'background-color':'#F3F3F3'}" styleClass="p-card-shadow">
                         <h3>Habilidades:</h3>
                         <div *ngFor="let pos of item.habilidades">
-                            <p>{{pos.habilidad}} {{pos.nivel}} <i class="star pi pi-star"></i></p>
+                            <p style="padding: 10px; background-color: #D4E6F1;"><b>- </b>{{pos.habilidad}} {{pos.nivel}} <i
+                                    class="star pi pi-star"></i></p>
                         </div>
-                        <div>
-                            <strong>Ingrese una Observación</strong>
-                            <textarea maxlength="65000" class="caja-texto" rows="3" placeholder="Observaciones"
-                                pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
-                        </div>
+                        <hr>
+                        <form [formGroup]="postulacionForm">
+                            <div>
+                                <strong>Ingrese una Observación</strong>
+                                <textarea maxlength="65000" class="caja-texto" rows="3" placeholder="Observaciones"
+                                    pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                            </div>
+                        </form>
+
                         <ng-template pTemplate="footer">
-                            <form [formGroup]="postulacionForm">
-                                <button class="button" (click)="aceptarPostulacion(item.external_postulacion)"><i
-                                        class="pi pi-check"></i> Aceptar</button>
-                                <button class="button-delete"
-                                    (click)="rechazarPostulacion(item.external_postulacion)"><i class="pi pi-times">
-                                        Rechazar</i></button>
-                            </form>
+
+                            <button pButton pRipple type="button" icon="pi pi-check" label="Aceptar"
+                               style="margin-right: 5px;" class="buton-primeng" (click)="aceptarPostulacion(item.external_postulacion)"></button>
+                            <button pButton pRipple type="button" icon="pi pi-times" label="Rechazar"
+                               style="margin-right: 5px;" class="p-button-danger buton-primeng"
+                                (click)="rechazarPostulacion(item.external_postulacion)"></button>
                         </ng-template>
+
                     </p-card>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="p-col-9 noData" *ngIf="!hayDatos">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h3>POR EL MOMENTO NO EXISTEN POSTULACIONES</h3>
     </div>
     <div class="p-col-1"></div>

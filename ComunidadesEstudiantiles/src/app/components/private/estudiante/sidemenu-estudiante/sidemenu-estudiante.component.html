@@ -2,21 +2,14 @@
 
 <div class="p-col-2">
     <div id="header">
-        <i class="pi pi-bars barras" (click)="expanded()"></i>
+        <i [class]="sidemenuIcon" (click)="expanded()"></i>
     </div>
     <div id="sidemenu" [class]="sidemenu">
         <div id="profile">
-            <img src="../../../../../assets/UNL3.jpg" />
+            <img src="./assets/UNL3.jpg" />
         </div>
         <div id="items">
             <p-panelMenu [model]="items" class="menu-side" [style]="{'width':'100%'}"></p-panelMenu>
-            <!-- <div class="item">
-                <a routerLink='../ver-comunidades'><i class="pi pi-user icon"></i> <span> Postularse</span></a>
-            </div>
-            <div class="item">
-                <a (click)="mensaje()"><i class="pi pi-power-off icon"></i> <span> Cerrar Sesión</span></a>
-            </div> -->
-
         </div>
     </div>
 </div>

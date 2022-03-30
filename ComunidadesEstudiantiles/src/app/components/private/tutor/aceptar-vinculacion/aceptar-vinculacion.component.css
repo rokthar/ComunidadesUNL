@@ -11,12 +11,14 @@ p{
 .cuerpo{
     padding-top: 5%;
 }
+
 .noData{
     text-align: center;
     padding-top: 8%;
 }
 .img-container{
     width: 100%;
+    text-align: center;
 }
 .img{
     text-align: center;

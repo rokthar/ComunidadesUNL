@@ -1,7 +1,3 @@
-.noData{
-    text-align: center;
-    padding-top: 5%;
-}
 .cuerpo{
     padding-top: 5%;
 }
@@ -20,7 +16,7 @@
 }
 .noData{
     text-align: center;
-    padding-top: 5%;
+    padding-top: 10%;
 }
 
 .noData img{
@@ -48,6 +44,9 @@
         width: 100%;
     }
     .noData{
-        padding-top: 10%;
+        padding-top: 15%;
     }
+}
+.buton-primeng{
+    margin-right: 5px;
 }

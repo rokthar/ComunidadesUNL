@@ -2,7 +2,7 @@
 
 <div class="p-col-2">
     <div id="header">
-        <i class="pi pi-bars barras" (click)="expanded()"></i>
+        <i [class]="sidemenuIcon" (click)="expanded()"></i>
     </div>
     <div id="sidemenu" [class]="sidemenu">
         <div id="profile">
@@ -10,31 +10,6 @@
         </div>
         <div id="items">
             <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
-            <!-- <div class="item">
-                <a routerLink='../planificar-actividades'><i class="pi pi-eye icon"></i> <span> Planificar Actividades</span></a>
-            </div>
-            <div class="item">
-                <a routerLink='../ver-actividades'><i class="pi pi-book icon"></i> <span> Generar Resultados</span></a>
-            </div>
-            <div class="item">
-                <a routerLink='../aceptar-postulacion'><i class="pi pi-book icon"></i> <span> Postulaciones</span></a>
-            </div>
-            <div class="item">
-                <a routerLink='../aceptar-vinculacion'><i class="pi pi-file icon"></i> <span> Vinculaciones</span></a>
-            </div>
-            <div class="item">
-                <a routerLink='../ver-comunidades-tutor'><i class="pi pi-users icon"></i> <span> Vincularse</span></a>
-            </div>
-            <div class="item">
-                <a (click)="reporteActividades()"><i class="pi pi-file-o icon"></i> <span> Reporte Actividades</span></a>
-            </div>
-            <div class="item">
-                <a (click)="reporteHistorial()"><i class="pi pi-file-o icon"></i> <span> Historial</span></a>
-            </div>
-            <div class="item">
-                <a (click)="mensaje()"><i class="pi pi-power-off icon"></i> <span> Cerrar Sesión</span></a>
-            </div> -->
-
         </div>
     </div>
 </div>

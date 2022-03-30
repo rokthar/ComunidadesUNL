@@ -22,22 +22,23 @@
                             *ngFor="let item of getHabilidades.controls; let pointIndex=index"
                             [formGroupName]="pointIndex">
                             <p-card header="Habilidad"
-                                [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#a9b5ec'}">
+                                [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#A9CCE3'}">
                                 <input pInputText class="textbox" placeholder="Habilidad" formControlName="habilidad" />
                                 <br><br>
                                 <input pInputText type="number" class="textbox" placeholder="Nivel"
                                     formControlName="nivel" min="1" max="5" />
-                                <br><button class="button-delete trash" (click)="less(pointIndex)"><i
-                                        class="pi pi-trash">
-                                        Eliminar</i></button>
+                                <br><button pButton pRipple type="button" style="width: 100%; margin-top: 10px;"
+                                    icon="pi pi-trash" label="Eliminar" class="p-button-danger buton-primeng"
+                                    (click)="less(pointIndex)"></button>
                             </p-card>
                         </div>
                     </div><br>
-                    <button class="button" (click)="add()"><i class="pi pi-plus"></i></button>
+                    <button pButton pRipple type="button" icon="pi pi-plus" label="Añadir" (click)="add()"></button>
                     <br><br>
-                    <button class="button" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()"><i
-                            class="pi pi-send"></i> Enviar Postulación</button>
-                    <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+                    <button pButton pRipple type="button" icon="pi pi-send" label="Enviar Postulación"
+                        style="margin-right: 5px;" [disabled]="postulacionComunidadForm.invalid" (click)="enviar()"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar"
+                        class="p-button-danger" style="margin-right: 5px;" (click)="cancelar()"></button>
                 </form>
             </div>
 

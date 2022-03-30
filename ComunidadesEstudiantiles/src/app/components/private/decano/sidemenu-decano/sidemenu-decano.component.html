@@ -2,11 +2,11 @@
 
 <div class="p-col-2">
     <div id="header">
-        <i class="pi pi-bars barras" (click)="expanded()"></i>
+        <i [class]="sidemenuIcon" (click)="expanded()"></i>
     </div>
     <div id="sidemenu" [class]="sidemenu">
         <div id="profile">
-            <img src="../../../../../assets/UNL3.jpg" />
+            <img src="./assets/UNL3.jpg" />
         </div>
         <div id="items">
             <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>

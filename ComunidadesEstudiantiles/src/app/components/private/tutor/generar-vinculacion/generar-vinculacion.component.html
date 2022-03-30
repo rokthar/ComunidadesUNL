@@ -6,21 +6,24 @@
     </div>
     <div class="p-col-2">
         <sidemenu-tutor></sidemenu-tutor>
-    </div> 
+    </div>
     <div class="p-col-9 cuerpo">
         <h1>{{titulo}}</h1>
         <div>
             <form [formGroup]="generarVinculacionForm">
                 <h3>Inserte la Descripción de la Vinculación</h3>
-                <textarea placeholder="Descripción de la Vinculación" rows="6" cols="100" pInputTextarea autoResize="autoResize" formControlName="descripcion"></textarea>
+                <textarea placeholder="Descripción de la Vinculación" rows="6" cols="100" pInputTextarea
+                    autoResize="autoResize" formControlName="descripcion"></textarea>
                 <br>
                 <h3>Inserte la Fecha para la Vinculación</h3>
-                <input pInputText type="date" class="date" placeholder="fecha" formControlName="fecha_inicio" />
+                <input pInputText type="date" class="date" placeholder="fecha" (change)="fechaSelected($event.target.valueAsDate)" formControlName="fecha_inicio" />
                 <br><br>
-                <button class="button" [disabled]="generarVinculacionForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Generar Vinculación</button>
-                <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+                <button pButton pRipple type="button" icon="pi pi-check" label="generar Vinculación"
+                   style="margin-right: 5px;" class="buton-primeng" [disabled]="generarVinculacionForm.invalid" (click)="enviar()"></button>
+                <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar"
+                   style="margin-right: 5px;" class="p-button-danger buton-primeng" (click)="cancelar()"></button>
             </form>
-            
+
         </div>
     </div>
     <div class="p-col-1"></div>

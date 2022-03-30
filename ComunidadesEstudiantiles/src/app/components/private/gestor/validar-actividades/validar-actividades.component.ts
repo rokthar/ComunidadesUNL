@@ -57,16 +57,16 @@ export class validarActividadesComponent implements OnInit{
     }
 
     aceptarActividades(external_actividades){
+        this.displayModal = false;
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         const values = this.actividadesForm.getRawValue();
         this.actividades_service.aceptarActividades(values,external_actividades).subscribe((resp:any)=>{
             if(resp.siglas == "OE"){
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Las actividades ha sido Validadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Las actividades no pudieron ser validadas' });
                 setTimeout(() => {
                     window.location.reload();
@@ -76,16 +76,16 @@ export class validarActividadesComponent implements OnInit{
     }
 
     rechazarActividades(external_actividades){
+        this.displayModal = false;
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         const values = this.actividadesForm.getRawValue();
         this.actividades_service.rechazarActividades(values,external_actividades).subscribe((resp:any)=>{
             if(resp.siglas == "OE"){
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Las actividades han sido rechazadas' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Las actividades no pudieron ser rechazadas' });
                 setTimeout(() => {
                     window.location.reload();

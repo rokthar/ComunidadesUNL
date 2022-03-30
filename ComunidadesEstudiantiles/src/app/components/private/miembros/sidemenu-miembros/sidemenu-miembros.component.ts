@@ -15,6 +15,7 @@ import { URL } from '../../../../core/constants/url';
 
 export class SideMenuMiembrosComponent implements OnInit {
     sidemenu: string;
+    sidemenuIcon:string = "pi pi-bars barras";
     items: MenuItem[];
     params: Estudiante;
     comunidad: any;
@@ -60,9 +61,11 @@ export class SideMenuMiembrosComponent implements OnInit {
     }
     expanded(){
         if(this.sidemenu=="ocultar"){
-            this.sidemenu="mostrar"
+            this.sidemenu="mostrar";
+            this.sidemenuIcon ="pi pi-times barras mostrarIcon";
         }else if(this.sidemenu=="mostrar"){
-            this.sidemenu="ocultar"
+            this.sidemenu="ocultar";
+            this.sidemenuIcon ="pi pi-bars barras ocultarIcon";
         }
     }
 }

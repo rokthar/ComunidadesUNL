@@ -1,5 +1,65 @@
-<div class="p-grid contenedor">
-    <div class="p-col-1"></div>
+<div class="p-grid contenedor" *ngIf="ready">
+    <!-- *************************************************************************************************************************************** -->
+    <div class="card">
+        <p-dataView #dv [value]="resultados" [paginator]="true" [rows]="9" filterBy="actividad" [sortField]="sortField" [sortOrder]="sortOrder" layout="grid">
+            <ng-template pTemplate="header">
+                <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                    <!-- <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown> -->
+                    <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                        <i class="pi pi-search"></i>
+                        <input type="search" pInputText placeholder="Buscar por Actividad" (input)="dv.filter($event.target.value)">
+                    </span>
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </ng-template>
+            <ng-template let-product pTemplate="listItem">
+                <div class="p-col-12">
+                    <div class="product-list-item img">
+                        <img src="{{imagen}}{{product.imagenes[0].ruta_imagen}}" alt="logo comunidad" />
+                        <div class="product-list-detail">
+                            <div class="product-name">{{product.actividad}}</div>
+                            <div class="product-description">Comunidad {{product.comunidad}}</div>
+                            <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                            <!-- <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.fecha_inicio}}</span> -->
+                        </div>
+                        <div class="product-list-action">
+                            <span class="product-category"><i class="pi pi-calendar"></i> Inicio: {{product.fecha_inicio}}</span>
+                            <span class="product-category"><i class="pi pi-calendar"></i> Fin: {{product.fecha_fin}}</span>
+                            <br>
+                            <p-button (click)="enviar(product.external_resultado)">Ver Resultado</p-button>
+                            <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+            <ng-template let-product pTemplate="gridItem">
+                <div class="p-col-12 p-md-4">
+                    <div class="product-grid-item card">
+                        <div class="product-grid-item-top">
+                            <div>
+                                <span class="product-category"> Comunidad {{product.comunidad}}</span>
+                            </div>
+                            <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                        </div>
+                        <div class="product-grid-item-content img2">
+                            <img src="{{imagen}}{{product.imagenes[0].ruta_imagen}}" alt="logo comunidad" />
+                            <div class="product-name">{{product.actividad}}</div>
+                            <!-- <div class="product-description">{{product.comunidad}}</div> -->
+                        </div>
+                        <div class="product-grid-item-bottom">
+                            <p><span class="product-category"><i class="pi pi-calendar"></i> {{product.fecha_inicio}}</span></p><br>
+                            <p><span class="product-category"><i class="pi pi-calendar"></i> {{product.fecha_fin}}</span></p>
+                        </div>
+                        <div class="product-grid-item-bottom">
+                            <p-button (click)="enviar(product.external_resultado)">Ver Resultado</p-button>
+                        </div>
+                    </div>
+                </div>
+            </ng-template>
+        </p-dataView>
+    </div>
+    <!-- *************************************************************************************************************************************** -->
+    <!-- <div class="p-col-1"></div>
     <div class="card-shadow p-col-10">
         <div class="p-grid">
             <p-card *ngFor="let item of resultados" class="card p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12" header="{{item.actividad}}" subheader="Comunidad {{item.comunidad}}" [style]="{width: '100%', height: '400px'}"
@@ -13,6 +73,36 @@
             <br>
             <small>Fecha de Fin: {{item.fecha_fin}}</small>
         </p-card>
+        </div>
+    </div>
+    <div class="p-col-1"></div> -->
+</div>
+
+<div class="p-grid contenedor" *ngIf="loading">
+    <div class="p-col-1"></div>
+    <div class="card-shadow p-col-10">
+        <div class="p-grid">
+            <p-card class="card p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12" [style]="{width: '100%', height: '400px'}" styleClass="p-card-shadow">
+                <ng-template pTemplate="header">
+                </ng-template>
+                <small></small>
+                <br>
+                <small></small>
+            </p-card>
+            <p-card class="card p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12" [style]="{width: '100%', height: '400px'}" styleClass="p-card-shadow">
+                <ng-template pTemplate="header">
+                </ng-template>
+                <small></small>
+                <br>
+                <small></small>
+            </p-card>
+            <p-card class="card p-col-12 p-xl-4 p-lg-6 p-md-6 p-sm-12" [style]="{width: '100%', height: '400px'}" styleClass="p-card-shadow">
+                <ng-template pTemplate="header">
+                </ng-template>
+                <small></small>
+                <br>
+                <small></small>
+            </p-card>
         </div>
     </div>
     <div class="p-col-1"></div>

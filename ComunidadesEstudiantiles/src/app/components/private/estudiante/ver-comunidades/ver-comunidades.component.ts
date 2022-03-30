@@ -7,6 +7,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PostulacionService } from 'src/app/services/postulacion.service';
 import { URL } from '../../../../core/constants/url';
 import { MessageService } from 'primeng/api';
+import { Location } from '@angular/common';
 
 
 @Component({
@@ -21,22 +22,32 @@ export class VerComunidadesComponent implements OnInit{
     imageSource: any;
     params: any;
     postulado: boolean;
-    datosPostulacion="";
+    datosPostulacion={
+        comunidad:"",
+        habilidades:[],
+        siglas:"",
+    };
     imagen = URL._imgCom;
     comunidad="";
     displayModal: boolean;
+    estaLogeado:Boolean=false;
     constructor(
         private comunidad_service:ComunidadService,
         public router:Router,
         private sanitizer: DomSanitizer,
         private postulacion_service:PostulacionService,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private _location:Location
     ){
 
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
-        
+        if ((this.params != null) && (this.params.estado == "1")) {
+            this.estaLogeado = true;
+          } else {
+            this._location.back();
+          }
         this.postulacion_service.buscarPostulacion(this.params.external_estudiante).subscribe((post:any)=>{
             if(post.siglas != "OE"){
                 this.postulado=false;
@@ -50,6 +61,8 @@ export class VerComunidadesComponent implements OnInit{
         });
     }
     cancelar(){
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción' });
+
         this.postulacion_service.cancelarPostulacion(this.params.external_estudiante).subscribe((resp:any)=>{
             if(resp.siglas == "OE"){
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Postulación ha sido cancelada' });

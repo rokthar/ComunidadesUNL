@@ -11,7 +11,34 @@
         <h1>{{titulo}}</h1>
         <div class="p-grid">
             <!-- <div class="p-md-12 p-lg-12"> -->
-                <div *ngFor="let item of lista">
+            <p-table [value]="lista" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"
+                urrentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                styleClass="p-datatable-responsive-demo">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Logo</th>
+                        <th>Comunidad</th>
+                        <Th>Tutor</Th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-objeto let-rowIndex="rowIndex">
+                    <tr>
+                        <td><img class="img" alt="Card" src="{{imagen}}{{objeto.ruta_logo}}"></td>
+                        <td>{{objeto.nombres }}</td>
+                        <td>{{objeto.tutor }}</td>
+                        <td>
+                            <ng-container>
+                                <button pButton pRipple type="button" icon="pi pi-info-circle" label="Ver Información"
+                                    class="p-button-secondary buton-primeng"
+                                    (click)="show(objeto.external_comunidad)"></button>
+                            </ng-container>
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </p-table>
+            <!-- <div *ngFor="let item of lista">
                     <div class="p-lg-2 p-md-6 p-sm-12 card">
                         <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '300px'}"
                             styleClass="p-card-shadow">
@@ -26,31 +53,37 @@
                             </ng-template>
                         </p-card>
                     </div>
-                </div>
-                <div>
-                    <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
-                        <h3>Descripción</h3>
-                            <p>{{comunidad.descripcion}}</p>
-                        <h3>Misión</h3>
-                            <p>{{comunidad.mision}}</p>
-                        <h3>Visión</h3>
-                            <p>{{comunidad.vision}}</p>
-                            <form [formGroup]="rechazarComunidadForm">
-                                <h3>Puede insetar sus Observaciones</h3>
-                                <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
-                                <br><br>
-                                <button class="button" (click)="aceptarComunidad(comunidad.external_comunidad)"><i class="pi pi-check">Aceptar Comunidad</i></button>
-                                <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)"><i class="pi pi-times"> Rechazar Comunidad</i></button>
-                                
-                            </form>
+                </div> -->
+            <div>
+                <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}"
+                    [baseZIndex]="10000">
+                    <h3>Descripción</h3>
+                    <p>{{comunidad.descripcion}}</p>
+                    <h3>Misión</h3>
+                    <p>{{comunidad.mision}}</p>
+                    <h3>Visión</h3>
+                    <p>{{comunidad.vision}}</p>
+                    <form [formGroup]="rechazarComunidadForm">
+                        <h3>Puede insetar sus Observaciones</h3>
+                        <textarea maxlength="65000" class="caja-texto" rows="3" placeholder="Observaciones"
+                            pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                        <br><br>
+                        <button pButton pRipple type="button" icon="pi pi-check" label="Aceptar Comunidad"
+                            style="margin-right: 5px;" class="buton-primeng"
+                            (click)="aceptarComunidad(comunidad.external_comunidad)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" label="Rechazar Comunidad"
+                            style="margin-right: 5px;" class="p-button-danger buton-primeng"
+                            (click)="rechazarComunidad(comunidad.external_comunidad)"></button>
 
-                    </p-dialog> 
-                </div>
+                    </form>
+
+                </p-dialog>
+            </div>
             <!-- </div> -->
         </div>
     </div>
     <div class="noData p-col-9" *ngIf="!hayDatos">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>
     <div class="p-col-1"></div>
@@ -59,4 +92,3 @@
         <footer-decano></footer-decano>
     </div>
 </div>
-

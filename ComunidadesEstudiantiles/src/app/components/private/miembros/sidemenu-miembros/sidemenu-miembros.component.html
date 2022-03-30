@@ -2,7 +2,7 @@
 
 <div class="p-col-2">
     <div id="header">
-        <i class="pi pi-bars barras" (click)="expanded()"></i>
+        <i [class]="sidemenuIcon" (click)="expanded()"></i>
     </div>
     <div id="sidemenu" [class]="sidemenu">
         <div id="profile">
@@ -10,13 +10,6 @@
         </div>
         <div id="items">
             <p-panelMenu [model]="items" [style]="{'width':'100%'}"></p-panelMenu>
-            <!-- <div class="item">
-                <a routerLink='../perfil' routerLinkActivate="active"><i class="pi pi-user"> Lista Actividades</i></a>
-            </div>
-            <div class="item">
-                <a (click)="mensaje()"><i class="pi pi-power-off icon"></i> <span> Cerrar Sesión</span></a>
-            </div> -->
-
         </div>
     </div>
 </div>

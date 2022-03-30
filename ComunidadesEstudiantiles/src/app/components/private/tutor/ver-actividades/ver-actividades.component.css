@@ -1,40 +1,54 @@
-.menu-tutor{
+.menu-tutor {
     padding-top: 0%;
 }
-.actividades p{
+
+.actividades p {
     padding-left: 2%;
     padding-right: 2%;
     text-align: justify;
 }
-.noData{
+
+.noData {
     text-align: center;
-    padding-top: 5%;
+    padding-top: 8%;
 }
-.button{
+
+.button {
     padding: 2%;
 }
-.noData img{
+
+.noData img {
     width: 20%;
     opacity: 60%;
 }
 
-.actividades{
+.actividades {
     margin-top: 5%;
 }
-.footer-main{
+
+.footer-main {
     margin-top: 5%;
     padding: 0%;
 }
-.bg-footer{
+
+.bg-footer {
     margin-top: 10.82%;
     padding: 0%;
     background-color: #132641;
 }
+.scroll{
+    height: 300px;
+    overflow: scroll;
+}
+
 @media only screen and (max-width: 900px) {
-    .actividades{
+    .actividades {
         margin-top: 3%;
     }
-    .menu-tutor{
+    .menu-tutor {
         width: 100%;
+    }
+    .noData {
+        padding-top: 15%;
     }
 }

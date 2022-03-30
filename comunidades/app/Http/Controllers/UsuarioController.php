@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\usuario;
-use App\Models\estudiante;
-use App\Models\docente;
+use App\Models\Usuario;
+use App\Models\Estudiante;
+use App\Models\Docente;
 use App\Http\Controllers\MailController;
 use Illuminate\Http\Request;
 
@@ -24,17 +24,28 @@ class UsuarioController extends Controller
                 if($data["correo"] == "" || $data["clave"] == "" || $data["tipo"] == ""){
                     return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
-                    $usuario = new usuario();
-                    $usuario->correo = $data["correo"];
-                    $clave = sha1($data["clave"] . "unl.");
-                    $usuario->clave = $clave;
-                    $usuario->tipoUsuario = $data["tipo"];
-                    $usuario->estado = 1;
-                    $external_usuario = "UuA" . Utilidades\UUID::v4();
-                    $usuario->external_us = $external_usuario;
-
-                    $usuario->save();
-                    return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE","external_us"=>$external_usuario], 200);
+                    $correoV = strLen(trim($data["correo"]));
+                    $claveV = strLen(trim($data["clave"]));
+                    if($correoV == 0 || $claveV == 0){
+                        return response()->json(["mensaje" => "Campos vacios", "siglas" => "CV"], 200);
+                    }else{
+                        $validar_email = self::valdiaremail($data['correo']);
+                        if($validar_email){
+                            $usuario = new Usuario();
+                            $usuario->correo = $data["correo"];
+                            $clave = sha1($data["clave"] . "unl.");
+                            $usuario->clave = $clave;
+                            $usuario->tipoUsuario = $data["tipo"];
+                            $usuario->estado = 1;
+                            $external_usuario = "UuA" . Utilidades\UUID::v4();
+                            $usuario->external_us = $external_usuario;
+        
+                            $usuario->save();
+                            return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE","external_us"=>$external_usuario], 200);
+                        }else{
+                            return response()->json(["mensaje" => "El correo debe ser de la UNL", "siglas" => "CI"], 200);
+                        }
+                    }
                 }
             }else{
                 return response()->json(["mensaje" => "El usuario ya existe", "siglas" => "UE"], 200);
@@ -43,30 +54,53 @@ class UsuarioController extends Controller
             return response()->json(["mensaje" => "La data no tiene el formato deseado", "siglas" => "DNF"], 200);
         }
     }
-
+    //VALIDAR CORREO DE LA UNL
+    public function valdiaremail($email)
+    {
+        $email = trim($email);
+        $dominio = explode("@", $email);
+        if ($dominio[1] === 'unl.edu.ec') {
+            return true;
+        }else{
+            return false;
+        }
+    }
     //REGISTRO DE ESTUDIANTE
 
     public function RegistrarEstudiante(Request $request, $external_id){
         if ($request->json()) {
             $data = $request->json()->all();
-            $usuario = usuario::where("external_us", $external_id)->first();
+            $usuario = Usuario::where("external_us", $external_id)->first();
             
             if ($usuario->tipoUsuario == 2) {
                 if($data["nombres"] == "" || $data["apellidos"] == "" || $data["ciclo"] == "" || $data["paralelo"] == ""){
                     return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
-                    $est = estudiante::where("fk_usuario",$usuario->id)->first();
+                    $est = Estudiante::where("fk_usuario",$usuario->id)->first();
                     if($est == ""){
-                        $persona = new estudiante();
-                        $persona->nombres = $data["nombres"];
-                        $persona->apellidos = $data["apellidos"];
-                        $persona->ciclo = $data["ciclo"];
-                        $persona->paralelo = $data["paralelo"];
-                        $persona->estado = 1;
-                        $persona->fk_usuario = $usuario->id;
-                        $persona->external_es = "Es" . Utilidades\UUID::v4();
-                        $persona->save();
-                        return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+                        $nombresV = strLen(trim($data["nombres"]));
+                        $apellidosV = strLen(trim($data["apellidos"]));
+                        $cicloV = strLen(trim($data["ciclo"]));
+                        $paraleloV = strLen(trim($data["paralelo"]));
+
+                        if($nombresV == 0 || $apellidosV == 0 || $cicloV == 0 || $paraleloV == 0){
+                            return response()->json(["mensaje" => "Campos vacios", "siglas" => "CV"], 200);
+                        }else{
+                            if($data["ciclo"] > 0 && $data["ciclo"] <= 10){
+                                $persona = new Estudiante();
+                                $persona->nombres = $data["nombres"];
+                                $persona->apellidos = $data["apellidos"];
+                                $persona->ciclo = $data["ciclo"];
+                                $persona->paralelo = $data["paralelo"];
+                                $persona->estado = 1;
+                                $persona->fk_usuario = $usuario->id;
+                                $persona->external_es = "Es" . Utilidades\UUID::v4();
+                                $persona->save();
+                                return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+                            }else{
+                                return response()->json(["mensaje" => "Error al Registrar", "siglas" => "CS"], 200);
+                            }
+                        }
                     }else{
                         return response()->json(["mensaje" => "El estudiante ya esta registrado", "siglas" => "ER"], 200);
                     }
@@ -82,10 +116,10 @@ class UsuarioController extends Controller
     public function EditarEstudiante(Request $request, $external_estudiante){
         if ($request->json()) {
             $data = $request->json()->all();
-            $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            $estudiante = Estudiante::where("external_es",$external_estudiante)->first();
             
             if ($estudiante) {
-                $usuario = usuario::where("id", $estudiante->fk_usuario)->first();
+                $usuario = Usuario::where("id", $estudiante->fk_usuario)->first();
                 if($usuario->tipoUsuario == 2){
                     $usuario->correo = $data["correo"];
 
@@ -109,9 +143,9 @@ class UsuarioController extends Controller
     public function EditarEstudianteClave(Request $request, $external_estudiante){
         if ($request->json()) {
             $data = $request->json()->all();
-            $estudiante = estudiante::where("external_es",$external_estudiante)->first();
+            $estudiante = Estudiante::where("external_es",$external_estudiante)->first();
             if ($estudiante) {
-                $usuario = usuario::where("id", $estudiante->fk_usuario)->first();
+                $usuario = Usuario::where("id", $estudiante->fk_usuario)->first();
                 if($data["clave"] == ""){
                     return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
@@ -133,24 +167,30 @@ class UsuarioController extends Controller
     public function RegistrarDocente(Request $request, $external_id){
         if ($request->json()) {
             $data = $request->json()->all();
-            $usuario = usuario::where("external_us", $external_id)->first();
+            $usuario = Usuario::where("external_us", $external_id)->first();
             if ($usuario->tipoUsuario == 1) {
                 if($data["nombres"] == "" || $data["apellidos"] == "" || $data['tipo_docente']==""){
                     return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
-                    $doc = docente::where("fk_usuario",$usuario->id)->first();
+                    $doc = Docente::where("fk_usuario",$usuario->id)->first();
                     if($doc){
                         return response()->json(["mensaje" => "El docente ya esta registrado", "siglas" => "DR"], 200);
                     }else{
-                        $docente = new docente();
-                        $docente->nombres = $data["nombres"];
-                        $docente->apellidos = $data["apellidos"];
-                        $docente->tipoDocente = $data['tipo_docente'];
-                        $docente->estado = 1;
-                        $docente->fk_usuario = $usuario->id;
-                        $docente->external_do = "Doc" . Utilidades\UUID::v4();
-                        $docente->save();
-                        return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+                        $nombresV = strLen(trim($data["nombres"]));
+                        $apellidosV = strLen(trim($data["apellidos"]));
+                        if($nombresV == 0 || $apellidosV == 0){
+                            return response()->json(["mensaje" => "Campos vacios", "siglas" => "CV"], 200);
+                        }else{
+                            $docente = new Docente();
+                            $docente->nombres = $data["nombres"];
+                            $docente->apellidos = $data["apellidos"];
+                            $docente->tipoDocente = $data['tipo_docente'];
+                            $docente->estado = 1;
+                            $docente->fk_usuario = $usuario->id;
+                            $docente->external_do = "Doc" . Utilidades\UUID::v4();
+                            $docente->save();
+                            return response()->json(["mensaje" => "Operacion existosa", "siglas" => "OE"], 200);
+                        }
                     }
                 }
             }else{
@@ -164,10 +204,10 @@ class UsuarioController extends Controller
     public function EditarDocente(Request $request, $external_docente){
         if ($request->json()) {
             $data = $request->json()->all();
-            $docente = docente::where("external_do",$external_docente)->first();
+            $docente = Docente::where("external_do",$external_docente)->first();
             
             if ($docente) {
-                $usuario = usuario::where("id", $docente->fk_usuario)->first();
+                $usuario = Usuario::where("id", $docente->fk_usuario)->first();
 
                 $usuario->correo = $data["correo"];
 
@@ -186,13 +226,13 @@ class UsuarioController extends Controller
     public function EditarDocenteClave(Request $request, $external_docente){
         if ($request->json()) {
             $data = $request->json()->all();
-            $docente = docente::where("external_do",$external_docente)->first();
+            $docente = Docente::where("external_do",$external_docente)->first();
             
             if ($docente) {
                 if($data["clave"] == ""){
                     return response()->json(["mensaje" => "Datos Faltantes", "siglas" => "DF"], 200);
                 }else{
-                    $usuario = usuario::where("id", $docente->fk_usuario)->first();
+                    $usuario = Usuario::where("id", $docente->fk_usuario)->first();
                     $clave = sha1($data["clave"] . "unl.");
                     $usuario->clave = $clave;
                     $usuario->save();
@@ -207,7 +247,7 @@ class UsuarioController extends Controller
     }
 
     public function ActivarUsuario($external_usuario){
-        $usuario = usuario::where("external_us",$external_usuario)->first();
+        $usuario = Usuario::where("external_us",$external_usuario)->first();
         if($usuario){
             $usuario->estado=1;
             $usuario->save();
@@ -218,7 +258,7 @@ class UsuarioController extends Controller
     }
 
     public function DesactivarUsuario($external_usuario){
-        $usuario = usuario::where("external_us",$external_usuario)->first();
+        $usuario = Usuario::where("external_us",$external_usuario)->first();
         if($usuario){
             $usuario->estado=0;
             $usuario->save();
@@ -241,7 +281,7 @@ class UsuarioController extends Controller
                 if($data["correo"] != "" || $data["clave"] != ""){
                     $clave = sha1($data["clave"] . "unl.");
 
-                    $usuario = usuario::where("correo", "=", $data["correo"])
+                    $usuario = Usuario::where("correo", "=", $data["correo"])
                         ->where("clave", "=", $clave)
                         ->where("estado", 1)->first();
                     if ($usuario) {
@@ -279,10 +319,10 @@ class UsuarioController extends Controller
     {
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $estudianteObj = usuario::where("external_us", $external_id)->where("tipoUsuario",2)->first();
+        $estudianteObj = Usuario::where("external_us", $external_id)->where("tipoUsuario",2)->first();
 
         if ($estudianteObj) {
-            $estudiante = estudiante::where("fk_usuario", $estudianteObj->id)->first();
+            $estudiante = Estudiante::where("fk_usuario", $estudianteObj->id)->first();
             if($estudiante){
                 $datos['data']= [
                    "correo"=>$estudianteObj->correo, 
@@ -308,10 +348,10 @@ class UsuarioController extends Controller
     {
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $docenteObj = usuario::where("external_us", $external_id)->where("tipoUsuario",1)->first();
+        $docenteObj = Usuario::where("external_us", $external_id)->where("tipoUsuario",1)->first();
 
         if ($docenteObj) {
-            $docente = docente::where("fk_usuario", $docenteObj->id)->first();
+            $docente = Docente::where("fk_usuario", $docenteObj->id)->first();
             
             $data = array();
             if ($docente) {
@@ -336,11 +376,11 @@ class UsuarioController extends Controller
     public function listarDocentes(){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $listas = docente::where("estado",1)->get();
+        $listas = Docente::where("estado",1)->get();
 
         $data = array();
         foreach ($listas as $lista) {
-            $usuario = usuario::where("id", $lista->fk_usuario)->first();
+            $usuario = Usuario::where("id", $lista->fk_usuario)->first();
             $datos['data'][] = [
                 "nombres" => $lista->nombres,
                 "apellidos" => $lista->apellidos,
@@ -356,10 +396,10 @@ class UsuarioController extends Controller
     public function listarDocentesConf(){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $listas = docente::where("estado","<", 2)->get();
+        $listas = Docente::where("estado","<", 2)->get();
         $data = array();
         foreach ($listas as $lista) {
-            $usuario = usuario::where("id", $lista->fk_usuario)->first();
+            $usuario = Usuario::where("id", $lista->fk_usuario)->first();
             $datos['data'][] = [
                 "nombres" => $lista->nombres,
                 "apellidos" => $lista->apellidos,
@@ -376,10 +416,10 @@ class UsuarioController extends Controller
     public function listarEstudiantesConf(){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $listas = estudiante::where("estado","<", 3)->get();
+        $listas = Estudiante::where("estado","<", 3)->get();
         $data = array();
         foreach ($listas as $lista) {
-            $usuario = usuario::where("id", $lista->fk_usuario)->first();
+            $usuario = Usuario::where("id", $lista->fk_usuario)->first();
             $datos['data'][] = [
                 "nombres" => $lista->nombres,
                 "apellidos" => $lista->apellidos,
@@ -399,12 +439,12 @@ class UsuarioController extends Controller
         if ($request->json()) {
             $data = $request->json()->all();
             if($data["correo"] != ""){
-                $usuario = usuario::where("correo",$data["correo"])->first();
+                $usuario = Usuario::where("correo",$data["correo"])->first();
                 if($usuario){
                     $auxClave = random_int(2,5)."unl";
                     $usuario->clave = sha1($auxClave);
                     $usuario->save();
-                    $enviar->enviarMailClave("Usuario","Recuperacion de Contraseña","Su solicitud ha sido eviada correctamente <br> Pofavor usar la siguiente contraseña generada automaticamente <strong>".$auxClave."</strong>, recuerde cambiar su contraeña cuando ingrese al sistrema.");
+                    //$enviar->enviarMail("Usuario","Recuperacion de Contraseña","Su solicitud ha sido eviada correctamente <br> Pofavor usar la siguiente contraseña generada automaticamente <strong>".$auxClave."</strong>, recuerde cambiar su contraeña cuando ingrese al sistrema.", $usuario->correo);
                     return response()->json(["mensaje" => "Operación Exitosa", "siglas" => "OE"], 200);
                 }else{
                     return response()->json(["mensaje" => "El usuario no existe", "siglas" => "UNE"], 200);

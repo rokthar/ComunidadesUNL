@@ -53,6 +53,7 @@ export class GenerarResultadosComponent implements OnInit {
     }
 
     enviar() {
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         const values = this.generarResultadosForm.getRawValue();
         for (let i = 0; i < this.imagenesResultado.length; i++) {
             if ((this.imagenesResultado[0].size <= 2000000) && (this.imagenesResultado[0].type == "image/jpeg")

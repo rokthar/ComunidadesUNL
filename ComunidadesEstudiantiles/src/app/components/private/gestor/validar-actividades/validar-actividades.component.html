@@ -4,11 +4,39 @@
     <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-col-2"><sidemenu-gestor></sidemenu-gestor></div>
+    <div class="p-col-2">
+        <sidemenu-gestor></sidemenu-gestor>
+    </div>
     <div class="p-col-9 actividades" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
-            <div *ngFor="let item of lista">
+            <p-table [value]="lista" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"
+                urrentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                styleClass="p-datatable-responsive-demo">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Logo</th>
+                        <th>Comunidad</th>
+                        <Th>Tutor</Th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-objeto let-rowIndex="rowIndex">
+                    <tr>
+                        <td><img class="img" alt="Card" src="{{imagen}}{{objeto.logo_comunidad}}"></td>
+                        <td>{{objeto.comunidad }}</td>
+                        <td>{{objeto.tutor }}</td>
+                        <td>
+                            <ng-container>
+                                <button pButton pRipple type="button" icon="pi pi-info-circle" label="Detalles"
+                                    class="p-button-secondary  buton-primeng" (click)="verDetalles(objeto.external_actividades)"></button>
+                            </ng-container>
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </p-table>
+            <!-- <div *ngFor="let item of lista">
                 <div class="p-lg-3 p-md-6 p-sm-12 card">
                     <p-card header="{{item.comunidad}}" subheader="{{item.tutor}}" [style]="{width: '360px'}"
                         styleClass="p-card-shadow">
@@ -25,9 +53,10 @@
                         </ng-template>
                     </p-card>
                 </div>
-            </div>
+            </div> -->
             <div>
-                <p-dialog header="Actividades" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
+                <p-dialog header="Actividades" [(visible)]="displayModal" [modal]="true" [style]="{width: '70vw'}"
+                    [baseZIndex]="10000">
                     <div *ngFor="let item of actividades">
                         <h3>Actividad: {{item.nombre_actividad}}</h3>
                         <p>{{item.descripcion_actividad}}</p>
@@ -35,17 +64,21 @@
                     </div>
                     <form [formGroup]="actividadesForm">
                         <h3>Puede enviar sus Observaciones</h3>
-                        <textarea maxlength="1000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                        <textarea maxlength="1000" class="caja-texto" rows="3" placeholder="Observaciones"
+                            pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
                         <br><br>
-                        <button class="button-card" (click)="aceptarActividades(ext_act)"><i class="pi pi-check"></i> Validar</button>
-                        <button class="button-delete" (click)="rechazarActividades(ext_act)"><i class="pi pi-times"></i> Rechazar</button>
+                        <button pButton pRipple type="button" icon="pi pi-check" label="Aceptar" class="buton-primeng"
+                            style="margin-right: 5px;" (click)="aceptarActividades(ext_act)"></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" label="Rechazar"
+                            style="margin-right: 5px;" class="p-button-danger buton-primeng"
+                            (click)="rechazarActividades(ext_act)"></button>
                     </form>
-                </p-dialog> 
+                </p-dialog>
             </div>
         </div>
     </div>
     <div class="noData p-col-9" *ngIf="!hayDatos">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h2>POR EL MOMENTO NO HAY PLANIFICACIONES</h2>
     </div>
     <div class="p-col-1"></div>

@@ -13,30 +13,34 @@ import { Resultados } from 'src/app/core/model/resultados';
     styleUrls: ['./resultados-preview.component.css']
 })
 
-export class ResultadosPreviewComponent implements OnInit{
+export class ResultadosPreviewComponent implements OnInit {
 
-    resultados=null;
+    resultados = null;
     imageSource: any;
     imagen;
+    loading = true;
+    ready=false;
     constructor(
-        private resultados_service:ResultadosService,
-        public router:Router,
+        private resultados_service: ResultadosService,
+        public router: Router,
         private sanitizer: DomSanitizer
 
-    ){
+    ) {
 
     }
     ngOnInit(): void {
         this.imagen = URL._imgResul;
-       this.resultados_service.listarResultados().subscribe((resp:Resultados)=>{
-        this.resultados = resp;
-       });
+        this.resultados_service.listarResultados().subscribe((resp: Resultados) => {
+            this.resultados = resp;
+            this.loading = false;
+            this.ready = true;
+        });
     }
 
-    enviar(external_resultado){
-        sessionStorage.setItem('datosResultado',external_resultado);
+    enviar(external_resultado) {
+        sessionStorage.setItem('datosResultado', external_resultado);
         this.router.navigateByUrl(Rutas.verResultados);
 
-    }   
+    }
 
 }

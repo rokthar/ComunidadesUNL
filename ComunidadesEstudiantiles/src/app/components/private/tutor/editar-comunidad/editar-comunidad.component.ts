@@ -3,6 +3,7 @@ import { MessageService } from 'primeng/api';
 import { URL } from 'src/app/core/constants/url';
 import { Comunidad } from 'src/app/core/model/comunidad';
 import { Docente } from 'src/app/core/model/docente';
+import { Location } from '@angular/common';
 import { ComunidadService } from 'src/app/services/comunidad.service';
 import { DocenteService } from 'src/app/services/docente.service';
 
@@ -22,14 +23,23 @@ export class EditarComunidadComponent implements OnInit {
     clave2: any;
     imagen = URL._imgCom;
     file: File;
+    estaLogeado:Boolean=false;
+
     constructor(
         private messageService: MessageService,
         private docente_service: DocenteService,
-        private comunidad_service: ComunidadService
+        private comunidad_service: ComunidadService,
+        private _location:Location,
+
     ) { }
 
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
+        if(this.params != null && this.params.tipo_docente=="5"){
+            this.estaLogeado = true;
+        }else{
+            this._location.back();
+        }
         this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp:Comunidad) => {
             this.comunidad = resp;
             this.ruta_imagen = resp.ruta_logo;
@@ -39,6 +49,13 @@ export class EditarComunidadComponent implements OnInit {
 
     enviar() {
         const values = this.comunidad;
+        if(values.nombre_comunidad == "" || values.nombre_comunidad == undefined ||
+        values.descripcion == "" || values.descripcion == undefined ||
+        values.mision == "" || values.mision == undefined || values.vision == "" || values.vision == undefined){
+        this.messageService.add({key: 'tc', severity:'warn', summary: 'Alerta', detail: 'Todos los campos son obligatorios.'});
+            return;
+        }
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         this.comunidad_service.editarComunidad(values, this.comunidad.external_comunidad).subscribe((resp: any) => {
             if (resp.siglas = "OE") {
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Los cambios han sido guardados correctamente' });
@@ -63,19 +80,24 @@ export class EditarComunidadComponent implements OnInit {
       }
 
       cambiarLogo(){
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         let form = new FormData();
         form.append('file', this.file);
           this.comunidad_service.subirImagen(form,this.comunidad.external_comunidad).subscribe((resp:any)=>{
-            if(resp.siglas = "OE"){
-                this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Los cambios han sido guardados correctamente' });
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
-            }else{
-                this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Los cambios no han sido guardados' });
-                setTimeout(() => {
-                    window.location.reload();
-                }, 1000);
+            try {
+                if(resp.siglas = "OE"){
+                    this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Los cambios han sido guardados correctamente' });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }else{
+                    this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'Los cambios no han sido guardados' });
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 1000);
+                }
+            } catch (error) {
+                alert(error);
             }
           });
       }

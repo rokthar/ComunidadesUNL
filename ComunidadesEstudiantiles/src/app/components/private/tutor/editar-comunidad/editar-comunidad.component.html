@@ -20,7 +20,7 @@
                 <p>Cambiar Logo de la comunidad</p>
                 <input pInputText class="textImg" type='file' (change)="fileEvent($event)" />
                 <br><br>
-                <button class="button" (click)="cambiarLogo()"><i class="pi pi-save"> Cambiar Logo</i></button>
+                <button pButton pRipple type="button" icon="pi pi-save" label="Cambiar Logo" class="buton-primeng" (click)="cambiarLogo()"></button>
             </div>
 
             <div class="p-col-12 p-lg-8">
@@ -62,8 +62,7 @@
                     </ng-template>
                 </p-inplace>
                 <br><br>
-                <div class="p-col-12"><button class="button" (click)="enviar()"><i class="pi pi-save">
-                            Guardar</i></button></div>
+                <div class="p-col-12"><button pButton pRipple type="button" icon="pi pi-save" label="Guardar" class="buton-primeng" (click)="enviar()"></button></div>
             </div>
 
         </div>

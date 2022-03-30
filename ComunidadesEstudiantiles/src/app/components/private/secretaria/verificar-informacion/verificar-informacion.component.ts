@@ -66,16 +66,17 @@ export class VerificarInformacionComponent implements OnInit{
     }
 
     verificarInformacion(external_comunidad){
+        this.displayModal = false
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.' });
+
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.revisionInformacion(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sido completada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Verificación no pudo completarse' });
                 setTimeout(() => {
                     window.location.reload();
@@ -85,16 +86,17 @@ export class VerificarInformacionComponent implements OnInit{
     }
 
     rechazarInformacion(external_comunidad){
+        this.displayModal = false
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.' });
+
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Verificación ha sido rechazada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Verificación no pudo ser rechazada' });
                 setTimeout(() => {
                     window.location.reload();

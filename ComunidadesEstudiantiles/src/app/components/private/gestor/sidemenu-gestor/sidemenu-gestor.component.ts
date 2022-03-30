@@ -12,6 +12,7 @@ import { Rutas } from 'src/app/core/constants/rutas';
 
 export class SideMenuGestorComponent implements OnInit {
     sidemenu: string;
+    sidemenuIcon:string = "pi pi-bars barras";
     items: MenuItem[];
 
     constructor(
@@ -60,9 +61,11 @@ export class SideMenuGestorComponent implements OnInit {
     }
     expanded() {
         if (this.sidemenu == "ocultar") {
-            this.sidemenu = "mostrar"
+            this.sidemenu = "mostrar";
+            this.sidemenuIcon ="pi pi-times barras mostrarIcon";
         } else if (this.sidemenu == "mostrar") {
-            this.sidemenu = "ocultar"
+            this.sidemenu = "ocultar";
+            this.sidemenuIcon ="pi pi-bars barras ocultarIcon";
         }
     }
 }

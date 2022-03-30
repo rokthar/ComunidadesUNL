@@ -12,33 +12,37 @@
         <div class="p-grid">
             <div *ngFor="let item of lista">
                 <div class="p-lg-3 p-md-6 p-sm-12">
-                    <p-card header="{{item.comunidad_solicitante}}" subheader="{{item.fecha_inicio}}" [style]="{width: '360px'}" styleClass="p-card-shadow">
+                    <p-card header="{{item.comunidad_solicitante}}" subheader="{{item.fecha_inicio}}"
+                        [style]="{width: '360px', 'background-color':'#F3F3F3'}" styleClass="p-card-shadow">
                         <ng-template pTemplate="header">
                             <div class="img-container">
                                 <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                             </div>
-                            </ng-template>
-                            <button class="button-detalles" (click)="detalles(item.descripcion,item.external_vinculacion)"><i class="pi pi-info-circle"> Ver Detalle</i></button>
+                        </ng-template>
+                        <button pButton pRipple type="button" icon="pi pi-info-circle" label="Ver Detalle" class="p-button-secondary buton-primeng"
+                           style="width: 100%;" (click)="detalles(item.descripcion,item.external_vinculacion)"></button>
                     </p-card>
                 </div>
             </div>
         </div>
 
-        <p-dialog header="Información Complementaria" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
-                <h3>Descripción</h3>
-                <p>{{descrip}}</p>
-                <form [formGroup]="rechazarVinculacionForm">
-                    <h3>Puede dejar sus Observaciones</h3>
-                    <textarea maxlength="65000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
-                    <br><br>
-                    <button class="button" (click)="aceptarVinculacion(external_vinculacion)"><i class="pi pi-check"> Aceptar Vinculación</i></button>
-                    <button class="button-delete" (click)="rechazarVinculacion(external_vinculacion)"><i class="pi pi-times"> Rechazar Rechazar</i></button>
-                </form>
-        </p-dialog> 
+        <p-dialog header="Información Complementaria" [modal]="true" [(visible)]="displayModal" [style]="{width: '70vw'}"
+            [baseZIndex]="10000">
+            <h3>Descripción</h3>
+            <p>{{descrip}}</p>
+            <form [formGroup]="rechazarVinculacionForm">
+                <h3>Puede dejar sus Observaciones</h3>
+                <textarea maxlength="65000" class="caja-texto" rows="3" placeholder="Observaciones" pInputTextarea
+                    autoResize="autoResize" formControlName="comentario"></textarea>
+                <br><br>
+                <button pButton pRipple type="button" style="margin-right: 5px;" icon="pi pi-check" label="Aceptar Vinculación" class="buton-primeng" (click)="aceptarVinculacion(external_vinculacion)"></button>
+                <button pButton pRipple type="button" style="margin-right: 5px;" icon="pi pi-times" label="Rechazar Vinculación" class="p-button-danger buton-primeng" (click)="rechazarVinculacion(external_vinculacion)"></button>
+            </form>
+        </p-dialog>
 
     </div>
     <div class="p-col-9 noData" *ngIf="!hayDatos">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h3>POR EL MOMENTO NO EXISTEN SOLICITUDES DE VINCULACIÓN</h3>
     </div>
     <div class="p-col-1"></div>

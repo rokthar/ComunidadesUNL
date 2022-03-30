@@ -42,11 +42,12 @@
                 </p-inplace>
                 <br><br>
 
-                <button class="button" (click)="guardar()"><i class="pi pi-save"> Guardar</i></button>
-                <br><br>
+                <button pButton pRipple type="button" icon="pi pi-save" label="Guardar" class="buton-primeng"
+                    (click)="guardar()"></button>
+                    <br><br>
 
-                <h2>Cambiar Contraseña</h2>
-                <a class="clave" (click)="show()">Cambiar Contraseña</a>
+                    <h2>Cambiar Contraseña</h2>
+                    <a class="clave" (click)="show()">Cambiar Contraseña</a>
             </div>
         </div>
     </div>
@@ -61,8 +62,9 @@
         <h3>Repita la Contraseña</h3>
         <input type="password" pInputText [(ngModel)]="clave2">
         <ng-template pTemplate="footer">
-            <p-button icon="pi pi-save" (click)="cambiarContrasena()" label="Guardar" styleClass="p-button-text">
-            </p-button>
+            <button pButton pRipple type="button" icon="pi pi-save" label="Guardar" class="buton-primeng"
+                (click)="cambiarContrasena()">
+            </button>
         </ng-template>
     </p-dialog>
 </div>

@@ -5,7 +5,7 @@
         <p-card header="UNIVERSIDAD NACIONAL DE LOJA " subheader=" CARRERA DE INGENIRIA EN SISTEMAS Y COMPUTACIÓN">
             <ng-template pTemplate="header">
                 <div class="img-container">
-                    <img alt="Ingenieria en Sistemas" src="../../../../assets/logo-unl.png">
+                    <img alt="Ingenieria en Sistemas" src="./assets/logo-unl.png">
                 </div>
             </ng-template>
             <form [formGroup]="loginForm">
@@ -15,8 +15,8 @@
                 <input id="clave" placeholder="Contraseña" class="caja-texto login-txt" type="password" pInputText
                     formControlName="clave">
                 <br><br>
-                <button class="button" [disabled]="loginForm.invalid" (click)="login()">Iniciar Sesión</button>
-                <button class="button-delete" (click)="cancelar()">Cancelar</button>
+                <button pButton icon="pi pi-check"  class="buton-primeng" label="Inicar Sesión" (click)="login()"></button>
+                <button pButton icon="pi pi-times" class="p-button-danger buton-primeng" label="Cancelar" (click)="cancelar()"></button>
             </form>
             <div class="opciones">
                 <span class="recuperar-clave" (click)="show()">Recuperar Contraseña</span><br>

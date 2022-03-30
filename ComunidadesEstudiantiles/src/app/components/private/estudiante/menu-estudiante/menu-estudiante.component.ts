@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MenuItem, MessageService } from 'primeng/api';
@@ -17,14 +18,21 @@ export class MenuEstudianteComponent implements OnInit {
     items: MenuItem[];
     logo_comunidad: any;
     ocultar: string = "ocultar";
+    estaLogeado:Boolean=false;
     constructor(
         public router: Router,
-        private messageService: MessageService
+        private messageService: MessageService,
+        private _location:Location
     ) {
         this.titulo = "Estudiante"
     }
     ngOnInit(): void {
         this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
+        if ((this.params != null) && (this.params.estado == "1")) {
+            this.estaLogeado = true;
+          } else {
+            this._location.back();
+          }
         this.items = [
             {label: 'Editar', icon: 'pi pi-pencil', command: () => {this.editar();}},
             {separator: true},

@@ -4,11 +4,40 @@
     <div class="p-col-12">
         <menu-gestor></menu-gestor>
     </div>
-    <div class="p-col-2"><sidemenu-gestor></sidemenu-gestor></div>
+    <div class="p-col-2">
+        <sidemenu-gestor></sidemenu-gestor>
+    </div>
     <div class="p-col-9 contenedor" *ngIf="hayDatos">
         <h1>{{titulo}}</h1>
         <div class="p-grid">
-                    <div class="p-lg-4 p-md-3 p-sm-12 card" *ngFor="let item of lista">
+            <p-table [value]="lista" [paginator]="true" [rows]="3" [showCurrentPageReport]="true"
+                urrentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" #dt1
+                styleClass="p-datatable-responsive-demo">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>Logo</th>
+                        <th>Comunidad</th>
+                        <Th>Tutor</Th>
+                        <th>Acciones</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-objeto let-rowIndex="rowIndex">
+                    <tr>
+                        <td><img class="img" alt="Card" src="{{imagen}}{{objeto.ruta_logo}}"></td>
+                        <td>{{objeto.nombres }}</td>
+                        <td>{{objeto.tutor }}</td>
+                        <td>
+                            <ng-container>
+                                <button pButton pRipple type="button" icon="pi pi-info-circle" label="Ver Información"
+                                    class="p-button-secondary buton-primeng"
+                                    (click)="show(objeto.external_comunidad)"></button>
+                            </ng-container>
+                        </td>
+                    </tr>
+
+                </ng-template>
+            </p-table>
+            <!-- <div class="p-lg-4 p-md-3 p-sm-12 card" *ngFor="let item of lista">
                         <p-card header="Comunidad {{item.nombres}}" subheader="Tutor: {{item.tutor}}" [style]="{width: '100%', 'height':'400px'}"
                             styleClass="p-card-shadow">
                             <ng-template pTemplate="header">
@@ -22,10 +51,10 @@
                                 <button class="button-detalles btnCard" (click)="show(item.external_comunidad)"><i class="pi pi-info-circle"> Ver Información</i></button>
                             </ng-template>
                         </p-card>
-                    </div>
+                    </div> -->
             <div>
-                <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [(visible)]="displayModal" [style]="{width: '70vw'}"
-                    [baseZIndex]="10000">
+                <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [(visible)]="displayModal"
+                    [style]="{width: '70vw'}" [modal]="true" [baseZIndex]="10000">
                     <h3>Descripción</h3>
                     <p>{{comunidad.descripcion}}</p>
                     <h3>Misión</h3>
@@ -34,23 +63,24 @@
                     <p>{{comunidad.vision}}</p>
                     <form [formGroup]="rechazarComunidadForm">
                         <h3>Puede enviar sus Observaciones</h3>
-                        <textarea maxlength="1000" class="caja-texto" rows="3"  placeholder="Observaciones" pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
+                        <textarea maxlength="1000" class="caja-texto" rows="3" placeholder="Observaciones"
+                            pInputTextarea autoResize="autoResize" formControlName="comentario"></textarea>
                         <br><br>
-                        <button class="button" (click)="validarComunidad(comunidad.external_comunidad)">
-                            <i class="pi pi-check"> Aceptar</i>
+                        <button pButton pRipple type="button" icon="pi pi-check" label="Aceptar" class="buton-primeng"
+                            style="margin-right: 5px;" (click)="validarComunidad(comunidad.external_comunidad)">
                         </button>
-                        <button class="button-delete" (click)="rechazarComunidad(comunidad.external_comunidad)">
-                            <i class="pi pi-times"> Rechazar</i>
-                        </button>
+                        <button pButton pRipple type="button" icon="pi pi-times" label="Rechazar"
+                            class="p-button-danger buton-primeng"
+                            style="margin-right: 5px;" (click)="rechazarComunidad(comunidad.external_comunidad)"></button>
                     </form>
-                    
-                    
+
+
                 </p-dialog>
             </div>
         </div>
     </div>
     <div class="noData p-col-9" *ngIf="!hayDatos">
-        <img src="/assets/advertencia.png" />
+        <img src="./assets/advertencia.png" />
         <h2>POR EL MOMENTO NO EXISTEN SOLICITUDES DE COMUNIDADES</h2>
     </div>
     <div class="p-col-1"></div>

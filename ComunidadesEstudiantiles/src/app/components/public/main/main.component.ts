@@ -11,11 +11,11 @@ export class MainComponent implements OnInit {
   displayCustom: boolean;
   activeIndex: number = 0;
   imagenes = [
-    "/assets/proceoPostulacion.png",
-    "/assets/procesoActividades.png",
-    "/assets/procesoCreación.PNG",
-    "/assets/procesoResultados.png",
-    "/assets/procesoVinculacion.png"
+    "./assets/proceoPostulacion.png",
+    "./assets/procesoActividades.png",
+    "./assets/procesoCreación.PNG",
+    "./assets/procesoResultados.png",
+    "./assets/procesoVinculacion.png"
   ];
   responsiveOptions:any[] = [
     {
@@ -36,7 +36,6 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.imagenes);
     
   }
   imageClick(index: number) {

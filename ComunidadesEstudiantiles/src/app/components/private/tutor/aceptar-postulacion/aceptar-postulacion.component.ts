@@ -64,6 +64,7 @@ export class AceptarPostulacionComponent implements OnInit {
 
     aceptarPostulacion(external_postulacion) {
         const values = this.postulacionForm.getRawValue();
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción' });
         this.postulacion_service.aceptarPostulacion(values,external_postulacion).subscribe((resp: any) => {
             if (resp.siglas == "OE") {
                 this.postulacion_service.añadirMiembro(external_postulacion).subscribe(() => {
@@ -84,6 +85,7 @@ export class AceptarPostulacionComponent implements OnInit {
     }
 
     rechazarPostulacion(external_postulacion) {
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción' });
         const values = this.postulacionForm.getRawValue();
         this.postulacion_service.rechazarPostulacion(values,external_postulacion).subscribe((resp: any) => {
             if (resp.siglas == "OE") {

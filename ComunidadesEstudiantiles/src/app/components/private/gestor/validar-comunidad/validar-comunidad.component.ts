@@ -72,18 +72,17 @@ export class ValidarComunidadComponent implements OnInit{
     }
 
     validarComunidad(external_comunidad){
-        // this.generarPDF(external_comunidad);
+        this.displayModal = false;
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.validarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
-                this.displayModal = false
                 this.generarPDF(external_comunidad);
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido validada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser validada' });
                 setTimeout(() => {
                     window.location.reload();
@@ -93,16 +92,17 @@ export class ValidarComunidadComponent implements OnInit{
     }
 
     rechazarComunidad(external_comunidad){
+        this.displayModal = false;
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
+
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values,external_comunidad).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La Comunidad ha sido rechazada' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
             }else{
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La Comunidad no pudo ser rechazada' });
                 setTimeout(() => {
                     window.location.reload();

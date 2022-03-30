@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\actividades;
-use App\Models\comunidad;
-use App\Models\docente;
-use App\Models\detalleActividad;
-use App\Models\usuario;
+use App\Models\Actividades;
+use App\Models\Comunidad;
+use App\Models\Docente;
+use App\Models\DetalleActividad;
+use App\Models\Usuario;
 use App\Http\Controllers\MailController;
 
 use Illuminate\Http\Request;
@@ -13,21 +13,21 @@ use Illuminate\Http\Request;
 class ActividadController extends Controller{
 
     public function PlanificarActividades ($external_docente){
-        $docenteG = docente::where("tipoDocente","2")->first();
-        $gestor = usuario::where("id",$docenteG->fk_usuario)->first();
+        $docenteG = Docente::where("tipoDocente","2")->first();
+        $gestor = Usuario::where("id",$docenteG->fk_usuario)->first();
             $enviar = new MailController();
 
             $docente=docente::where("external_do",$external_docente)->first();
                 if($docente){
-                    $comunidadObj=comunidad::where("tutor",$docente->id)->first();
+                    $comunidadObj=Comunidad::where("tutor",$docente->id)->first();
                 if($comunidadObj){
-                    $actividades = new actividades();
+                    $actividades = new Actividades();
                     $actividades->fk_comunidad = $comunidadObj->id;
                     $actividades->estado=3;
                     $external = "Act".Utilidades\UUID::v4();
                     $actividades->external_actividades = $external;
                     $actividades->save();
-                    $enviar->enviarMail($docenteG->nombres." ".$docenteG->apellidos." Gestor de la carrera","Planificacion de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificacion de actividades, esta debera ser revisada en un perdiodo de 3-8 dias", $gestor->correo);
+                    //$enviar->enviarMail($docenteG->nombres." ".$docenteG->apellidos." Gestor de la carrera","Planificación de Actividades","La Comunidad ".$comunidadObj->nombre_comunidad." ha envida su planificación de actividades, esta debera ser revisada en un perdiodo de 3-8 dias", $gestor->correo);
 
                     return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE","external_actividades"=>$external],200);
                 }else{
@@ -44,10 +44,10 @@ class ActividadController extends Controller{
         if ($request->json()){
             $data = $request->json()->all();
             
-            $actividadesObj = actividades::where("external_actividades", $external_actividades)->first();
+            $actividadesObj = Actividades::where("external_actividades", $external_actividades)->first();
             if($actividadesObj){
                 for($i=0; $i < count($data) ; $i++){
-                    $detalleActividad = new detalleActividad();
+                    $detalleActividad = new DetalleActividad();
                     $detalleActividad->fk_actividades = $actividadesObj->id;
                     $detalleActividad->nombre_actividad = $data[$i]["nombre_actividad"];
                     $detalleActividad->descripcion_actividad = $data[$i]["descripcion_actividad"];
@@ -70,21 +70,21 @@ class ActividadController extends Controller{
             $data = $request->json()->all();
             $enviar = new MailController();
 
-            $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-            $comunidad = comunidad::where("id",$actividadObj->fk_comunidad)->first();
-            $tutor = docente::where("id", $comunidad->tutor)->first();
-            $usuarioT = usuario::where("id", $tutor->fk_usuario)->first();
+            $actividadObj = Actividades::where("external_actividades", $external_actividades)->first();
+            $comunidad = Comunidad::where("id",$actividadObj->fk_comunidad)->first();
+            $tutor = Docente::where("id", $comunidad->tutor)->first();
+            $usuarioT = Usuario::where("id", $tutor->fk_usuario)->first();
             
             if($actividadObj){
-                $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+                $detalleactividadObj = DetalleActividad::where("fk_actividades", $actividadObj->id)->get();
                 foreach ($detalleactividadObj as $lista) {
                     $lista->estado = 2;
                     $lista->save();    
                 }
-                $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $actividad = Actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $actividad->estado = 2;
                 $actividad->save();
-                $enviar->enviarMail("Tutor ".$tutor->nombres." ".$tutor->apellidos,"Planificacion de Actividades Aprobada","Su planificacion de actividades ha sido aprobada por el Gestor de la Carrera <br>".$data["comentario"], $usuarioT->correo);
+                //$enviar->enviarMail("Tutor ".$tutor->nombres." ".$tutor->apellidos,"Planificación de Actividades Aprobada","Su planificación de actividades ha sido aprobada por el Gestor de la Carrera <br>".$data["comentario"], $usuarioT->correo);
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -98,20 +98,20 @@ class ActividadController extends Controller{
             $data = $request->json()->all();
             $enviar = new MailController();
 
-            $actividadObj = actividades::where("external_actividades", $external_actividades)->first();
-            $comunidad = comunidad::where("id",$actividad_fk_comunidad)->first();
-            $tutor = docente::where("id", $comunidad->tutor)->first();
-            $usuarioT = usuario::where("id", $tutor->fk_usuario)->first();
+            $actividadObj = Actividades::where("external_actividades", $external_actividades)->first();
+            $comunidad = Comunidad::where("id",$actividad_fk_comunidad)->first();
+            $tutor = Docente::where("id", $comunidad->tutor)->first();
+            $usuarioT = Usuario::where("id", $tutor->fk_usuario)->first();
             if($actividadObj){
-                $detalleactividadObj = detalleActividad::where("fk_actividades", $actividadObj->id)->get();
+                $detalleactividadObj = DetalleActividad::where("fk_actividades", $actividadObj->id)->get();
                 foreach ($detalleactividadObj as $lista) {
                     $lista->estado = 0;
                     $lista->save();    
                 }
-                $actividad = actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
+                $actividad = Actividades::where("id", $actividadObj->id)->first(); //veo si el usuario tiene una persona y obtengo todo el reglon
                 $actividad->estado = 0;
                 $actividad->save();
-                $enviar->enviarMail("Tutor ".$tutor->nombres." ". $tutor->apellidos,"Planificacion de Actividades Rechazada","Su planificacion de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"], $usuarioT->correo);
+                //$enviar->enviarMail("Tutor ".$tutor->nombres." ". $tutor->apellidos,"Planificación de Actividades Rechazada","Su planificación de actividades ha sido rechazada por el Gestor de la Carrera, podra generar otra planificacion de actividades y volver a enviarla para su revision. <br>".$data["comentario"], $usuarioT->correo);
                         
                 return response()->json(["mensaje"=>"Operación Exitosa", "siglas"=>"OE"],200);
             }else{
@@ -121,7 +121,7 @@ class ActividadController extends Controller{
     }
 
     public function TermianrPlanificacion($external_comunidad){
-        $actividad = actividad::where("estado",2)->where("fk_comunidad",$external_comunidad)->first();
+        $actividad = Actividad::where("estado",2)->where("fk_comunidad",$external_comunidad)->first();
         $actividad->estado=1;
         $actividad->save();
     }
@@ -135,9 +135,9 @@ class ActividadController extends Controller{
         $data = array();
         foreach ($listas as $lista) {
             $dataAct = null;
-            $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
-            $comunidad = comunidad::where("id",$lista->fk_comunidad)->first();
-            $tutor = docente::where("id", $comunidad->tutor)->first();
+            $actividades = DetalleActividad::where("fk_actividades",$lista->id)->get();
+            $comunidad = Comunidad::where("id",$lista->fk_comunidad)->first();
+            $tutor = Docente::where("id", $comunidad->tutor)->first();
             foreach ($actividades as $act) {
                 $dataAct[] =[
                     "nombre_actividad"=>$act->nombre_actividad,
@@ -161,13 +161,13 @@ class ActividadController extends Controller{
     public function ListarPlanificacionActivada (){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $listas = actividades::where("estado",2)->get();
+        $listas = Actividades::where("estado",2)->get();
 
         $data = array();
         foreach ($listas as $lista) {
-            $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
-            $comunidad = comunidad::where("id",$lista->fk_comunidad)->first();
-            $tutor = docente::where("id", $comunidad->tutor)->first();
+            $actividades = DetalleActividad::where("fk_actividades",$lista->id)->get();
+            $comunidad = Comunidad::where("id",$lista->fk_comunidad)->first();
+            $tutor = Docente::where("id", $comunidad->tutor)->first();
             foreach ($actividades as $act) {
                 $dataAct[] =[
                     "nombre_actividad"=>$act->nombre_actividad,
@@ -189,28 +189,34 @@ class ActividadController extends Controller{
     public function ListarPlanificacionByComunidad($external_comunidad){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
+        $comunidad = Comunidad::where("external_comunidad",$external_comunidad)->first();
         if($comunidad){
-            $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+            $listas = Actividades::where("fk_comunidad",$comunidad->id)->where("estado","!=",0)->get();
             if($listas != null){
                 $data = array();
                 foreach ($listas as $lista) {
-                    $actividades = detalleActividad::where("fk_actividades",$lista->id)->get();
-        
-                    foreach ($actividades as $act) {
-                        if($act->estado == 1){
-                            $estado = "Completada";
-                        }else if($act->estado == 2){
-                            $estado = "Por Completar";
+                    $actividades = DetalleActividad::where("fk_actividades",$lista->id)->get();
+                    if($actividades != null){
+                        foreach ($actividades as $act) {
+                            if($act->estado == 1){
+                                $estado = "Completada";
+                            }else if($act->estado == 2){
+                                $estado = "Por Completar";
+                            }else{
+                                $estado = "En Revisión";
+                            }
+                            $datos['data'][] = [
+                                "nombre_actividad"=>$act->nombre_actividad,
+                                "descripcion_actividad"=>$act->descripcion_actividad,
+                                "fecha_inicio"=>$act->fecha_inicio,
+                                "external_det_actividad"=>$act->external_detact,
+                                "estado"=>$estado
+                            ];
                         }
-                        $datos['data'][] = [
-                            "nombre_actividad"=>$act->nombre_actividad,
-                            "descripcion_actividad"=>$act->descripcion_actividad,
-                            "fecha_inicio"=>$act->fecha_inicio,
-                            "external_det_actividad"=>$act->external_detact,
-                            "estado"=>$estado
-                        ];
+                    }else{
+                        self::estadoJson(200, false, 'La comunidad no tiene actividades');
                     }
+                    
                 }
                 self::estadoJson(200, true, '');
             }else{
@@ -226,12 +232,12 @@ class ActividadController extends Controller{
     public function ListarPlanificacionResultados($external_comunidad){
         global $estado, $datos;
         self::iniciarObjetoJSon();
-        $comunidad = comunidad::where("external_comunidad",$external_comunidad)->first();
+        $comunidad = Comunidad::where("external_comunidad",$external_comunidad)->first();
         if($comunidad){
-            $listas = actividades::where("fk_comunidad",$comunidad->id)->get();
+            $listas = Actividades::where("fk_comunidad",$comunidad->id)->get();
             $data = array();
             foreach ($listas as $lista) {
-                $actividades = detalleActividad::where("fk_actividades",$lista->id)->where("estado",2)->get();
+                $actividades = DetalleActividad::where("fk_actividades",$lista->id)->where("estado",2)->get();
 
                 foreach ($actividades as $act) {
                     $datos['data'][] = [

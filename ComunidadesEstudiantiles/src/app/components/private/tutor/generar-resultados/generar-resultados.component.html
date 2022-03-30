@@ -5,33 +5,44 @@
     </div>
     <div class="p-col-2">
         <sidemenu-tutor></sidemenu-tutor>
-    </div>  
+    </div>
     <div class="p-col-9 cuerpo">
         <h1>{{titulo}}</h1>
         <form [formGroup]="generarResultadosForm">
-            <h3>Inserte el Resumen del Resultado</h3>
-            <textarea class="cajas-texto" rows="6" cols="60" pInputTextarea autoResize="autoResize" formControlName="resumen_resultado"></textarea>
-            <h3>Inserte la Descripción General del Resultado</h3>
-            <textarea class="cajas-texto" rows="6" cols="60" pInputTextarea autoResize="autoResize" formControlName="descripcion_resultado"></textarea>
-            <br><br>
-            <small>Sr Usuario se recomienda subir imagenes de tipo jpg, jpeg o png</small><br>
-            <small>su imagen no puede pesar más de 2Mb</small>
-            <br><br>
-            <input pInputText type='file' multiple (change)="fileEvent($event)" />
-            <br>
-            <br><br>
-            <input pInputText type="date" class="date" placeholder="fecha" formControlName="fecha_fin" />
-            <br><br>
-            <button class="button" [disabled]="generarResultadosForm.invalid" type="button" (click)="enviar()"><i class="pi pi-send"> Publicar Resultado</i></button>
-            <button class="button-delete" type="button" (click)="cancelar()"><i class="pi pi-times"> Cancelar</i></button>
+            <div class="p-grid">
+                <div class="p-col-7">
+                    <h3>Inserte el Resumen del Resultado</h3>
+                    <textarea class="cajas-texto" style="width: 100%;" rows="6" cols="60" pInputTextarea autoResize="autoResize"
+                        formControlName="resumen_resultado"></textarea>
+                    <h3>Inserte la Descripción General del Resultado</h3>
+                    <textarea class="cajas-texto" style="width: 100%;" rows="6" cols="60" pInputTextarea autoResize="autoResize"
+                        formControlName="descripcion_resultado"></textarea>
+                    <br><br>
+                    
+                    <button pButton pRipple type="button" icon="pi pi-send" label="Publicar Resultado"
+                        [disabled]="generarResultadosForm.invalid" style="margin-right: 5px;" class="buton-primeng"
+                        (click)="enviar()"></button>
+                    <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar" style="margin-right: 5px;"
+                        class="p-button-danger buton-primeng" (click)="cancelar()"></button>
 
+                </div>
+                <div class="p-col-5">
+                    <small>Sr Usuario se recomienda subir imagenes de tipo jpg, jpeg o png</small><br>
+                    <small>Su imagen no puede pesar más de 2Mb</small>
+                    <br><br>
+                    <input pInputText type='file' multiple (change)="fileEvent($event)" />
+                    <br>
+                    <br><br>
+                    <h3>Fecha de culminación de la actividad: </h3>
+                    <input pInputText type="date" class="date" placeholder="fecha" formControlName="fecha_fin" />
+                    <br><br>
+                </div>
+            </div>
         </form>
     </div>
-    <div class="p-col-1"></div>    
+    <div class="p-col-1"></div>
     <div class="p-col-2 bg-footer"></div>
     <div class="p-col-10 footer-main">
         <footer-tutor></footer-tutor>
     </div>
 </div>
-
-

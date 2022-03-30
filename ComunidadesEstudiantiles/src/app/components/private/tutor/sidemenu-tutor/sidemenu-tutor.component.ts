@@ -21,6 +21,7 @@ import { Actividades } from 'src/app/core/model/actividades';
 
 export class SideMenuTutorComponent implements OnInit {
     public sidemenu;
+    sidemenuIcon:string = "pi pi-bars barras";
     items: MenuItem[];
     imagen = URL._imgCom;
     params: any;
@@ -106,9 +107,11 @@ export class SideMenuTutorComponent implements OnInit {
     }
     expanded() {
         if (this.sidemenu == "ocultar") {
-            this.sidemenu = "mostrar"
+            this.sidemenu = "mostrar";
+            this.sidemenuIcon ="pi pi-times barras mostrarIcon";
         } else if (this.sidemenu == "mostrar") {
-            this.sidemenu = "ocultar"
+            this.sidemenu = "ocultar";
+            this.sidemenuIcon ="pi pi-bars barras ocultarIcon";
         }
     }
     reporteActividades() {
@@ -163,7 +166,7 @@ export class SideMenuTutorComponent implements OnInit {
                     style: 'texto'
                 },
                 {
-                    text: '\n\nLista de Actividades de la Comunidad\n\n',
+                    text: '\n\nResumen de las Actividades\n\n',
                     style: 'subtitulos'
                 },
                 {
@@ -174,7 +177,7 @@ export class SideMenuTutorComponent implements OnInit {
                     },
                     layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
+                            return (rowIndex === 0) ? '#85C1E9' : '#fafafa';
                         }
                     }
                 },
@@ -289,9 +292,6 @@ export class SideMenuTutorComponent implements OnInit {
         } else {
             rowsVinculaciones.push(["0", "No cuenta con nigun resultado"]);
         }
-        console.log(rowsVinculaciones);
-        console.log(rowsActividades);
-        
         
         let docDefinition = {
             content: [
@@ -341,7 +341,7 @@ export class SideMenuTutorComponent implements OnInit {
                     },
                     layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
+                            return (rowIndex === 0) ? '#85C1E9' : '#fafafa';
                         }
                     }
                 },
@@ -357,7 +357,7 @@ export class SideMenuTutorComponent implements OnInit {
                     },
                     layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
+                            return (rowIndex === 0) ? '#85C1E9' : '#fafafa';
                         }
                     }
                 },
@@ -373,7 +373,7 @@ export class SideMenuTutorComponent implements OnInit {
                     },
                     layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
+                            return (rowIndex === 0) ? '#85C1E9' : '#fafafa';
                         }
                     }
                 },
@@ -389,7 +389,7 @@ export class SideMenuTutorComponent implements OnInit {
                     },
                     layout: {
                         fillColor: function (rowIndex, node, columnIndex) {
-                            return (rowIndex === 0) ? '#a8dadc' : '#fafafa';
+                            return (rowIndex === 0) ? '#85C1E9' : '#fafafa';
                         }
                     }
                 },

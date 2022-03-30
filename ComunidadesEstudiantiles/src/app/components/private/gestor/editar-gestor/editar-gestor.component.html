@@ -41,7 +41,7 @@
                 <h2>Cambiar Contraseña</h2>
                 <a class="clave" (click)="show()">Cambiar Contraseña</a>
             </div>
-            <div class="p-col-12"><button class="button" (click)="enviar()"><i class="pi pi-save"> Guardar</i></button></div>
+            <div class="p-col-12"><button pButton pRipple type="button" icon="pi pi-save" label="Guardar" class="buton-primeng" (click)="enviar()"></button></div>
         </div>
         <p-dialog header="Cambiar Contraseña" [(visible)]="display" [style]="{width: '50vw'}" [baseZIndex]="10000">
             <h3>Ingrese su nueva Contraseña</h3>
@@ -49,8 +49,8 @@
             <h3>Repita la contraseña</h3>
             <input type="password" pInputText [(ngModel)]="clave2">
             <ng-template pTemplate="footer">
-                <p-button icon="pi pi-save" (click)="cambiarContrasena()" label="Guardar" styleClass="p-button-text">
-                </p-button>
+                <button pButton pRipple type="button" icon="pi pi-save" label="Guardar" class="buton-primeng" (click)="cambiarContrasena()">
+                </button>
             </ng-template>
         </p-dialog>
     </div>

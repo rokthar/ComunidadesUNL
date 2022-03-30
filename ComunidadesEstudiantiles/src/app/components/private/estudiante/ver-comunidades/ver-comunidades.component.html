@@ -4,10 +4,76 @@
     <div class="p-col-12">
         <menu-estudiante></menu-estudiante>
     </div>
-    <div class="p-col-2"><sidemenu-estudiante></sidemenu-estudiante></div>
+    <div class="p-col-2">
+        <sidemenu-estudiante></sidemenu-estudiante>
+    </div>
     <div class="p-col-9 comunidades" *ngIf="!postulado">
+        <!-- *************************************************************************************************************************************** -->
+        <div class="card">
+            <p-dataView #dv [value]="lista" [paginator]="true" [rows]="6" filterBy="nombres" [sortField]="sortField"
+                [sortOrder]="sortOrder" layout="grid">
+                <ng-template pTemplate="header">
+                    <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                        <!-- <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Sort By Price" (onChange)="onSortChange($event)" styleClass="p-mb-2 p-mb-md-0"></p-dropdown> -->
+                        <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                            <i class="pi pi-search"></i>
+                            <input type="search" pInputText placeholder="Buscar por Comunidad"
+                                (input)="dv.filter($event.target.value)">
+                        </span>
+                        <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                    </div>
+                </ng-template>
+                <ng-template let-product pTemplate="listItem">
+                    <div class="p-col-12">
+                        <div class="product-list-item img">
+                            <img src="{{imagen}}{{product.ruta_logo}}" style="width: 50%;" alt="logo comunidad" />
+                            <div class="product-list-detail">
+                                <div class="product-name">{{product.nombres}}</div>
+                                <div class="product-description">Tutor: {{product.tutor}}</div>
+                                <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                                <!-- <i class="pi pi-tag product-category-icon"></i><span class="product-category">{{product.fecha_inicio}}</span> -->
+                            </div>
+                            <div class="product-list-action">
+                                <button pButton pRipple type="button" icon="pi pi-check" label="Seleccionar"
+                                    class="buton-primeng" (click)="seleccionar(product.external_comunidad)"></button>
+                                <hr>
+                                <button pButton pRipple type="button" icon="pi pi-info-circle" label="Detalles"
+                                    class="buton-primeng p-button-secondary" (click)="detalles(product.external_comunidad)"></button>
+                                <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template let-product pTemplate="gridItem">
+                    <div class="p-col-12 p-md-4">
+                        <div class="product-grid-item card">
+                            <div class="product-grid-item-top">
+                                <div>
+                                    <span class="product-category"> Tutor {{product.tutor}}</span>
+                                </div>
+                                <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+                            </div>
+                            <div class="product-grid-item-content img2">
+                                <img src="{{imagen}}{{product.ruta_logo}}" style="width: 50%;" alt="logo comunidad" />
+                                <div class="product-name">Comunidad {{product.nombres}}</div>
+                                <!-- <div class="product-description">{{product.comunidad}}</div> -->
+                            </div>
+                            <br>
+                            <div style="text-align: center;">
+                                <button pButton pRipple type="button" icon="pi pi-check" label="Seleccionar"
+                                    class="buton-primeng" style="width: 100%;" (click)="seleccionar(product.external_comunidad)"></button>
+                                <br>
+                                <button pButton pRipple type="button" icon="pi pi-info-circle" label="Detalles"
+                                    class="buton-primeng p-button-secondary" style="width: 100%;" (click)="detalles(product.external_comunidad)"></button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-dataView>
+        </div>
+        <!-- *************************************************************************************************************************************** -->
         <div class="p-grid cuerpo">
-            <div class="card p-col-12 p-sm-6 p-md-6 p-lg-6 p-xl-4" *ngFor="let item of lista">
+            <!-- <div class="card p-col-12 p-sm-6 p-md-6 p-lg-6 p-xl-4" *ngFor="let item of lista">
                 <p-card header="{{item.nombres}}" subheader="{{item.tutor}}" [style]="{width: '100%'}"
                     styleClass="p-card-shadow">
                     <ng-template pTemplate="header">
@@ -15,7 +81,7 @@
                             <img class="img" alt="Card" src="{{imagen}}{{item.ruta_logo}}">
                         </div>
                     </ng-template>
-                    <!-- <p>{{item.descripcion}}</p> -->
+                    <p>{{item.descripcion}}</p>
                     <ng-template pTemplate="footer">
                         <button class="button" (click)="seleccionar(item.external_comunidad)"><i class="pi pi-check">
                                 Seleccionar</i></button>
@@ -23,10 +89,10 @@
                                 Detalles</i></button>
                     </ng-template>
                 </p-card>
-            </div>
+            </div> -->
             <div>
-                <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [(visible)]="displayModal" [style]="{width: '70vw'}"
-                    [baseZIndex]="10000">
+                <p-dialog header="Información Complementaria de {{comunidad.nombres}}" [modal]="true" [(visible)]="displayModal"
+                    [style]="{width: '70vw'}" [baseZIndex]="10000">
                     <h3>Descripción</h3>
                     <p>{{comunidad.descripcion}}</p>
                     <h3>Misión</h3>
@@ -40,20 +106,22 @@
     <div class="noData p-lg-9" *ngIf="postulado">
         <div class="p-grid">
             <div class="p-col-12 p-lg-6">
-                <p-card header="Solicitud de Postulación" subheader="Comunidad {{datosPostulacion.comunidad}}" [style]="{width: '100%', 'background-color':'#D6DEED'}" styleClass="p-card-shadow">
+                <p-card header="Solicitud de Postulación" subheader="Comunidad {{datosPostulacion.comunidad}}"
+                    [style]="{width: '100%', 'background-color':'#EBF5FB'}" styleClass="p-card-shadow">
                     <h3>Habilidades</h3>
                     <div *ngFor="let item of datosPostulacion.habilidades">
-                        <p>{{item.habilidad}} Nivel: {{item.nivel}} <i class="icono pi pi-star"></i></p>
+                        <div class="p-col-6 p-lg-6" style="width: 100%; text-align: left;">
+                            <div style="background-color: #D6EAF8; padding: 2px 2px 10px 10px;">
+                                <h4>{{item.habilidad}} {{item.nivel}} <i class="icono pi pi-star"></i></h4>
+                            </div>
+                        </div>
                     </div>
                     <ng-template pTemplate="footer">
-                        <button class="button-delete" (click)="cancelar()"><i class="pi pi-trash">
-                                Cancelar Postulación</i></button>
+                        <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar Postulación" class="p-button-danger buton-primeng" (click)="cancelar()"></button>
                     </ng-template>
                 </p-card>
             </div>
         </div>
-        <!-- <img src="/assets/advertencia.png" />
-        <p>Por el momento ya cuenta con una solicitud de Postulación a la Comunidad {{datosPostulacion.comunidad}}</p> -->
     </div>
     <div class="p-col-1"></div>
     <div class="p-col-2 bg-footer"></div>

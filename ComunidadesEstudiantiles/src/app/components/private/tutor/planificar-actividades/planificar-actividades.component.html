@@ -14,19 +14,32 @@
         <form [formGroup]="planificarActividadesForm">
             <div class="p-grid act" formArrayName="actividades">
                 <div class="p-col-12">
-                    <button class="button add" (click)="add()"><i class="pi pi-plus"> Añadir</i></button>
-                    <button class="button" [disabled]="planificarActividadesForm.invalid" (click)="enviar()"><i class="pi pi-send"></i> Enviar Planificacion</button>
-                    <button class="button-delete" (click)="cancelar()"><i class="pi pi-times"></i> Cancelar</button>
+                    <button pButton pRipple style="margin-right: 5px;" type="button" icon="pi pi-plus" label="Añadir"
+                        class="buton-primeng" (click)="add()"></button>
+                    <button pButton pRipple style="margin-right: 5px;" type="button" icon="pi pi-send"
+                        label="Enviar Planificación" class="buton-primeng"
+                        [disabled]="planificarActividadesForm.invalid" (click)="enviar()"></button>
+                    <button pButton pRipple style="margin-right: 5px;" type="button" icon="pi pi-times" label="Cancelar"
+                        class="p-button-danger buton-primeng" (click)="cancelar()"></button>
                 </div>
                 <div class="p-col-12">
                     <div class="p-grid">
-                        <div class="p-col-12 p-lg-6 p-md-6 p-sm-12 card" *ngFor="let item of getActividades.controls; let pointIndex=index" [formGroupName]="pointIndex">
-                            <p-card header="Actividad" [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#a8dadc'}">
-                                <input pInputText class="textbox" placeholder="Nombre Actividad" formControlName="nombre_actividad" /> <br><br>
-                                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize" placeholder="Descripcion" formControlName="descripcion_actividad"></textarea><br><br>
-                                <input pInputText type="date" class="textbox" placeholder="fecha" formControlName="fecha_inicio" />
+                        <div class="p-col-12 p-lg-6 p-md-6 p-sm-12 card"
+                            *ngFor="let item of getActividades.controls; let pointIndex=index"
+                            [formGroupName]="pointIndex">
+                            <p-card header="Actividad"
+                                [style]="{'width': '100%', 'margin-bottom': '2em', 'margin-right':'2em', 'background-color':'#E7E7E7'}">
+                                <input pInputText class="textbox" placeholder="Nombre Actividad"
+                                    formControlName="nombre_actividad" /> <br><br>
+                                <textarea rows="5" cols="30" pInputTextarea autoResize="autoResize"
+                                    placeholder="Descripcion"
+                                    formControlName="descripcion_actividad"></textarea><br><br>
+                                <input pInputText type="date" class="textbox" placeholder="fecha"
+                                    formControlName="fecha_inicio"
+                                    (change)="fechaSelected($event.target.valueAsDate)" />
                                 <ng-template pTemplate="footer">
-                                    <button class="button-delete less" (click)="less(pointIndex)"><i class="pi pi-trash"></i> Eliminar</button>
+                                    <button pButton pRipple type="button" icon="pi pi-trash" label="Eliminar"
+                                        class="p-button-danger buton-primeng" (click)="less(pointIndex)"></button>
                                 </ng-template>
                             </p-card>
                         </div>
@@ -41,12 +54,13 @@
         <h2>PLANIFICACIÓN DE ACTIVIDADES</h2>
         <div class="p-grid">
             <div class="p-col-12 p-lg-7 calendario">
-                <full-calendar class="fecha" [options]="calendarOptions"></full-calendar>   
+                <full-calendar class="fecha" [options]="calendarOptions"></full-calendar>
             </div>
         </div>
         <p-dialog header="Actividades" [(visible)]="displayModal" [style]="{width: '70vw'}" [baseZIndex]="10000">
             <p-tabView>
-                <p-tabPanel [header]="item.nombre_actividad" *ngFor="let item of actividad; let i = index" [selected]="i == 0">
+                <p-tabPanel [header]="item.nombre_actividad" *ngFor="let item of actividad; let i = index"
+                    [selected]="i == 0">
                     <p><strong>Fecha Inicio </strong>{{item.fecha_inicio}}</p>
                     <h3>Descripción</h3>
                     <p>{{item.descripcion_actividad}}</p>

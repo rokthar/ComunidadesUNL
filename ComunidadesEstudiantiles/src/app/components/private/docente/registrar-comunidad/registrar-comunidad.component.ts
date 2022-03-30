@@ -43,7 +43,6 @@ export class RegistrarComunidadComponent implements OnInit {
     if ((this.params != null) && (this.params.tipo_docente == "1")) {
       this.estaLogeado = true;
     } else {
-      alert("no estoy autorizado");
       this._location.back();
     }
     this.comunidad_service.buscarComunidadByTutor(this.params.external_docente).subscribe((resp) => {
@@ -63,8 +62,14 @@ export class RegistrarComunidadComponent implements OnInit {
   }
 
   enviar() {
+    
+    if(this.file == undefined){
+      this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Faltan Datos', detail: 'Debe seleccionar una imagen.' });
+      return;
+    }
     const values = this.registrarComunidadForm.getRawValue();
     if ((this.file.size <= 2000000) && (this.file.type == "image/png")) {
+      this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.' });
       this.comunidad_service.registrarComunidad(values, this.params.external_docente).subscribe((resp: Comunidad) => {
         let form = new FormData();
         form.append('file', this.file);

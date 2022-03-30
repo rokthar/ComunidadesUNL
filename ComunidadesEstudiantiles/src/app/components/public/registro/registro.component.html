@@ -8,11 +8,11 @@
             <p><input type="password" class="txt-reg" name="pass2" placeholder="Repita la contraseña" id="pass2" [(ngModel)]="pass2" pInputText></p>
             <p><input type="text" class="txt-reg" name="nombre" placeholder="Nombres" id="nombre" [(ngModel)]="nombre" pInputText></p>
             <p><input type="text" class="txt-reg" name="apellido" placeholder="Apellidos" id="apellido" [(ngModel)]="apellido" pInputText></p>
-            <p><input type="text" class="txt-reg" name="ciclo" placeholder="Ciclo" id="ciclo" [(ngModel)]="ciclo" pInputText></p>
+            <p><input type="number" min="1" max="10" class="txt-reg" name="ciclo" placeholder="Ciclo" id="ciclo" [(ngModel)]="ciclo" pInputText></p>
             <p><input type="text" class="txt-reg" name="paralelo" placeholder="Paralelo" id="paralelo" [(ngModel)]="paralelo" pInputText></p>
             <ng-template pTemplate="footer">
-                <button class="button" (click)="registrarse()" ><i class="pi pi-user-plus"> Registrarse</i></button>
-                <button class="button-delete" (click)="cancelar()" > <i class="pi pi-times"> Cancelar</i></button>
+                <button pButton pRipple type="button" icon="pi pi-check" label="Registrase" class="buton-primeng" (click)="registrarse()" ></button>
+                <button pButton pRipple type="button" icon="pi pi-times" label="Cancelar" class="p-button-danger buton-primeng" (click)="cancelar()" > </button>
             </ng-template>
         </p-card>
     </div>

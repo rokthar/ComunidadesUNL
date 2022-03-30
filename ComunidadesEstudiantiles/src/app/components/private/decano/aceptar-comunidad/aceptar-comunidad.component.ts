@@ -63,16 +63,16 @@ export class AceptarComunidadComponent implements OnInit {
     }
 
     aceptarComunidad(external_comunidad) {
+        this.displayModal = false
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción' });
         this.comunidad_service.aceptarComunidad(external_comunidad).subscribe((resp: any) => {
             if (resp.siglas == "OE") {
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'Comunidad Aceptada correctamente' });
                 setTimeout(() => {
                     window.location.reload();
                 }, 1500);
                 
             } else {
-                this.displayModal = false
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La comunidad no ha podido ser aceptada' });
                 setTimeout(() => {
                     window.location.reload();
@@ -82,20 +82,19 @@ export class AceptarComunidadComponent implements OnInit {
     }
 
     rechazarComunidad(external_comunidad) {
+        this.displayModal = false
+        this.messageService.add({ key: 'tc', severity: 'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción' });
         const values = this.rechazarComunidadForm.getRawValue();
         this.comunidad_service.rechazarComunidad(values, external_comunidad).subscribe((resp: any) => {
             if (resp.siglas == "OE") {
                 this.messageService.add({ key: 'tc', severity: 'success', summary: 'Operación Exitosa', detail: 'La comunidad ha sido rechazada' });
                 setTimeout(() => {
-                    this.displayModal = false
                     window.location.reload();
                 }, 1500);
-                this.displayModal = false
                 window.location.reload();
             } else {
                 this.messageService.add({ key: 'tc', severity: 'warn', summary: 'Error', detail: 'La comunidad no ha podido ser rechazada' });
                 setTimeout(() => {
-                    this.displayModal = false
                     window.location.reload();
                 }, 1500);
             }

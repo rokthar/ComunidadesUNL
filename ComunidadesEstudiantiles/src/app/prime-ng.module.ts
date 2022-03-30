@@ -22,6 +22,7 @@ import {SlideMenuModule} from 'primeng/slidemenu';
 import {InplaceModule} from 'primeng/inplace';
 import {PanelMenuModule} from 'primeng/panelmenu';
 import {SplitButtonModule} from 'primeng/splitbutton';
+import {DataViewModule} from 'primeng/dataview';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     SlideMenuModule,
     InplaceModule,
     PanelMenuModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DataViewModule
   ],
   exports: [
     ButtonModule,
@@ -71,7 +73,8 @@ import {SplitButtonModule} from 'primeng/splitbutton';
     SlideMenuModule,
     InplaceModule,
     PanelMenuModule,
-    SplitButtonModule
+    SplitButtonModule,
+    DataViewModule
   ],
   bootstrap: [AppComponent]
 })

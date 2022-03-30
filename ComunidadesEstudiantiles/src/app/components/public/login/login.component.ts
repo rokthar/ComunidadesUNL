@@ -1,7 +1,7 @@
 import { Location } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { componentFactoryName } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Rutas } from 'src/app/core/constants/rutas';
@@ -21,10 +21,11 @@ import {MessageService} from 'primeng/api';
     providers: [MessageService]
 })
 
-export class LoginComponent {
+export class LoginComponent implements OnInit{
     public titulo: string;
     public comentario: string;
-    
+    params:any;
+    estaLogeado:Boolean=false;
     correo="";
     loginForm: FormGroup;
     display: boolean= false;
@@ -48,47 +49,57 @@ export class LoginComponent {
         })
 
     }
+    ngOnInit(): void {
+        this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
+        if (this.params != null) {
+            this._location.back();
+        }
+    }
 
     login(){
         const values = this.loginForm.getRawValue();
-        this.usuarioService.loginUsuarios(values).subscribe((resp: any)=>{
-            if(resp.siglas == "OE"){
-            if(resp.tipoUsuario == 1){
-                this.docenteService.buscarDocente(resp.external_us).subscribe((docente:Docente)=>{
-                    sessionStorage.setItem('datosUsuario',JSON.stringify(docente));
-                    this.acceso_service.estaLogeado.next(docente);
-                    if(docente.tipo_docente == "1"){
-                        this.router.navigateByUrl(Rutas.registrarComunidad);
-                    }else if(docente.tipo_docente == "2"){
-                        this.router.navigateByUrl(Rutas.validarComunidad);
-                    }else if(docente.tipo_docente == "3"){
-                        this.router.navigateByUrl(Rutas.verificarInformacion);
-                    }else if(docente.tipo_docente == "4"){
-                        this.router.navigateByUrl(Rutas.aceptarComunidad);
-                    }else if(docente.tipo_docente == "5"){
-                        this.router.navigateByUrl(Rutas.planificarActividades);
-                    }
-                });
-            }else if(resp.tipoUsuario == 2){
-                this.estudianteService.buscarEstudiante(resp.external_us).subscribe((estudiante:Estudiante)=>{
-                    sessionStorage.setItem('datosUsuario',JSON.stringify(estudiante));
-                    this.acceso_service.estaLogeado.next(estudiante);
-
-                    if(estudiante.estado == "1"){
-                        this.router.navigateByUrl(Rutas.verComunidades);
-                    }else if(estudiante.estado == "2"){ 
-                        this.router.navigateByUrl(Rutas.perfilMiembto);
-                    }
-                });
-                
+        if (values.correo != "" && values.clave != ""){
+            this.usuarioService.loginUsuarios(values).subscribe((resp: any)=>{
+                if(resp.siglas == "OE"){
+                if(resp.tipoUsuario == 1){
+                    this.docenteService.buscarDocente(resp.external_us).subscribe((docente:Docente)=>{
+                        sessionStorage.setItem('datosUsuario',JSON.stringify(docente));
+                        this.acceso_service.estaLogeado.next(docente);
+                        if(docente.tipo_docente == "1"){
+                            this.router.navigateByUrl(Rutas.registrarComunidad);
+                        }else if(docente.tipo_docente == "2"){
+                            this.router.navigateByUrl(Rutas.validarComunidad);
+                        }else if(docente.tipo_docente == "3"){
+                            this.router.navigateByUrl(Rutas.verificarInformacion);
+                        }else if(docente.tipo_docente == "4"){
+                            this.router.navigateByUrl(Rutas.aceptarComunidad);
+                        }else if(docente.tipo_docente == "5"){
+                            this.router.navigateByUrl(Rutas.planificarActividades);
+                        }
+                    });
+                }else if(resp.tipoUsuario == 2){
+                    this.estudianteService.buscarEstudiante(resp.external_us).subscribe((estudiante:Estudiante)=>{
+                        sessionStorage.setItem('datosUsuario',JSON.stringify(estudiante));
+                        this.acceso_service.estaLogeado.next(estudiante);
+    
+                        if(estudiante.estado == "1"){
+                            this.router.navigateByUrl(Rutas.verComunidades);
+                        }else if(estudiante.estado == "2"){ 
+                            this.router.navigateByUrl(Rutas.perfilMiembto);
+                        }
+                    });
+                    
+                }
+            }else{
+                this.messageService.add({key: 'tc', severity:'error', summary: 'Error al iniciar sesión', detail: 'Usuario o Contraseña Incorrectos'});
+                setTimeout(() => {
+                    window.location.reload();
+                }, 1500);
             }
+            });
         }else{
-            this.messageService.add({key: 'tc', severity:'error', summary: 'Error al iniciar sesión', detail: 'Usuario o Contraseña Incorrectos'});
-            setTimeout(() => {
-                window.location.reload();
-            }, 1500);
+            this.messageService.add({key: 'tc', severity:'error', summary: 'Error al iniciar sesión', detail: 'Todos los campos son obligatorios'});
         }
-        });
     }
 
     show(){
@@ -103,16 +114,20 @@ export class LoginComponent {
     }
     RecuperarClave(correo){
         let value = {"correo":correo}
-        this.usuarioService.recuperarClave(value).subscribe((resp:any)=>{
-            if(resp.siglas == "OE"){
-                this.messageService.add({key: 'tc', severity:'success', summary: 'Operación Exitosa', detail: 'Se ha enviado un correo para la recuperación de su cuenta'});
-                setTimeout(() => {
-                    this._location.back();
-                }, 2000);
-            }else{
-            this.messageService.add({key: 'tc', severity:'error', summary: 'Error', detail: 'Se ha producido un error'});
-            }
-        });
+        if(value.correo != ""){
+            this.usuarioService.recuperarClave(value).subscribe((resp:any)=>{
+                if(resp.siglas == "OE"){
+                    this.messageService.add({key: 'tc', severity:'success', summary: 'Operación Exitosa', detail: 'Se ha enviado un correo para la recuperación de su cuenta'});
+                    setTimeout(() => {
+                        this._location.back();
+                    }, 2000);
+                }else{
+                this.messageService.add({key: 'tc', severity:'error', summary: 'Error', detail: 'Se ha producido un error'});
+                }
+            });
+        }else{
+            this.messageService.add({key: 'tc', severity:'error', summary: 'Error', detail: 'El campo es obligatorio'});
+        }
     }
 
     cancelar(){

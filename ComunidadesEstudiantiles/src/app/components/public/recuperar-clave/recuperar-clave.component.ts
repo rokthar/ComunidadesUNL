@@ -13,10 +13,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     providers: [MessageService]
 })
 
-export class RecuperarClaveComponent{
+export class RecuperarClaveComponent implements OnInit{
     claveForm: FormGroup;
     private _location: Location;
-
+    params:any;
+    estaLogeado:Boolean=false;
     constructor(
         private _builder:FormBuilder,
 
@@ -25,6 +26,12 @@ export class RecuperarClaveComponent{
             clave1:['', Validators.required],
             clave2:['', Validators.required]
         })
+    }
+    ngOnInit(): void {
+        this.params = JSON.parse(sessionStorage.getItem('datosUsuario'));
+        if (this.params != null) {
+            this._location.back();
+        }
     }
 
     actualizarClave(){

@@ -58,6 +58,7 @@ export class AceptarVinculacionComponent implements OnInit{
 
     aceptarVinculacion(external_vinculacion){
         const values = this.rechazarVinculacionForm.getRawValue();
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         this.displayModal = false;
         this.vinculacion_service.activarVinculacion(values,external_vinculacion).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){
@@ -76,6 +77,7 @@ export class AceptarVinculacionComponent implements OnInit{
 
     rechazarVinculacion(external_vinculacion){
         this.displayModal = false;
+        this.messageService.add({key: 'tc', severity:'success', summary: 'Cargando', detail: 'Se esta ejecutando la acción.'});
         const values = this.rechazarVinculacionForm.getRawValue();
         this.vinculacion_service.rechazarVinculación(values,external_vinculacion).subscribe((resp:any)=>{
             if(resp.siglas=="OE"){

@@ -11,10 +11,16 @@
 }
 
 .footer .logoCIS img{
-    width: fit-content;
+    width: 100%;
 }
 @media only screen and (max-width: 900px) {
     .footer{
         padding: 5%;
+    }
+    .logoCIS{
+        margin-bottom: 10px;
+    }
+    .derechos{
+        margin-top: 10px;
     }
 }
